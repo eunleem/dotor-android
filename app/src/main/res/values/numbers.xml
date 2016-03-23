@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="nickname.length.max">14</integer>
+    <integer name="nickname.length.min">1</integer>
+
+    <integer name="email.length.max">30</integer>
+    <integer name="email.length.min">5</integer>
+
+    <integer name="location.length.max">30</integer>
+
+    <integer name="pet_name.length.max">12</integer>
+
+    <integer name="comment.length.max">300</integer>
+</resources>

@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+
+    <LinearLayout
+        android:id="@+id/layoutByPet"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <Spinner
+            android:id="@+id/spinnerMyPets"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/pet.type" />
+
+        <RadioGroup
+            android:id="@+id/radioGroupPetType"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            android:checkedButton="@+id/radioPetTypeAny"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/radioPetTypeAny"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/any"
+                android:textSize="16sp" />
+
+            <RadioButton
+                android:id="@+id/radioPetTypeDog"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/puppy"
+                android:textSize="16sp" />
+
+            <RadioButton
+                android:id="@+id/radioPetTypeCat"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_weight="1"
+                android:text="@string/kitten"
+                android:textSize="16sp" />
+        </RadioGroup>
+
+        <View style="@style/Divider" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/gender" />
+
+        <RadioGroup
+            android:id="@+id/radioGroupPetGender"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            android:checkedButton="@+id/radioPetGenderAny"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/radioPetGenderAny"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/any"
+                android:textSize="16sp" />
+
+            <RadioButton
+                android:id="@+id/radioPetGenderMale"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/male"
+                android:textSize="16sp" />
+
+            <RadioButton
+                android:id="@+id/radioPetGenderFemale"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_weight="1"
+                android:text="@string/female"
+                android:textSize="16sp" />
+        </RadioGroup>
+
+        <View style="@style/Divider" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/pet.size" />
+
+        <RadioGroup
+            android:id="@+id/radioGroupPetSize"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            android:checkedButton="@+id/radioPetSizeAny"
+            android:orientation="vertical">
+
+            <RadioButton
+                android:id="@+id/radioPetSizeAny"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/any"
+                android:textSize="16sp" />
+
+            <RadioButton
+                android:id="@+id/radioPetSizeSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/pet_size_small"
+                android:textSize="16sp" />
+
+            <RadioButton
+                android:id="@+id/radioPetSizeMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/pet_size_medium"
+                android:textSize="16sp" />
+
+            <RadioButton
+                android:id="@+id/radioPetSizeLarge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/pet_size_large"
+                android:textSize="16sp" />
+
+            <RadioButton
+                android:id="@+id/radioPetSizeXLarge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/pet_size_xlarge"
+                android:textSize="16sp" />
+
+        </RadioGroup>
+
+        <View style="@style/Divider" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/age" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/textPetAgeMin"
+                android:layout_width="48dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:hint="@string/minimum_age"
+                android:inputType="number"
+                android:maxLength="2"
+                android:text="0" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:text="~" />
+
+            <EditText
+                android:id="@+id/textPetAgeMax"
+                android:layout_width="48dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:hint="@string/maximum_age"
+                android:inputType="number"
+                android:maxLength="2"
+                android:text="15" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <View style="@style/Divider" />
+
+    <Button
+        android:id="@+id/buttonSetFilter"
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:text="@string/set_filter"
+        android:textColor="@color/colorSecondary" />
+
+</LinearLayout>

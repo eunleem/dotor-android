@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_my_pet_list"
+            android:icon="@drawable/ic_logo_grey600_18dp"
+            android:title="@string/label.my_pet_list" />
+        <item
+            android:id="@+id/nav_my_reviews"
+            android:icon="@drawable/ic_file_multiple_grey600_18dp"
+            android:title="@string/label.view_my_reviews" />
+        <item
+            android:id="@+id/nav_settings"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="@string/settings" />
+    </group>
+
+    <item android:title="Communicate">
+        <menu>
+            <item
+                android:id="@+id/nav_share"
+                android:icon="@drawable/ic_menu_share"
+                android:title="@string/label.share"
+                android:visible="false" />
+            <item
+                android:id="@+id/nav_like"
+                android:icon="@drawable/ic_heart_grey600_18dp"
+                android:title="@string/label.give_kudos"
+                android:visible="false" />
+            <item
+                android:id="@+id/nav_send_feedback"
+                android:icon="@drawable/ic_menu_send"
+                android:title="@string/label.send_feedback" />
+        </menu>
+    </item>
+
+    <item
+        android:title="Development"
+        android:visible="false">
+        <menu>
+            <item
+                android:id="@+id/dev_reset"
+                android:icon="@android:drawable/stat_sys_warning"
+                android:title="RESET" />
+            <item
+                android:id="@+id/dev_hospital_insert"
+                android:icon="@drawable/ic_hospital_grey600_24dp"
+                android:title="Insert Hospital" />
+        </menu>
+    </item>
+
+</menu>

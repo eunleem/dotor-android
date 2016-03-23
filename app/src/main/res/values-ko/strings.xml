@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Dotor</string>
+
+    <!-- GENERAL -->
+    <string name="settings">설정</string>
+    <string name="close">닫기</string>
+    <string name="action.search">검색</string>
+    <string name="action.notification">알림</string>
+
+    <string name="pet">반려동물</string>
+
+    <string name="pet.name">반려동물 이름</string>
+    <string name="pet.type">Type</string>
+    <string name="puppy">강아지</string>
+    <string name="kitten">고양이</string>
+
+    <string name="gender" translatable="true">성별</string>
+    <string name="male" translatable="true">수컷</string>
+    <string name="female" translatable="true">암컷</string>
+
+    <string name="age" translatable="true">나이</string>
+    <string name="age_unit" translatable="false">살</string>
+    <string name="weight" translatable="true">크기</string>
+
+    <string name="review" translatable="true">리뷰</string>
+    <string name="region" translatable="true">지역</string>
+    <string name="location" translatable="true">위치</string>
+    <string name="hospital" translatable="true">병원명</string>
+
+    <string-array name="pet_size_array">
+        <item>소형</item>
+        <item>중형</item>
+        <item>대형</item>
+        <item>초대형</item>
+    </string-array>
+
+    <!-- 다시한번 확정 후 등록-->
+    <string-array name="review_category_array">
+        <item>Basic</item>
+        <item>Vaccination</item>
+        <item>Surgery</item>
+        <item>Medicine</item>
+        <item>Blood Test</item>
+        <item>X-Ray</item>
+        <item>Etc</item>
+    </string-array>
+
+    <string name="pet_size_small">소형</string>
+    <string name="pet_size_medium">중형</string>
+    <string name="pet_size_large">대형</string>
+    <string name="pet_size_xlarge">초대형</string>
+    <!-- XX-Large는 필요없을듯 -->
+    <!--<string name="pet_size_xxlarge">XX-Large</string>-->
+
+
+    <!-- SHOWCASE -->
+    <string name="showcase.post.title">아래 버튼을 터치하고 리뷰를 등록해주세요.</string>
+    <string name="showcase.post.text">간단해요!</string>
+
+
+    <!-- MESSAGES -->
+    <string name="msg.error.general">예상치 못한 오류가 발생되었습니다. 개발팀에 알려주세요.</string>
+    <string name="msg.error.invalid_input">유효하지 않은 입력값이 있습니다.</string>
+    <string name="msg.error.bad.connection">네트워크 연결 상태를 확인 후 다시 시도해주세요.</string>
+    <string name="msg.error.bad.server">현재 서버 연결상태가 원활하지 않습니다.</string>
+
+    <string name="msg.progress.logging_in">Logging in&#8230;</string>
+
+    <string name="msg.error.login">로그인 하는 동안 문제가 발생했습니다.</string>
+    <string name="msg.error.email">유효하지 않은 이메일입니다.</string>
+
+    <string name="msg.error.nickname">유효하지 않은 닉네임 입니다.</string>
+
+
+    <string name="add">추가</string>
+    <string name="save">저장</string>
+    <string name="skip">건너뛰기</string>
+    <string name="cancel">취소</string>
+    <string name="modify">수정</string>
+
+    <string name="send">전송</string>
+
+    <string name="try_again" translatable="true">다시 시도해주세요.</string>
+    <string name="canceled" translatable="true">취소 되었습니다.</string>
+    <string name="required" translatable="true">요청 되었습니다.</string>
+
+    <!-- PET LIST ACTIVITY -->
+    <string name="title_activity_pet_list">내 반려동물</string>
+
+
+    <!-- START ACTIVITY -->
+    <string name="btn.start">시작하기</string>
+
+    <string name="intro_text1_1">아픈 반려동물 가슴 아픈 보호자\n문제는 진료비</string>
+    <string name="intro_text1_2">아픈 반려동물은 증상을 직접 말할 수가 없으니\n병원 검사에 의존합니다. 문제는 진료비</string>
+    <string name="intro_text2_1">다른데도 이렇게 비싼가?\n고무줄 진료비</string>
+    <string name="intro_text2_2">표준가격 기준이 없는 진료비를 확인하면 찜찜하고\n답답해집니다. 지역별 진료비 차이 최대 5배</string>
+    <string name="intro_text3_1">변화를 위한 작은 움직임\n동물병원 진료후기 공유</string>
+    <string name="intro_text3_2">동물병원 영수증을 첨부해주세요.\n진료비를 비교하고 정보를 나눌 수 있습니다.</string>
+    <string name="intro_text4_1">영수증과 후기가 모일 수록 더 믿을 수 있는\n데이터가 만들어 집니다.</string>
+    <string name="intro_text4_ask">이미 회원이신가요?</string>
+    <string name="intro_text4_login"><u>로그인하기</u></string>
+    <string name="intro_text4_notify1">지금 시작하시면</string>
+    <string name="intro_text4_notify2"><u>이용약관</u></string>
+    <string name="intro_text4_notify3">및</string>
+    <string name="intro_text4_notify4"><u>개인정보 보호 정책</u></string>
+    <string name="intro_text4_notify5">,</string>
+    <string name="intro_text4_notify6"><u>위치정보 이용약관</u></string>
+    <string name="intro_text4_notify7">에 동의하시는 것으로 간주 됩니다.</string>
+
+    <string name="msg.error.register">등록에 오류가 발생했습니다.</string>
+
+
+    <!-- EDIT PET ACTIVITY -->
+    <string name="title_activity_edit_pet">반려동물 정보수정</string>
+    <string name="title_activity_add_pet">반려동물 추가</string>
+
+    <string name="title_fragment_cancel_confirm">저장하지 않은 정보는 반영되지 않습니다.</string>
+
+
+    <string name="profile.save.cancel.confirm">반려동물 정보 수정을 취소하시겠습니까?</string>
+
+    <string name="msg.progress.adding_pet">반려동물 추가&#8230;</string>
+
+    <string name="msg.error.add_pet_name_required">이름을 입력해주세요!</string>
+    <string name="msg.error.addpet_too_many">30마리 이상의 반려동물을 등록하실 수 없습니다!</string>
+
+    <string name="add_pet.cancel.confirm">반려동물 추가를 취소하시겠습니까?</string>
+
+    <string name="label.go_to_main">메인으로</string>
+    <string name="label.go_back">돌아가기</string>
+    <string name="label.discard">네</string>
+    <string name="label.stay">아니요</string>
+
+
+    <!-- EDIT PROFILE ACTIVITY -->
+    <string name="title_activity_setup_profile">프로필 설정</string>
+    <string name="title_activity_edit_profile">프로필</string>
+
+    <string name="profile.nickname">닉네임 (*)</string>
+    <!-- 최초입력정보에서 제외
+    <string name="profile.email">Email (optional)</string>
+    <string name="profile.location">Location (optional)</string>
+
+    <string name="fetching_location">Fetching location&#8230;</string>
+    -->
+
+
+    <!-- MAIN ACTIVITY -->
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="action_settings">설정</string>
+
+    <string name="main_message_subtitle">다른 동물병원 진료비/ 서비스는 어떨까요?</string>
+    <string name="main_message_title">진료후기를 등록해보세요.</string>
+    <string name="main_message_body">등록한 진료정보로 지역, 증상, 유형별\n진료비/진료정보를 비교해 볼 수 있습니다!</string>
+
+    <string name="main_post_review">진료후기 등록하기</string>
+
+    <string name="main_view_symptoms">유사증상 진료비 비교하기</string>
+    <string name="main_view_pettype">같은 유형 반려동물 진료후기</string>
+
+    <string name="msg.ok.addpet">\"%1$s\" (이)가 내 반려동물에 추가되었습니다.</string>
+    <string name="msg.cancel.addpet">반려동물 추가가 취소되었습니다.</string>
+    <string name="msg.error.addpet">반려동물을 추가하는데 오류가 발생했습니다.</string>
+    <string name="msg.error.editpet">반려동물 정보를 수정하는데 오류가 발생했습니다.</string>
+
+    <string name="msg.error.addreview">리뷰를 추가할 수 없습니다.</string>
+    <string name="msg.error.editreview">리뷰를 수정할 수 없습니다.</string>
+    <string name="title_activity_post_review">리뷰 등록</string>
+
+
+    <!-- NAVIGATION DRAWER -->
+    <string name="label.my_profile">프로필</string>
+
+    <string name="label.my_pet_list">내 반려동물</string>
+    <string name="label.view_my_reviews">내가 쓴 리뷰</string>
+
+    <string name="label.share">닷터 친구에게 공유하기</string>
+    <string name="label.give_kudos">닷터 좋아요</string>
+    <string name="label.send_feedback">피드백 보내기</string>
+
+    <!-- POST REVIEW ACTIVITY -->
+    <string name="label.post.hospital">병원명</string>
+    <string name="label.post.symptoms">진료 항목</string>
+    <string name="label.post.cost">진료비</string>
+
+    <string name="post.no_pet">진료비</string>
+
+
+    <!-- SETTINGS ACTIVITY -->
+    <string name="settings.notification">알림 설정</string>
+    <string name="settings.notification.likes">내 리뷰를 고마워할 경우</string>
+    <string name="settings.notification.comments">내 리뷰에 댓글을 남길 경우</string>
+    <string name="settings.reset.all">Delete All Data and Reset</string>
+
+    <string name="settings.reset.confirm">Reset all data including account info and go back to initial state?</string>
+    <string name="settings.reset">Reset</string>
+
+
+    <!-- MY REVIEWS ACTIVITY -->
+    <string name="title_activity_my_reviews">내가 쓴 리뷰</string>
+
+    <!-- NOTIFICATION ACTIVITY -->
+    <string name="title_activity_notification">알림</string>
+
+    <!-- REVIEWS ACTIVITY -->
+    <string name="title_activity_review_list">리뷰</string>
+
+    <!-- VIEW REVIEW ACTIVITY -->
+    <string name="title_activity_review_detail">View Review</string>
+    <string name="title_activity_feedback">피드백 보내기</string>
+    <string name="title_activity_kudo">Give Kudos</string>
+
+    <string name="title_activity_view_image">이미지 확인</string>
+    <string name="title_activity_comments">댓글</string>
+    <string name="title_activity_view_likes">고마워요</string>
+
+
+    <!-- FEEDBACK ACTIVITY -->
+    <string name="label.feedback">피드백</string>
+    <string name="msg_feedback_sent">피드백이 전달되었습니다. 감사합니다!</string>
+    <string name="msg_error_nickname_required">닉네임을 입력해주세요.</string>
+    <string name="msg_error_no_pet">반려동물을 등록해주세요!</string>
+    <string name="birthday">생일</string>
+
+    <string name="birthday_format">yyyy년 MM월 dd일</string>
+    <string name="title_activity_scrolling">ScrollingActivity</string>
+    <string name="nickname_invalid_too_short">2글자 이상입력해주세요.</string>
+    <string name="nickname_invalid_double_space">유효하지 않은 닉네임입니다.</string>
+    <string name="profile_saving_changes">저장중...</string>
+    <string name="msg_error_autocomplete_location">위치정보를 찾을 수 없습니다.</string>
+    <string name="msg_no_my_reviews">등록한 리뷰가 없습니다!</string>
+
+    <string name="money_unit">원</string>
+    <string name="title_activity_insert_hospital">InsertHospitalActivity</string>
+    <string name="title_activity_view_hospital">ViewHospitalActivity</string>
+    <string name="title_activity_hospital_list">HospitalListActivity</string>
+    <string name="set_location">지역</string>
+    <string name="visit_categories">Categories</string>
+    <string name="visit_categories_basic">Basic</string>
+    <string name="visit_categories_bloodtest">Blood Test</string>
+    <string name="visit_categories_xray">X-Ray</string>
+    <string name="label.reset">초기화</string>
+    <string name="write_comment">댓글</string>
+    <string name="current_location_unavailable">현재 위치</string>
+    <string name="search_location">현재 위치</string>
+    <string name="change_location">지역 변경</string>
+    <string name="distance">거리</string>
+    <string name="get_current_location">현재 위치 가져오기</string>
+    <string name="msg_error_current_location_fail">현재 위치를 가져올 수 없습니다</string>
+    <string name="no_categories_selected">진료항목이 선택되지 않았습니다.</string>
+    <string name="delete">삭제</string>
+    <string name="report">신고</string>
+    <string name="already_reported">이미 신고 되었습니다.</string>
+    <string name="reported">신고 되었습니다.</string>
+    <string name="modify_not_yet_supported">수정기능은 준비중입니다.</string>
+    <string name="msg_error_delete_review_notyours">다른 사람의 리뷰는 삭제하실 수 없습니다.</string>
+    <string name="deleted">삭제 되었습니다.</string>
+    <string name="filter_by_pet">동물유형 필터</string>
+    <string name="both">Both</string>
+    <string name="minimum_age">Minimum Age</string>
+    <string name="maximum_age">Maximum Age</string>
+    <string name="set_filter">필터 설정</string>
+    <string name="any">Any</string>
+    <string name="pet.size">크기</string>
+    <string name="take_picture">사진 촬영하기</string>
+    <string name="get_image_from_gallery">갤러리에서 가져오기</string>
+    <string name="title_activity_edit_image">이미지 편집</string>
+    <string name="rotate">회전</string>
+    <string name="crop">잘라내기</string>
+    <string name="add_image">이미지 추가</string>
+
+
+</resources>
+
