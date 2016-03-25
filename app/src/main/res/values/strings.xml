@@ -11,7 +11,7 @@
     <string name="pet">반려동물</string>
 
     <string name="pet.name">반려동물 이름</string>
-    <string name="pet.type">Type</string>
+    <string name="pet.type">종류</string>
     <string name="puppy">강아지</string>
     <string name="kitten">고양이</string>
 
@@ -181,8 +181,8 @@
     <string name="settings.notification">알림 설정</string>
     <string name="settings.notification.likes">내 리뷰를 고마워할 경우</string>
     <string name="settings.notification.comments">내 리뷰에 댓글을 남길 경우</string>
-    <string name="settings.reset.all">Delete All Data and Reset</string>
 
+    <string name="settings.reset.all">Delete All Data and Reset</string>
     <string name="settings.reset.confirm">Reset all data including account info and go back to initial state?</string>
     <string name="settings.reset">Reset</string>
 
@@ -213,7 +213,7 @@
 
     <string name="birthday_format">yyyy년 MM월 dd일</string>
 
-    <string name="nickname_invalid_too_short">2글자 이상입력해주세요.</string>
+    <string name="nickname_invalid_too_short">3글자 이상 입력해주세요.</string>
     <string name="nickname_invalid_double_space">유효하지 않은 닉네임입니다.</string>
     <string name="profile_saving_changes">저장중&#8230;</string>
     <string name="msg_error_autocomplete_location">위치정보를 찾을 수 없습니다.</string>
@@ -299,6 +299,13 @@
 
     <string name="feedback_email_body">[닷터를 사용하며 개선했으면 하는 점, 혹은 칭찬하고 싶은 점을 이메일로 보내주세요.]\n\n\n나의 유저아이디: %1$s</string>
 
+    <string name="label.about_us">Created by Team88</string>
+    <string name="program_info">Program Info</string>
+    <string name="terms">Terms of Service</string>
+    <string name="open_source_licenses">Open Source Licenses</string>
+    <string name="created_by">Created by Team88</string>
+    <string name="team88">https://www.team88.net/</string>
+
 
     <!-- BELOW IS NOT NEEDED!!!!!!!!!!!!!!!! -->
 
@@ -312,13 +319,6 @@
     <string name="email_unverified">Email Unverified</string>
     <string name="email_verified">This email is verified!</string>
     <string name="email_will_be_verified">Verification email will be sent.</string>
-    <string name="label.about_us">Created by Team88</string>
-    <string name="program_info">Program Info</string>
-    <string name="terms">Terms of Service</string>
-    <string name="open_source_licenses">Open Source Licenses</string>
-    <string name="created_by">Created by Team88</string>
-    <string name="team88">Team 88 - https://www.team88.net/</string>
-    <string name="open_source_licenses_body">Licenses</string>
 
 
 </resources>

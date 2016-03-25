@@ -31,11 +31,12 @@
                 android:layout_height="wrap_content">
 
                 <ImageView
-                    android:layout_width="140dp"
-                    android:layout_height="140dp"
+                    android:layout_width="128dp"
+                    android:layout_height="128dp"
+                    android:layout_marginBottom="16dp"
                     android:layout_gravity="bottom|end"
                     android:alpha="0.1"
-                    android:src="@drawable/ic_rename_box_white_48dp" />
+                    android:src="@drawable/ic_pencil_edit" />
 
                 <LinearLayout
                     android:id="@+id/layoutMainText"
