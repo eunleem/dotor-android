@@ -15,3 +15,16 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
+-keep class android.support.v7.** { *; }
+-keep interface android.support.v7.** { *; }
+-keep enum android.support.v7.** { *; }
+
+-keep class android.support.v4.** { *; }
+-keep interface android.support.v4.** { *; }
+-keep enum android.support.v4.** { *; }
+
+-keep class com.google.** { *; }
+-keep interface com.google.** { *; }
+-keep enum com.google.** { *; }
+
+-keepattributes Signature

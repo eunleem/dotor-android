@@ -67,21 +67,19 @@
         android:gravity="end"
         android:text="1km" />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/colorLightGrey" />
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center_vertical|end"
         android:orientation="horizontal">
 
         <Button
+            android:id="@+id/buttonCancel"
             style="?android:attr/borderlessButtonStyle"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
             android:padding="8dp"
             android:text="@string/cancel"
             android:textColor="@color/secondaryText" />
@@ -89,9 +87,10 @@
         <Button
             android:id="@+id/buttonSetFilter"
             style="?android:attr/borderlessButtonStyle"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
             android:padding="8dp"
             android:text="@string/set_filter"
             android:textColor="@color/colorSecondary"

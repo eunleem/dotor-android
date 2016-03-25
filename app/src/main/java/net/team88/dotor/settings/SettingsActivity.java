@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
@@ -16,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -25,6 +27,7 @@ import net.team88.dotor.hospitals.Hospitals;
 import net.team88.dotor.intro.SplashActivity;
 import net.team88.dotor.notifications.PushSetting;
 import net.team88.dotor.pets.MyPets;
+import net.team88.dotor.reviews.SearchSettings;
 import net.team88.dotor.shared.BasicResponse;
 import net.team88.dotor.shared.DotorWebService;
 import net.team88.dotor.shared.Server;
@@ -44,6 +47,10 @@ public class SettingsActivity extends AppCompatActivity {
     private Button buttonResetAll;
 
     private PushSetting pushSetting;
+    private TextView textTerms;
+    private TextView textLicense;
+    private View viewAppVersion;
+    private View viewCreatedBy;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +63,7 @@ public class SettingsActivity extends AppCompatActivity {
 
         loadPushSetting();
 
-        registerEventHandlers();
+        registerEvents();
 
     }
 
@@ -90,26 +97,14 @@ public class SettingsActivity extends AppCompatActivity {
         switchNotification = (SwitchCompat) findViewById(R.id.switchNotification);
         switchNotificationLikes = (SwitchCompat) findViewById(R.id.switchNotificationLikes);
         switchNotificationComments = (SwitchCompat) findViewById(R.id.switchNotificationComments);
+
+        textTerms = (TextView) findViewById(R.id.textTerms);
+        textLicense = (TextView) findViewById(R.id.textLicense);
+        viewAppVersion = (View) findViewById(R.id.layoutAppVersion);
+        viewCreatedBy = (View) findViewById(R.id.layoutCreatedBy);
     }
 
-    private void registerEventHandlers() {
-        buttonResetAll.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ResetConfirmDialogFragment frag = new ResetConfirmDialogFragment();
-                frag.setDbReset(false);
-                frag.show(getSupportFragmentManager(), "Reset");
-            }
-        });
-
-        buttonResetDb.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ResetConfirmDialogFragment frag = new ResetConfirmDialogFragment();
-                frag.setDbReset(true);
-                frag.show(getSupportFragmentManager(), "Reset");
-            }
-        });
+    private void registerEvents() {
 
         switchNotification.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -137,6 +132,62 @@ public class SettingsActivity extends AppCompatActivity {
                 updateNotificationSettings();
             }
         });
+
+
+        textTerms.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Uri uri = Uri.parse("https://dotor.team88.net/terms");
+                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                startActivity(intent);
+            }
+        });
+
+        textLicense.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Uri uri = Uri.parse("https://www.team88.net/dotor/licenses");
+                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                startActivity(intent);
+            }
+        });
+
+        viewAppVersion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Uri uri = Uri.parse("https://www.team88.net/dotor/version");
+                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                startActivity(intent);
+            }
+        });
+
+        viewCreatedBy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Uri uri = Uri.parse("https://www.team88.net/");
+                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                startActivity(intent);
+            }
+        });
+
+
+//        buttonResetAll.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                ResetConfirmDialogFragment frag = new ResetConfirmDialogFragment();
+//                frag.setDbReset(false);
+//                frag.show(getSupportFragmentManager(), "Reset");
+//            }
+//        });
+//
+//        buttonResetDb.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                ResetConfirmDialogFragment frag = new ResetConfirmDialogFragment();
+//                frag.setDbReset(true);
+//                frag.show(getSupportFragmentManager(), "Reset");
+//            }
+//        });
     }
 
     private void updateNotificationSettings() {
@@ -230,6 +281,7 @@ public class SettingsActivity extends AppCompatActivity {
         Server.getInstance(this).reset();
         Settings.getInstance(this).reset();
         Hospitals.getInstance(this).reset();
+        SearchSettings.getInstance(this).reset();
 
 
         // #TODO Reset Reviews and other data

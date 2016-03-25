@@ -4,11 +4,11 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_my_pet_list"
-            android:icon="@drawable/ic_logo_grey600_18dp"
+            android:icon="@drawable/ic_logo_grey600_24dp"
             android:title="@string/label.my_pet_list" />
         <item
             android:id="@+id/nav_my_reviews"
-            android:icon="@drawable/ic_file_multiple_grey600_18dp"
+            android:icon="@drawable/ic_file_multiple_grey600_24dp"
             android:title="@string/label.view_my_reviews" />
         <item
             android:id="@+id/nav_settings"
@@ -19,21 +19,28 @@
     <item android:title="Communicate">
         <menu>
             <item
+                android:id="@+id/nav_send_feedback"
+                android:icon="@drawable/ic_menu_send"
+                android:title="@string/label.send_feedback" />
+            <item
                 android:id="@+id/nav_share"
                 android:icon="@drawable/ic_menu_share"
                 android:title="@string/label.share"
                 android:visible="false" />
             <item
                 android:id="@+id/nav_like"
-                android:icon="@drawable/ic_heart_grey600_18dp"
+                android:icon="@drawable/ic_heart_grey600_24dp"
                 android:title="@string/label.give_kudos"
                 android:visible="false" />
-            <item
-                android:id="@+id/nav_send_feedback"
-                android:icon="@drawable/ic_menu_send"
-                android:title="@string/label.send_feedback" />
         </menu>
     </item>
+
+    <group>
+        <item
+            android:id="@+id/nav_about_us"
+            android:icon="@drawable/ic_team_logo_grey600_24dp"
+            android:title="@string/label.about_us" />
+    </group>
 
     <item
         android:title="Development"

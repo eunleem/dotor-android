@@ -2,6 +2,7 @@ package net.team88.dotor;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.util.Log;
@@ -348,9 +349,27 @@ public class MainActivity extends AppCompatActivity
             case R.id.nav_send_feedback: {
                 //Intent intent = new Intent(MainActivity.this, FeedbackActivity.class);
                 //startActivityForResult(intent, REQUEST_FEEDBACK);
+                Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
+                        "mailto", "team88.master+feedback@gmail.com", null));
 
+                final String subject = getString(R.string.feedback_email_subject);
+
+                String bodyTemplate = getString(R.string.feedback_email_body);
+
+                final String username = MyAccount.getInstance(this).getAccount().getUsername();
+                final String body = String.format(bodyTemplate, username);
+
+                emailIntent.putExtra(Intent.EXTRA_SUBJECT, subject);
+                emailIntent.putExtra(Intent.EXTRA_TEXT, body);
+
+                startActivity(Intent.createChooser(emailIntent, "Send email..."));
                 break;
             }
+            case R.id.nav_about_us:
+                Uri uri = Uri.parse("https://www.team88.net/");
+                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                startActivity(intent);
+                break;
             case R.id.dev_reset:
 
                 break;

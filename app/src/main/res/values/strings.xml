@@ -1,5 +1,5 @@
 <resources>
-       <string name="app_name">Dotor</string>
+    <string name="app_name">Dotor</string>
 
 
     <!-- GENERAL -->
@@ -37,13 +37,13 @@
 
     <!-- 다시한번 확정 후 등록-->
     <string-array name="review_category_array">
-        <item>Basic</item>
-        <item>Vaccination</item>
-        <item>Surgery</item>
-        <item>Medicine</item>
-        <item>Blood Test</item>
-        <item>X-Ray</item>
-        <item>Etc</item>
+        <item>기본</item>
+        <item>백신</item>
+        <item>수술</item>
+        <item>약</item>
+        <item>피검사</item>
+        <item>엑스레이</item>
+        <item>기타</item>
     </string-array>
 
     <string name="pet_size_small">소형</string>
@@ -52,11 +52,6 @@
     <string name="pet_size_xlarge">초대형</string>
     <!-- XX-Large는 필요없을듯 -->
     <!--<string name="pet_size_xxlarge">XX-Large</string>-->
-
-
-    <!-- SHOWCASE -->
-    <string name="showcase.post.title">아래 버튼을 터치하고 리뷰를 등록해주세요.</string>
-    <string name="showcase.post.text">간단해요!</string>
 
 
     <!-- MESSAGES -->
@@ -101,13 +96,7 @@
     <string name="intro_text4_1">영수증과 후기가 모일 수록 더 믿을 수 있는\n데이터가 만들어 집니다.</string>
     <string name="intro_text4_ask">이미 회원이신가요?</string>
     <string name="intro_text4_login"><u>로그인하기</u></string>
-    <string name="intro_text4_notify1">지금 시작하시면</string>
-    <string name="intro_text4_notify2"><u>이용약관</u></string>
-    <string name="intro_text4_notify3">및</string>
-    <string name="intro_text4_notify4"><u>개인정보 보호 정책</u></string>
-    <string name="intro_text4_notify5">,</string>
-    <string name="intro_text4_notify6"><u>위치정보 이용약관</u></string>
-    <string name="intro_text4_notify7">에 동의하시는 것으로 간주 됩니다.</string>
+    <string name="intro_text4_terms">지금 시작하시면 <a href="https://dotor.team88.net/terms">이용약관</a> 및 <a href="https://dotor.team88.net/terms_privacy">개인정보 보호 정책</a>,\n<a href="https://dotor.team88.net/terms_location">위치정보 이용약관</a>에 동의하시는 것으로 간주 됩니다.</string>
 
     <string name="msg.error.register">등록에 오류가 발생했습니다.</string>
 
@@ -208,43 +197,46 @@
     <string name="title_activity_review_list">리뷰</string>
 
     <!-- VIEW REVIEW ACTIVITY -->
-    <string name="title_activity_review_view">View Review</string>
+    <string name="title_activity_review_view">진료후기</string>
 
     <string name="title_activity_view_image">이미지 확인</string>
-    <string name="title_activity_comments">댓글</string>
-    <string name="title_activity_view_likes">고마워요</string>
 
 
     <!-- FEEDBACK ACTIVITY -->
     <string name="label.feedback">피드백</string>
     <string name="msg_feedback_sent">피드백이 전달되었습니다. 감사합니다!</string>
     <string name="msg_error_nickname_required">닉네임을 입력해주세요.</string>
+
+
     <string name="msg_error_no_pet">반려동물을 등록해주세요!</string>
     <string name="birthday">생일</string>
 
     <string name="birthday_format">yyyy년 MM월 dd일</string>
-    <string name="title_activity_scrolling">ScrollingActivity</string>
+
     <string name="nickname_invalid_too_short">2글자 이상입력해주세요.</string>
     <string name="nickname_invalid_double_space">유효하지 않은 닉네임입니다.</string>
-    <string name="profile_saving_changes">저장중...</string>
+    <string name="profile_saving_changes">저장중&#8230;</string>
     <string name="msg_error_autocomplete_location">위치정보를 찾을 수 없습니다.</string>
     <string name="msg_no_my_reviews">등록한 리뷰가 없습니다!</string>
 
     <string name="money_unit">원</string>
-    <string name="title_activity_view_hospital">ViewHospitalActivity</string>
-    <string name="title_activity_hospital_list">HospitalListActivity</string>
+
     <string name="set_location">지역</string>
     <string name="visit_categories">Categories</string>
     <string name="visit_categories_basic">Basic</string>
     <string name="visit_categories_bloodtest">Blood Test</string>
     <string name="visit_categories_xray">X-Ray</string>
+
     <string name="label.reset">초기화</string>
-    <string name="write_comment">댓글</string>
+
+    <string name="write_comment">댓글 쓰기</string>
     <string name="current_location_unavailable">현재 위치</string>
     <string name="search_location">검색 위치</string>
     <string name="change_location">지역 변경</string>
     <string name="distance">거리</string>
+
     <string name="get_current_location">현재 위치 가져오기</string>
+
     <string name="msg_error_current_location_fail">현재 위치를 가져올 수 없습니다</string>
     <string name="no_categories_selected">진료항목이 선택되지 않았습니다.</string>
     <string name="delete">삭제</string>
@@ -268,27 +260,65 @@
     <string name="crop">잘라내기</string>
     <string name="add_image">이미지 추가</string>
 
+    <string name="post_review_finished">진료후기 등록 성공!</string>
+    <string name="post_review_failed_title">진료후기 등록 실패.</string>
+    <string name="post_review_failed_text">진료후기 등록에 문제가 발생했습니다. 다시한번 시도 해주세요&#8230;</string>
+    <string name="post_review_finished_text">진료후기가 등록 되었습니다!</string>
+    <string name="uploading_image_title">이미지 업로드&#8230;</string>
+    <string name="uploading_image_text">이미지를 업로드 중입니다&#8230; 잠시만 기다려주세요!</string>
+    <string name="label_reviews_by_location">지역별 진료후기</string>
+    <string name="title_activity_my_review_list">내 진료후기</string>
+    <string name="msg_no_reviews">진료후기를 찾을 수 없습니다.</string>
+    <string name="msg_no_pets">등록된 반려동물이 없습니다.</string>
+    <string name="msg_no_notification">확인할 알림이 없습니다.</string>
+    <string name="msg_error_cost_required">진료비를 입력해주세요.</string>
+    <string name="msg_error_review_required">진료후기를 입력해주세요.</string>
+    <string name="msg_error_hospital_required">병원명을 입력해주세요.</string>
+    <string name="msg_error_location_required">지역을 선택해주세요.</string>
+    <string name="msg_error_categories_required">진료항목을 선택해주세요.</string>
+    <string name="wait">잠시만 기다려주세요.&#8230;</string>
+    <string name="post_label_hospital_info">병원정보</string>
+    <string name="post_label_visit">About your visit</string>
+    <string name="post_label_body">병원 진료가 어땟나요?</string>
+    <string name="post_label_images">동물병원 영수증 사진을 첨부해주세요.</string>
+    <string name="msg_error_review_view_failed">진료후기를 불러오는데 실패했습니다.</string>
+    <string name="msg_progress_loading">잠시만 기다려주세요.&#8230;</string>
+
+    <string name="msg_notification_like">\"%1$s\" 진료후기에 고마움을 표현하셨습니다!</string>
+    <string name="msg_notification_comment">\"%1$s\" 진료후기에 댓글이 등록되었습니다!</string>
+    <string name="already_liked">이미 고마움을 표현하셨습니다.</string>
+    <string name="comment_inserted">댓글이 등록되었습니다.</string>
+    <string name="comment_insert_failed">댓글을 등록하는데 실패했습니다.</string>
+    <string name="comment_required">입력값이 유효하지 않습니다.</string>
+    <string name="review_liked">고마움이 전달되었습니다.</string>
+    <string name="review_like_failed">고마움을 전달하는데 문제가 발생했습니다.</string>
+    <string name="report_failed">신고기능에 오류가 발생했습니다.</string>
+    <string name="msg_error_delete_review">진료후기를 삭제하는데 오류가 발생했습니다.</string>
+
+    <string name="feedback_email_subject">[Dotor] 피드백</string>
+
+    <string name="feedback_email_body">[닷터를 사용하며 개선했으면 하는 점, 혹은 칭찬하고 싶은 점을 이메일로 보내주세요.]\n\n\n나의 유저아이디: %1$s</string>
+
+
+    <!-- BELOW IS NOT NEEDED!!!!!!!!!!!!!!!! -->
+
+    <!-- SHOWCASE -->
+    <string name="showcase.post.title">아래 버튼을 터치하고 리뷰를 등록해주세요.</string>
+    <string name="showcase.post.text">간단해요!</string>
+
+
+    <string name="register_your_email">Register your email address!</string>
+
     <string name="email_unverified">Email Unverified</string>
     <string name="email_verified">This email is verified!</string>
     <string name="email_will_be_verified">Verification email will be sent.</string>
-    <string name="post_review_finished">Review has been posted!</string>
-    <string name="post_review_failed_title">Post Review Failed</string>
-    <string name="post_review_failed_text">Post review failed... please try again.</string>
-    <string name="post_review_finished_text">Review has been posted!</string>
-    <string name="uploading_image_title">Uploading Image...</string>
-    <string name="uploading_image_text">Uploading image... please wait a moment!</string>
-    <string name="label_reviews_by_location">Reviews by Location</string>
-    <string name="register_your_email">Register your email address!</string>
-    <string name="title_activity_my_review_list">MyReviewListActivity</string>
-    <string name="msg_no_reviews">No Reviews Found</string>
-    <string name="msg_no_pets">No Pets Added</string>
-    <string name="msg_no_notification">No Notification</string>
-    <string name="msg_error_cost_required">Cost is required</string>
-    <string name="msg_error_review_required">Review body is required</string>
-    <string name="msg_error_hospital_required">Hospital Name is required</string>
-    <string name="msg_error_location_required">Hospital location is required</string>
-    <string name="msg_error_categories_required">Categories required</string>
-    <string name="wait">Wait...</string>
+    <string name="label.about_us">Created by Team88</string>
+    <string name="program_info">Program Info</string>
+    <string name="terms">Terms of Service</string>
+    <string name="open_source_licenses">Open Source Licenses</string>
+    <string name="created_by">Created by Team88</string>
+    <string name="team88">Team 88 - https://www.team88.net/</string>
+    <string name="open_source_licenses_body">Licenses</string>
 
 
 </resources>

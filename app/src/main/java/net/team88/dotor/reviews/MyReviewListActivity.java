@@ -80,7 +80,7 @@ public class MyReviewListActivity extends AppCompatActivity {
             }
         });
 
-        layoutSwipeRefresh.setDistanceToTriggerSync(500);
+        layoutSwipeRefresh.setDistanceToTriggerSync(300);
         layoutSwipeRefresh.setColorSchemeResources(R.color.colorAccent, R.color.colorSecondary, R.color.colorPrimary);
         TypedValue typed_value = new TypedValue();
         this.getTheme().resolveAttribute(android.support.v7.appcompat.R.attr.actionBarSize, typed_value, true);
@@ -115,10 +115,11 @@ public class MyReviewListActivity extends AppCompatActivity {
 
                 final ArrayList<Review> reviews = body.reviews;
                 if (reviews == null || reviews.size() == 0) {
+                    viewAdapter.clear();
+                    viewAdapter.notifyDataSetChanged();
                     layoutSwipeRefresh.setRefreshing(false);
+
                     textNothingMessage.setVisibility(View.VISIBLE);
-                    Snackbar.make(layoutSwipeRefresh, R.string.msg_no_my_reviews, Snackbar.LENGTH_INDEFINITE)
-                            .show();
                     return;
                 }
 

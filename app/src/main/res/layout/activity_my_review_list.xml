@@ -4,8 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/bgLightGrey"
     android:fitsSystemWindows="true"
-    tools:context="net.team88.dotor.reviews.MyReviewListActivity">
+    tools:context=".reviews.MyReviewListActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -21,11 +22,10 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <RelativeLayout
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="?android:attr/actionBarSize"
-        android:background="@color/bgLightGrey">
+        android:layout_marginTop="?android:attr/actionBarSize">
 
         <TextView
             android:id="@+id/textNothingMessage"
@@ -41,20 +41,19 @@
         <android.support.v4.widget.SwipeRefreshLayout
             android:id="@+id/layoutSwipeRefresh"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/bgLightGrey"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+            android:layout_height="wrap_content">
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recyclerViewReviews"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:minHeight="160dp" />
+                android:clipToPadding="false"
+                android:paddingTop="8dp"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
         </android.support.v4.widget.SwipeRefreshLayout>
 
-    </RelativeLayout>
-
+    </FrameLayout>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
@@ -62,7 +61,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
-        android:src="@android:drawable/ic_dialog_email"
+        android:src="@drawable/ic_pencil_white_36dp"
         android:visibility="gone" />
 
 </android.support.design.widget.CoordinatorLayout>

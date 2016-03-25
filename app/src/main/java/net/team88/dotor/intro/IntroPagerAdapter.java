@@ -2,10 +2,12 @@ package net.team88.dotor.intro;
 
 import android.content.Context;
 import android.support.v4.view.PagerAdapter;
+import android.text.method.LinkMovementMethod;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import net.team88.dotor.R;
 
@@ -38,7 +40,12 @@ public class IntroPagerAdapter extends PagerAdapter {
                 public void onClick(View v) {
                     mListener.onStartClicked(buttonStart);
                 }
+
             });
+
+            // To allow Auto Web link. REF: http://stackoverflow.com/a/2746708/4694036
+            TextView textTerms = (TextView) pageViews.get(position).findViewById(R.id.textTerms);
+            textTerms.setMovementMethod(LinkMovementMethod.getInstance());
         }
 
         container.addView(pageViews.get(position));

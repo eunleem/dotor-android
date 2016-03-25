@@ -57,7 +57,7 @@ public class NotificationsRecyclerViewAdapter extends RecyclerView.Adapter<Notif
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.listitem_notification, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_notification, parent, false);
         return new ViewHolder(view);
     }
 
@@ -70,7 +70,15 @@ public class NotificationsRecyclerViewAdapter extends RecyclerView.Adapter<Notif
         CharSequence time = DateUtils.getRelativeTimeSpanString(context, notification.created.getTime());
         holder.textTimestamp.setText(time.toString());
 
-        holder.textMessage.setText(notification.message);
+        String message = "";
+        String nickname = notification.message;
+        if (notification.type.equalsIgnoreCase("review_comment")) {
+            message = String.format(context.getString(R.string.msg_notification_comment), nickname);
+        } else if (notification.type.equalsIgnoreCase("review_like")) {
+            message = String.format(context.getString(R.string.msg_notification_like), nickname);
+        }
+
+        holder.textMessage.setText(message);
         if (notification.isRead) {
             holder.layoutRoot.setBackgroundColor(Color.WHITE);
         } else {

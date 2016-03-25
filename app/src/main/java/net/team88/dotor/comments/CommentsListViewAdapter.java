@@ -32,7 +32,7 @@ public class CommentsListViewAdapter extends ArrayAdapter<Comment> {
         ViewHolder viewHolder;
         if (convertView == null) {
             viewHolder = new ViewHolder();
-            convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_comment, parent, false);
+            convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_comment, parent, false);
             viewHolder.layoutRoot = (View) convertView.findViewById(R.id.layoutRoot);
             viewHolder.textNickname = (TextView) convertView.findViewById(R.id.textNickname);
             viewHolder.textCommentBody = (TextView) convertView.findViewById(R.id.textCommentBody);

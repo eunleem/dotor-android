@@ -41,14 +41,17 @@ public class MyGcmListenerService extends GcmListenerService {
         // TODO Make it richer Push Notification
         String notificationId = data.getString("notification_id", "");
         String message = data.getString("message");
+        String type = data.getString("type");
         String relatedType = data.getString("related_type", "");
         String relatedId = data.getString("related_id", "");
+
         Log.d(TAG, "From: " + from);
 
         Log.d(TAG, "PushId: " + notificationId);
         Log.d(TAG, "RelatedType: " + relatedType);
         Log.d(TAG, "RelatedId: " + relatedId);
-        Log.d(TAG, "Message: " + message);
+        Log.d(TAG, "Type: " + type);
+        Log.d(TAG, "Message: " + message); // Message is not really MESSAGE! It's nickname
 
         if (from.startsWith("/topics/")) {
             // message received from some topic.
@@ -91,7 +94,7 @@ public class MyGcmListenerService extends GcmListenerService {
          * In some cases it may be useful to show a notification indicating to the user
          * that a message was received.
          */
-        sendNotification(notificationId, relatedType, relatedId, message);
+        sendNotification(notificationId, relatedType, relatedId, type, message);
         // [END_EXCLUDE]
     }
     // [END receive_message]
@@ -99,9 +102,9 @@ public class MyGcmListenerService extends GcmListenerService {
     /**
      * Create and show a simple notification containing the received GCM message.
      *
-     * @param message GCM message received.
+     * @param type GCM type received.
      */
-    private void sendNotification(String notificationid, String relatedType, String relatedId, String message) {
+    private void sendNotification(String notificationid, String relatedType, String relatedId, String type, String nickname) {
         Intent intent = new Intent();
         if (relatedType.equalsIgnoreCase("review")) {
             intent.setClass(this, ReviewViewActivity.class);
@@ -110,6 +113,14 @@ public class MyGcmListenerService extends GcmListenerService {
 
         } else {
             intent.setClass(this, NotificationListActivity.class);
+        }
+
+        String message = "";
+        if (type.equalsIgnoreCase("review_comment")) {
+            message = String.format(getString(R.string.msg_notification_comment), nickname);
+
+        } else if (type.equalsIgnoreCase("review_like")) {
+            message = String.format(getString(R.string.msg_notification_like), nickname);
         }
 
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -132,7 +143,7 @@ public class MyGcmListenerService extends GcmListenerService {
 
         NotificationManagerCompat notificationManager =
                 NotificationManagerCompat.from(this);
-                        //(NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        //(NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
         notificationManager.notify(10 /* ID of notification */,
                 notificationBuilder.build());

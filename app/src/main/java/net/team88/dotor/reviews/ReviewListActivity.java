@@ -276,7 +276,7 @@ public class ReviewListActivity extends AppCompatActivity {
 
                     searchSettings = SearchSettings.getInstance(getApplicationContext());
                     categories = stringBuilder.toString();
-                    searchSettings.setSelectedCaterories(categories);
+                    searchSettings.setSelectedCategories(categories);
                     selectedCategories = searchSettings.getSelectedCategories();
 
                     Log.d(TAG, "onClick: Categories: " + categories);
@@ -334,12 +334,13 @@ public class ReviewListActivity extends AppCompatActivity {
 
         private static final int REQUEST_PLACE_AUTOCOMPLETE = 1;
         private TextView textCurrentLocation;
-
-        private Button buttonClose;
+        private Button buttonGetCurrentLocation;
 
         private SeekBar seekbarDistance;
         private TextView textDistance;
-        private Button buttonGetCurrentLocation;
+
+        private Button buttonSetFilter;
+        private Button buttonCancel;
 
         @Nullable
         @Override
@@ -358,7 +359,8 @@ public class ReviewListActivity extends AppCompatActivity {
             seekbarDistance = (SeekBar) view.findViewById(R.id.seekbarDistance);
             textDistance = (TextView) view.findViewById(R.id.textDistance);
 
-            buttonClose = (Button) view.findViewById(R.id.buttonSetFilter);
+            buttonSetFilter = (Button) view.findViewById(R.id.buttonSetFilter);
+            buttonCancel = (Button) view.findViewById(R.id.buttonCancel);
 
             getDialog().setTitle(R.string.set_location);
 
@@ -371,9 +373,11 @@ public class ReviewListActivity extends AppCompatActivity {
             buttonGetCurrentLocation.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(final View v) {
-
-                    Drawable marker = getResources().getDrawable(R.drawable.ic_map_marker_grey600_24dp);
-                    ((Button) v).setCompoundDrawablesRelative(marker, null, null, null);
+                    final Button button = (Button) v;
+                    Drawable marker = getResources().getDrawable(R.drawable.ic_map_marker_grey600_18dp);
+                    button.setCompoundDrawablesRelative(marker, null, null, null);
+                    final String orgText = button.getText().toString();
+                    button.setText("...");
 
                     AsyncTask.execute(new Runnable() {
                         @Override
@@ -386,7 +390,8 @@ public class ReviewListActivity extends AppCompatActivity {
                                     public void run() {
                                         Snackbar.make(v, R.string.msg_error_current_location_fail, Snackbar.LENGTH_LONG)
                                                 .show();
-                                        ((Button) v).setCompoundDrawablesRelative(null, null, null, null);
+                                        button.setCompoundDrawablesRelative(null, null, null, null);
+                                        button.setText(orgText);
                                     }
                                 });
                                 return;
@@ -397,7 +402,8 @@ public class ReviewListActivity extends AppCompatActivity {
                                 @Override
                                 public void run() {
                                     textCurrentLocation.setText(currentLocationName);
-                                    ((Button) v).setCompoundDrawablesRelative(null, null, null, null);
+                                    button.setCompoundDrawablesRelative(null, null, null, null);
+                                    button.setText(orgText);
                                 }
                             });
 
@@ -437,14 +443,6 @@ public class ReviewListActivity extends AppCompatActivity {
                 }
             });
 
-            buttonClose.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    getDialog().dismiss();
-                    nearbyRequest.distance = (double) seekbarDistance.getProgress() * 1000;
-                    getReviews();
-                }
-            });
 
             textCurrentLocation.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -477,6 +475,22 @@ public class ReviewListActivity extends AppCompatActivity {
                         v.setEnabled(true);
                     }
 
+                }
+            });
+
+            buttonSetFilter.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    getDialog().dismiss();
+                    nearbyRequest.distance = (double) seekbarDistance.getProgress() * 1000;
+                    getReviews();
+                }
+            });
+
+            buttonCancel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    getDialog().dismiss();
                 }
             });
         }

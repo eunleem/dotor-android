@@ -11,6 +11,7 @@ import com.google.gson.Gson;
 
 import net.team88.dotor.BuildConfig;
 import net.team88.dotor.R;
+import net.team88.dotor.notifications.GcmRegistrationService;
 import net.team88.dotor.shared.BasicResponse;
 import net.team88.dotor.shared.DotorWebService;
 import net.team88.dotor.shared.Server;
@@ -72,6 +73,7 @@ public class MyAccount {
 
     public void reset() {
         this.storage.edit().clear().apply();
+        sInstance = null;
     }
 
     public boolean isRegistered() {
@@ -100,8 +102,8 @@ public class MyAccount {
         this.account.setPassword(password);
 
         if (Utils.isPlayServicesAvailable(this.context)) {
-//            Intent intent = new Intent(this.context, GcmRegistrationService.class);
-//            this.context.startService(intent);
+            Intent intent = new Intent(this.context, GcmRegistrationService.class);
+            this.context.startService(intent);
         }
 
         this.save();

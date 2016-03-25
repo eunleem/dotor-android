@@ -1,5 +1,6 @@
 package net.team88.dotor.reviews;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.PorterDuff;
@@ -50,7 +51,7 @@ import retrofit2.Response;
 
 public class ReviewViewActivity extends AppCompatActivity {
 
-    private static final String TAG = "ReviewDetail";
+    private static final String TAG = "ReviewView";
 
     ObjectId reviewId;
 
@@ -81,6 +82,7 @@ public class ReviewViewActivity extends AppCompatActivity {
     private EditText textCommentBody;
     private ImageButton buttonPostComment;
     private ListView listViewComments;
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,18 +97,27 @@ public class ReviewViewActivity extends AppCompatActivity {
         registerElements();
         registerEvents();
 
+        if (progressDialog == null) {
+            progressDialog = new ProgressDialog(this);
+            progressDialog.setIndeterminate(true);
+            progressDialog.setCanceledOnTouchOutside(false);
+            progressDialog.setMessage(getString(R.string.msg_progress_loading));
+            progressDialog.show();
+        }
+
 
         Intent intent = getIntent();
-        String reviewIdStr = intent.getStringExtra("reviewid");
+        String reviewIdStr = intent.getStringExtra("reviewid"); // TODO replace hard-coded string with Const String
         if (reviewIdStr == null || reviewIdStr.isEmpty()) {
             Log.e(TAG, "No review id.");
         } else {
             this.reviewId = new ObjectId(reviewIdStr);
         }
 
-        String notificationIdStr = intent.getStringExtra("notificationid");
+        String notificationIdStr = intent.getStringExtra("notificationid"); // TODO replace hard-coded value
         if (notificationIdStr == null || notificationIdStr.isEmpty()) {
-            Log.e(TAG, "No notification id which is all good.");
+            Log.d(TAG, "No notification id which is all good.");
+
         } else {
             DotorWebService service = Server.getInstance(this).getService();
             Call<BasicResponse> call = service.readNotfication(notificationIdStr);
@@ -259,12 +270,17 @@ public class ReviewViewActivity extends AppCompatActivity {
                 public void onResponse(Call<BasicResponse> call, Response<BasicResponse> response) {
                     if (response.isSuccess() == false) {
                         Log.e(TAG, "DeleteReview failed!");
+                        Snackbar.make(textReviewBody, R.string.msg_error_delete_review, Snackbar.LENGTH_LONG)
+                                .show();
                         return;
                     }
 
                     BasicResponse body = response.body();
                     if (body.status == -1) {
                         Log.e(TAG, "DeleteReview returned status non-zero! message: " + body.message);
+                        Snackbar.make(textReviewBody, R.string.msg_error_delete_review, Snackbar.LENGTH_LONG)
+                                .show();
+                        return;
 
                     } else if (body.status == -2) {
                         // Not Yours
@@ -281,6 +297,8 @@ public class ReviewViewActivity extends AppCompatActivity {
                 @Override
                 public void onFailure(Call<BasicResponse> call, Throwable t) {
                     Log.d(TAG, "Delete Review Failed. " + t.getMessage());
+                    Snackbar.make(textReviewBody, R.string.msg_error_delete_review, Snackbar.LENGTH_LONG)
+                            .show();
                 }
             });
 
@@ -295,13 +313,18 @@ public class ReviewViewActivity extends AppCompatActivity {
                 public void onResponse(Call<BasicResponse> call, Response<BasicResponse> response) {
                     if (response.isSuccess() == false) {
                         Log.e(TAG, "insertReport failed!");
+                        Snackbar.make(textReviewBody, R.string.report_failed, Snackbar.LENGTH_LONG)
+                                .show();
                         return;
                     }
 
                     BasicResponse body = response.body();
                     if (body.status < 0) {
                         Log.e(TAG, "insertReport returned status non-zero! message: " + body.message);
+                        Snackbar.make(textReviewBody, R.string.report_failed, Snackbar.LENGTH_LONG)
+                                .show();
                         return;
+
                     } else if (body.status == 1) {
                         // Already Reported
                         Snackbar.make(textReviewBody, R.string.already_reported, Snackbar.LENGTH_LONG)
@@ -316,6 +339,8 @@ public class ReviewViewActivity extends AppCompatActivity {
                 @Override
                 public void onFailure(Call<BasicResponse> call, Throwable t) {
                     Log.d(TAG, "insertReport Failed. " + t.getMessage());
+                    Snackbar.make(textReviewBody, R.string.report_failed, Snackbar.LENGTH_LONG)
+                            .show();
                 }
             });
         }
@@ -331,14 +356,22 @@ public class ReviewViewActivity extends AppCompatActivity {
             public void onResponse(Call<ReviewResponse> call, Response<ReviewResponse> response) {
                 if (response.isSuccess() == false) {
                     Log.e(TAG, "getReviews failed!");
+                    Toast.makeText(ReviewViewActivity.this, R.string.msg_error_review_view_failed,
+                            Toast.LENGTH_LONG).show();
+                    finish();
                     return;
                 }
 
                 ReviewResponse body = response.body();
                 if (body.status < 0) {
                     Log.e(TAG, "getReviews returned status non-zero! message: " + body.message);
+                    Toast.makeText(ReviewViewActivity.this, R.string.msg_error_review_view_failed,
+                            Toast.LENGTH_LONG).show();
+                    finish();
                     return;
                 }
+
+                progressDialog.hide();
 
                 petCached = body.pet;
                 reviewCached = body.review;
@@ -382,14 +415,14 @@ public class ReviewViewActivity extends AppCompatActivity {
                     fetchComments(false);
                 }
 
-
                 // TODO If My Review, Add Options to edit or delete.
-
             }
 
             @Override
             public void onFailure(Call<ReviewResponse> call, Throwable t) {
-
+                Toast.makeText(ReviewViewActivity.this, R.string.msg_error_review_view_failed,
+                        Toast.LENGTH_LONG).show();
+                finish();
             }
         });
     }
@@ -456,25 +489,27 @@ public class ReviewViewActivity extends AppCompatActivity {
             public void onResponse(Call<BasicResponse> call, Response<BasicResponse> response) {
                 fab.setEnabled(true);
                 if (response.isSuccess() == false) {
-                    Log.e(TAG, "likeReview failed!");
+                    Snackbar.make(textPetName, R.string.review_like_failed, Snackbar.LENGTH_LONG)
+                            .show();
                     return;
                 }
 
                 BasicResponse body = response.body();
                 if (body == null) {
-                    Log.d(TAG, "likeReview onResponse: BodyNull");
+                    Snackbar.make(textPetName, R.string.review_like_failed, Snackbar.LENGTH_LONG)
+                            .show();
                     return;
                 }
 
                 if (body.status < 0) {
                     Log.e(TAG, "likeReview returned status non-zero! message: " + body.message);
-                    Snackbar.make(textPetName, "Error occurred.", Snackbar.LENGTH_LONG) // TODO Fix message
+                    Snackbar.make(textPetName, R.string.review_like_failed, Snackbar.LENGTH_LONG)
                             .show();
                     return;
                 }
 
                 if (body.status == 1) {
-                    Snackbar.make(textPetName, "You already Liked it.", Snackbar.LENGTH_SHORT) // TODO Fix message
+                    Snackbar.make(textPetName, R.string.already_liked, Snackbar.LENGTH_SHORT)
                             .show();
                     return;
                 }
@@ -483,7 +518,7 @@ public class ReviewViewActivity extends AppCompatActivity {
                     Log.d(TAG, "Liked own review.");
                 }
 
-                Snackbar.make(textPetName, "You Liked it.", Snackbar.LENGTH_SHORT) // TODO Fix message
+                Snackbar.make(textPetName, R.string.review_liked, Snackbar.LENGTH_SHORT)
                         .show();
 
                 if (reviewCached.likes == null) {
@@ -497,7 +532,7 @@ public class ReviewViewActivity extends AppCompatActivity {
             public void onFailure(Call<BasicResponse> call, Throwable t) {
                 fab.setEnabled(true);
                 Crashlytics.log(Log.ERROR, "ReviewLike", t.getMessage());
-                Snackbar.make(textPetName, "Error", Snackbar.LENGTH_LONG) // TODO Fix message
+                Snackbar.make(textPetName, R.string.review_like_failed, Snackbar.LENGTH_LONG)
                         .show();
 
             }
@@ -527,8 +562,7 @@ public class ReviewViewActivity extends AppCompatActivity {
         textCommentBody.setEnabled(false);
         String commentBody = textCommentBody.getText().toString().trim();
         if (commentBody.isEmpty()) {
-            // TODO Better Error showing
-            textCommentBody.setError("Cannot be empty");
+            textCommentBody.setError(getString(R.string.comment_required));
             return;
         }
 
@@ -544,18 +578,19 @@ public class ReviewViewActivity extends AppCompatActivity {
             public void onResponse(Call<BasicResponse> call, Response<BasicResponse> response) {
                 textCommentBody.setEnabled(true);
                 if (response.isSuccess() == false) {
-                    Log.e(TAG, "likeReview failed!");
+                    Log.e(TAG, "CommentInsert failed!");
+                    Snackbar.make(textCommentBody, R.string.comment_insert_failed, Snackbar.LENGTH_LONG)
+                            .show();
                     return;
                 }
 
                 BasicResponse body = response.body();
                 if (body.status < 0) {
-                    Log.e(TAG, "likeReview returned status non-zero! message: " + body.message);
-                    Snackbar.make(textCommentBody, "You already Liked it.", Snackbar.LENGTH_SHORT) // TODO Fix message
+                    Snackbar.make(textCommentBody, R.string.comment_insert_failed, Snackbar.LENGTH_LONG)
                             .show();
                     return;
                 }
-                Snackbar.make(textCommentBody, "Comment inserted.", Snackbar.LENGTH_SHORT) // TODO Fix message
+                Snackbar.make(textCommentBody, R.string.comment_inserted, Snackbar.LENGTH_LONG)
                         .show();
 
                 textCommentBody.setText("");
@@ -566,9 +601,9 @@ public class ReviewViewActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<BasicResponse> call, Throwable t) {
                 textCommentBody.setEnabled(true);
-                Crashlytics.log(Log.ERROR, "ReviewLike", t.getMessage());
-                Snackbar.make(textCommentBody, "Error", Snackbar.LENGTH_LONG) // TODO Fix message
+                Snackbar.make(textCommentBody, R.string.comment_insert_failed, Snackbar.LENGTH_LONG)
                         .show();
+                Crashlytics.log(Log.ERROR, "InsertReview", t.getMessage());
             }
         });
     }

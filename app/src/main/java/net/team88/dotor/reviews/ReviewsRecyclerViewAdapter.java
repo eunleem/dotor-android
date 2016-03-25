@@ -101,7 +101,7 @@ public class ReviewsRecyclerViewAdapter extends RecyclerView.Adapter<ReviewsRecy
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_review, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_review, parent, false);
         return new ViewHolder(view);
     }
 
@@ -111,7 +111,7 @@ public class ReviewsRecyclerViewAdapter extends RecyclerView.Adapter<ReviewsRecy
 
         if (review.categories != null) {
             StringBuilder categories = new StringBuilder();
-            for (String category: review.categories) {
+            for (String category : review.categories) {
                 categories
                         .append(", ")
                         .append(category);
@@ -200,15 +200,14 @@ public class ReviewsRecyclerViewAdapter extends RecyclerView.Adapter<ReviewsRecy
         holder.layoutCardBody.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 Intent intent = new Intent(context, ReviewViewActivity.class);
                 intent.putExtra("reviewid", review.id.toHexString());
-                ActivityOptionsCompat options = ActivityOptionsCompat.
-                        makeSceneTransitionAnimation((Activity) context,
-                                (View) holder.imageViewReviewThumbnail,
-                                "review_image");
-                context.startActivity(intent, options.toBundle());
-                //context.startActivity(intent);
+//                ActivityOptionsCompat options = ActivityOptionsCompat.
+//                        makeSceneTransitionAnimation((Activity) context,
+//                                (View) holder.imageViewReviewThumbnail,
+//                                "review_image");
+//                context.startActivity(intent, options.toBundle());
+                context.startActivity(intent);
             }
         });
 
@@ -216,12 +215,18 @@ public class ReviewsRecyclerViewAdapter extends RecyclerView.Adapter<ReviewsRecy
             @Override
             public void onClick(View v) {
                 // TODO Open Likes Activity
+                Intent intent = new Intent(context, ReviewViewActivity.class);
+                intent.putExtra("reviewid", review.id.toHexString());
+                context.startActivity(intent);
             }
         });
 
         holder.layoutComments.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent = new Intent(context, ReviewViewActivity.class);
+                intent.putExtra("reviewid", review.id.toHexString());
+                context.startActivity(intent);
             }
         });
     }

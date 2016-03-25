@@ -14,7 +14,10 @@
 
     </TableLayout>
 
-    <View style="@style/Divider" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorLightGrey" />
 
     <LinearLayout
         android:layout_width="match_parent"

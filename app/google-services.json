@@ -1,17 +1,17 @@
 {
   "project_info": {
-    "project_id": "spry-climber-125804",
-    "project_number": "254977534814",
+    "project_id": "dotor-1258",
+    "project_number": "80870269427",
     "name": "Dotor"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:254977534814:android:edb771a9e1a2d2e1",
-        "client_id": "android:net.team88.dotor",
+        "mobilesdk_app_id": "1:80870269427:android:1d42e2d747728467",
+        "client_id": "android:net.team88.net.dotor",
         "client_type": 1,
         "android_client_info": {
-          "package_name": "net.team88.dotor",
+          "package_name": "net.team88.net.dotor",
           "certificate_hash": []
         }
       },
