@@ -61,35 +61,51 @@ android {
     }
 
     productFlavors {
-        dev {
+        admin {
             versionCode 1
-            versionName "0.1"
+            versionName "1.0-admin"
         }
-        team {
+        user {
             versionCode 9
             versionName "0.9"
-        }
-        prod {
-            versionCode 1
-            versionName "1.0"
         }
     }
 
     buildTypes {
         debug {
+            debuggable true
             applicationIdSuffix ".debug"
             versionNameSuffix "." + getDate() + "-debug"
             ext.disableCrashlytics = true
         }
+
+        alphahr {
+            applicationIdSuffix ".alpha"
+            versionNameSuffix "." + getDate() + "-hr"
+            signingConfig signingConfigs.beta
+            //ext.betaDistributionReleaseNotesFilePath = "alpha_release_notes.txt"
+            ext.betaDistributionEmails = "ra9522@daum.net"
+            ext.betaDistributionNotifications = true
+        }
+
+        alphakn {
+            applicationIdSuffix ".alpha"
+            versionNameSuffix "." + getDate() + "-kn"
+            signingConfig signingConfigs.beta
+            //ext.betaDistributionReleaseNotesFilePath = "alpha_release_notes.txt"
+            ext.betaDistributionEmails = "kn.kim@outlook.com"
+            ext.betaDistributionNotifications = true
+        }
+
         alpha {
-            debuggable true
             applicationIdSuffix ".alpha"
             versionNameSuffix "." + getDate() + "-alpha"
             signingConfig signingConfigs.beta
-            ext.betaDistributionReleaseNotesFilePath = "alpha_release_notes.txt"
+            //ext.betaDistributionReleaseNotesFilePath = "alpha_release_notes.txt"
             //ext.betaDistributionEmails = "jeindus@gmail.com, kn.kim@outlook.com"
             ext.betaDistributionNotifications = false
         }
+
         beta {
             applicationIdSuffix ".beta"
             versionNameSuffix "." + getDate() + "-beta"
