@@ -25,16 +25,16 @@
         android:theme="@style/AppTheme">
         <meta-data
             android:name="net.team88.server.url"
-            android:value="https://dotor.team88.net" />
+            android:value="https://dotor.team88.net:8080" />
         <meta-data
             android:name="net.team88.server.url.debug"
             android:value="https://dotor.team88.net:8088" />
         <meta-data
             android:name="net.team88.server.url.alpha"
-            android:value="https://dotor.team88.net" />
+            android:value="https://dotor.team88.net:8080" />
         <meta-data
             android:name="net.team88.server.url.beta"
-            android:value="https://dotor.team88.net" />
+            android:value="https://dotor.team88.net:8080" />
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyAdtaIKNeT2n5zkkM9YM3vYK47_3xwoFF0" />
