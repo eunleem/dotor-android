@@ -191,6 +191,52 @@
         <View style="@style/Divider" />
 
         <LinearLayout
+            android:id="@+id/layoutHospitalInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:orientation="horizontal"
+            android:paddingBottom="32dp"
+            android:paddingEnd="16dp"
+            android:paddingStart="16dp"
+            android:paddingTop="32dp"
+            android:visibility="visible">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginEnd="32dp"
+                android:foregroundGravity="center_vertical"
+                android:src="@drawable/ic_hospital_building_grey600_24dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:text="@string/main_view_hospital_info"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/textHospitalInfoSubtitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:singleLine="true"
+                    android:text="@string/main_view_hospital_info_subtitle"
+                    android:textSize="13sp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
             android:id="@+id/layout_reviews_by_pet"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -236,7 +282,6 @@
 
         </LinearLayout>
 
-        <View style="@style/Divider" />
 
     </LinearLayout>
 </ScrollView>

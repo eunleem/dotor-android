@@ -1,6 +1,11 @@
 package net.team88.dotor;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.DialogFragment;
+import android.app.FragmentManager;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -60,6 +65,8 @@ public class MainActivity extends AppCompatActivity
 
     View layoutReviewsByCategories;
     TextView textCategorySubtitle;
+    private View layoutHospitalInfo;
+    private HospitalInfoDialogFragment hospitalInfoDialogFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -156,6 +163,8 @@ public class MainActivity extends AppCompatActivity
         layoutReviewsByLocation = (View) findViewById(R.id.layout_reviews_by_location);
         layoutReviewsByCategories = (View) findViewById(R.id.layout_reviews_by_categories);
 
+        layoutHospitalInfo = (View) findViewById(R.id.layoutHospitalInfo);
+
         textLocationSubtitle = (TextView) findViewById(R.id.textLocationSubtitle);
         textCategorySubtitle = (TextView) findViewById(R.id.textCategorySubtitle);
     }
@@ -192,6 +201,32 @@ public class MainActivity extends AppCompatActivity
                 startActivity(intent);
             }
         });
+
+        layoutHospitalInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (hospitalInfoDialogFragment == null) {
+                    hospitalInfoDialogFragment = new HospitalInfoDialogFragment();
+                }
+                FragmentManager fm = getFragmentManager();
+                hospitalInfoDialogFragment.show(fm, "hospital info");
+
+            }
+        });
+    }
+
+    public class HospitalInfoDialogFragment extends DialogFragment {
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setMessage(R.string.hospital_info_not_yet_implemented)
+                    .setPositiveButton(R.string.close, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.dismiss();
+                        }
+                    });
+            return builder.create();
+        }
     }
 
     private void login() {
