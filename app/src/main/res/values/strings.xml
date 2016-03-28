@@ -87,13 +87,14 @@
     <!-- START ACTIVITY -->
     <string name="btn.start">시작하기</string>
 
-    <string name="intro_text1_1">아픈 반려동물 가슴 아픈 보호자\n문제는 진료비</string>
-    <string name="intro_text1_2">아픈 반려동물은 증상을 직접 말할 수가 없으니\n병원 검사에 의존합니다. 문제는 진료비</string>
-    <string name="intro_text2_1">다른데도 이렇게 비싼가?\n고무줄 진료비</string>
-    <string name="intro_text2_2">표준가격 기준이 없는 진료비를 확인하면 찜찜하고\n답답해집니다. 지역별 진료비 차이 최대 5배</string>
-    <string name="intro_text3_1">변화를 위한 작은 움직임\n동물병원 진료후기 공유</string>
-    <string name="intro_text3_2">동물병원 영수증을 첨부해주세요.\n진료비를 비교하고 정보를 나눌 수 있습니다.</string>
-    <string name="intro_text4_1">영수증과 후기가 모일 수록 더 믿을 수 있는\n데이터가 만들어 집니다.</string>
+    <string name="intro_text1_1">동물병원 진료비는 기준이 없습니다\n지역별 진료비 차이 최대 5배</string>
+    <string name="intro_text1_2">같은 처방 다른 가격</string>
+    <string name="intro_text2_1">아픈동물은 말을 할 수 없습니다.\n병원검사 진찰에 의존</string>
+    <string name="intro_text2_2">일방적 정보전달 소통구조</string>
+    <string name="intro_text3_1">변화가 필요합니다</string>
+    <string name="intro_text3_2">변화를 위한 작은 움직임\ndotor</string>
+    <string name="intro_text4_1">진료비와 진료후기를 공유해주세요\n보호자들이 만드는 동물병원정보</string>
+    <string name="intro_text4_2">동물병원정보 공유 대화의 장\ndotor</string>
     <string name="intro_text4_ask">이미 회원이신가요?</string>
     <string name="intro_text4_login"><u>로그인하기</u></string>
     <string name="intro_text4_terms">지금 시작하시면 <a href="https://dotor.team88.net/terms">이용약관</a> 및 <a href="https://dotor.team88.net/terms_privacy">개인정보 보호 정책</a>,\n<a href="https://dotor.team88.net/terms_location">위치정보 이용약관</a>에 동의하시는 것으로 간주 됩니다.</string>
@@ -140,9 +141,9 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="action_settings">설정</string>
 
-    <string name="main_message_subtitle">다른 동물병원 진료비/ 서비스는 어떨까요?</string>
-    <string name="main_message_title">진료후기를 등록해보세요.</string>
-    <string name="main_message_body">등록한 진료정보로 지역, 증상, 유형별\n진료비/진료정보를 비교해 볼 수 있습니다!</string>
+    <string name="main_message_subtitle">동물병원을 말하다. MODIFIED</string>
+    <string name="main_message_title">진료후기를 등록해주세요.</string>
+    <string name="main_message_body">\n보호자들이 만드는 동물병원정보</string>
 
     <string name="main_post_review">진료후기 등록하기</string>
 
