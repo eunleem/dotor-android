@@ -34,7 +34,7 @@
             android:textSize="25sp"
             android:text="@string/intro_text2_1"
             android:layout_height="wrap_content"
-            android:textColor="@color/colorWhite"/>
+            android:textColor="@color/white"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -43,6 +43,6 @@
             android:textSize="15sp"
             android:text="@string/intro_text2_2"
             android:layout_height="wrap_content"
-            android:textColor="@color/colorWhite"/>
+            android:textColor="@color/white"/>
     </LinearLayout>
 </LinearLayout>

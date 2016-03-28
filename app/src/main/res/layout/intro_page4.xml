@@ -35,7 +35,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="@string/intro_text4_1"
-            android:textColor="@color/colorWhite"
+            android:textColor="@color/white"
             android:textSize="18sp" />
 
         <Button
@@ -67,7 +67,7 @@
                 android:layout_weight="1"
                 android:gravity="center_horizontal"
                 android:text="@string/intro_text4_ask"
-                android:textColor="@color/colorWhite"
+                android:textColor="@color/white"
                 android:textSize="15sp" />
 
             <TextView
@@ -98,7 +98,7 @@
                 android:layout_marginStart="8dp"
                 android:gravity="center"
                 android:text="@string/intro_text4_terms"
-                android:textColor="@color/colorWhite" />
+                android:textColor="@color/white" />
 
 
         </LinearLayout>

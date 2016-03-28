@@ -125,7 +125,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="@color/colorLightGrey" />
+                    android:background="@color/divider" />
 
                 <TextView
                     android:id="@+id/textLicense"
@@ -142,7 +142,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="@color/colorLightGrey" />
+                    android:background="@color/divider" />
 
                 <LinearLayout
                     android:id="@+id/layoutAppVersion"
@@ -179,7 +179,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="@color/colorLightGrey" />
+                    android:background="@color/divider" />
 
                 <LinearLayout
                     android:id="@+id/layoutCreatedBy"
@@ -222,7 +222,7 @@
                 android:layout_marginBottom="32dp"
                 android:background="@color/colorRed"
                 android:text="@string/settings.reset.all"
-                android:textColor="@color/colorWhite"
+                android:textColor="@color/white"
                 android:visibility="gone" />
 
             <Button
@@ -232,7 +232,7 @@
                 android:layout_marginBottom="32dp"
                 android:background="@color/colorRed"
                 android:text="RESET REMOTE DB DEV OLNY"
-                android:textColor="@color/colorWhite"
+                android:textColor="@color/white"
                 android:visibility="gone" />
 
         </LinearLayout>
