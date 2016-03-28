@@ -11,7 +11,7 @@
     <string name="pet">반려동물</string>
 
     <string name="pet.name">반려동물 이름</string>
-    <string name="pet.type">종류</string>
+    <string name="pet.type">Type</string>
     <string name="puppy">강아지</string>
     <string name="kitten">고양이</string>
 
@@ -23,7 +23,7 @@
     <string name="age_unit" translatable="false">살</string>
     <string name="weight" translatable="true">크기</string>
 
-    <string name="review" translatable="true">리뷰</string>
+    <string name="review" translatable="true">내용을 입력해주세요.</string>
     <string name="region" translatable="true">지역</string>
     <string name="location" translatable="true">위치</string>
     <string name="hospital" translatable="true">병원명</string>
@@ -35,23 +35,29 @@
         <item>초대형</item>
     </string-array>
 
-    <!-- 다시한번 확정 후 등록-->
+    <!--1차병원 진료과목 위주, 부위 없음-->
     <string-array name="review_category_array">
-        <item>기본</item>
-        <item>백신</item>
-        <item>수술</item>
-        <item>약</item>
+        <item>기본진료</item>
         <item>피검사</item>
-        <item>엑스레이</item>
-        <item>기타</item>
+        <item>X-ray검사</item>
+        <item>초음파검사</item>
+        <item>기타검사</item>
+        <item>약처방</item>
+        <item>구충</item>
+        <item>사상충</item>
+        <item>예방(필수)접종</item>
+        <item>중성화</item>
+        <item>슬개골 탈구 수술</item>
+        <item>기타 수술</item>
+        <item>주사 마취</item>
+        <item>호흡 마취</item>
+        <item>카테고리에 없음</item>
     </string-array>
 
     <string name="pet_size_small">소형</string>
     <string name="pet_size_medium">중형</string>
     <string name="pet_size_large">대형</string>
     <string name="pet_size_xlarge">초대형</string>
-    <!-- XX-Large는 필요없을듯 -->
-    <!--<string name="pet_size_xxlarge">XX-Large</string>-->
 
 
     <!-- MESSAGES -->
@@ -104,7 +110,7 @@
 
     <!-- EDIT PET ACTIVITY -->
     <string name="title_activity_edit_pet">반려동물 정보수정</string>
-    <string name="title_activity_add_pet">반려동물 추가</string>
+    <string name="title_activity_add_pet">반려동물 등록</string>
 
     <string name="title_fragment_cancel_confirm">저장하지 않은 정보는 반영되지 않습니다.</string>
 
@@ -141,13 +147,13 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="action_settings">설정</string>
 
-    <string name="main_message_subtitle">동물병원을 말하다. MODIFIED</string>
-    <string name="main_message_title">진료후기를 등록해주세요.</string>
-    <string name="main_message_body">\n보호자들이 만드는 동물병원정보</string>
+    <string name="main_message_subtitle">보호자가 만드는 동물병원정보</string>
+    <string name="main_message_title">진료후기를 등록해주세요</string>
+    <string name="main_message_body">여러분들이 등록해주신 진료후기들이 실제 동물병원정보에 반영됩니다!\n※beta기간 중 등록된 일부 데이터는 정식 버젼에 반영되지 않을수있습니다.</string>
 
     <string name="main_post_review">진료후기 등록하기</string>
 
-    <string name="main_view_symptoms">유사증상 진료비 비교하기</string>
+    <string name="main_view_symptoms">진료과목별 진료후기</string>
     <string name="main_view_pettype">같은 유형 반려동물 진료후기</string>
 
     <string name="msg.ok.addpet">\"%1$s\" (이)가 내 반려동물에 추가되었습니다.</string>
@@ -155,47 +161,47 @@
     <string name="msg.error.addpet">반려동물을 추가하는데 오류가 발생했습니다.</string>
     <string name="msg.error.editpet">반려동물 정보를 수정하는데 오류가 발생했습니다.</string>
 
-    <string name="msg.error.addreview">리뷰를 추가할 수 없습니다.</string>
-    <string name="msg.error.editreview">리뷰를 수정할 수 없습니다.</string>
-    <string name="title_activity_post_review">리뷰 등록</string>
+    <string name="msg.error.addreview">진료후기를 추가할 수 없습니다.</string>
+    <string name="msg.error.editreview">진료후기를 수정할 수 없습니다.</string>
+    <string name="title_activity_post_review">진료후기 작성</string>
 
 
     <!-- NAVIGATION DRAWER -->
     <string name="label.my_profile">프로필</string>
 
     <string name="label.my_pet_list">내 반려동물</string>
-    <string name="label.view_my_reviews">내가 쓴 리뷰</string>
+    <string name="label.view_my_reviews">내 진료후기</string>
 
     <string name="label.share">닷터 친구에게 공유하기</string>
     <string name="label.give_kudos">닷터 좋아요</string>
-    <string name="label.send_feedback">피드백 보내기</string>
+    <string name="label.send_feedback">의견 보내기</string>
 
     <!-- POST REVIEW ACTIVITY -->
     <string name="label.post.hospital">병원명</string>
     <string name="label.post.symptoms">진료 항목</string>
-    <string name="label.post.cost">진료비</string>
+    <string name="label.post.cost">진료비 총액</string>
 
     <string name="post.no_pet">진료비</string>
 
 
     <!-- SETTINGS ACTIVITY -->
     <string name="settings.notification">알림 설정</string>
-    <string name="settings.notification.likes">내 리뷰를 고마워할 경우</string>
-    <string name="settings.notification.comments">내 리뷰에 댓글을 남길 경우</string>
-
+    <string name="settings.notification.likes">내 진료후기를 고마워할 경우</string>
+    <string name="settings.notification.comments">내 진료후기에 댓글을 남길 경우</string>
     <string name="settings.reset.all">Delete All Data and Reset</string>
+
     <string name="settings.reset.confirm">Reset all data including account info and go back to initial state?</string>
     <string name="settings.reset">Reset</string>
 
 
     <!-- MY REVIEWS ACTIVITY -->
-    <string name="title_activity_my_reviews">내가 쓴 리뷰</string>
+    <string name="title_activity_my_reviews">내가 쓴 진료후기</string>
 
     <!-- NOTIFICATION ACTIVITY -->
     <string name="title_activity_notification">알림</string>
 
     <!-- REVIEWS ACTIVITY -->
-    <string name="title_activity_review_list">리뷰</string>
+    <string name="title_activity_review_list">진료후기</string>
 
     <!-- VIEW REVIEW ACTIVITY -->
     <string name="title_activity_review_view">진료후기</string>
@@ -218,12 +224,12 @@
     <string name="nickname_invalid_double_space">유효하지 않은 닉네임입니다.</string>
     <string name="profile_saving_changes">저장중&#8230;</string>
     <string name="msg_error_autocomplete_location">위치정보를 찾을 수 없습니다.</string>
-    <string name="msg_no_my_reviews">등록한 리뷰가 없습니다!</string>
+    <string name="msg_no_my_reviews">등록한 진료후기가 없습니다!</string>
 
     <string name="money_unit">원</string>
 
     <string name="set_location">지역</string>
-    <string name="visit_categories">Categories</string>
+    <string name="visit_categories">진료 과목</string>
     <string name="visit_categories_basic">Basic</string>
     <string name="visit_categories_bloodtest">Blood Test</string>
     <string name="visit_categories_xray">X-Ray</string>
@@ -245,13 +251,13 @@
     <string name="already_reported">이미 신고 되었습니다.</string>
     <string name="reported">신고 되었습니다.</string>
     <string name="modify_not_yet_supported">수정기능은 준비중입니다.</string>
-    <string name="msg_error_delete_review_notyours">다른 사람의 리뷰는 삭제하실 수 없습니다.</string>
+    <string name="msg_error_delete_review_notyours">다른 사람의 진료후기는 삭제하실 수 없습니다.</string>
     <string name="deleted">삭제 되었습니다.</string>
     <string name="filter_by_pet">동물유형 필터</string>
     <string name="both">Both</string>
     <string name="minimum_age">Minimum Age</string>
     <string name="maximum_age">Maximum Age</string>
-    <string name="set_filter">필터 설정</string>
+    <string name="set_filter">확인</string>
     <string name="any">Any</string>
     <string name="pet.size">크기</string>
     <string name="take_picture">사진 촬영하기</string>
@@ -279,38 +285,43 @@
     <string name="msg_error_categories_required">진료항목을 선택해주세요.</string>
     <string name="wait">잠시만 기다려주세요.&#8230;</string>
     <string name="post_label_hospital_info">병원정보</string>
-    <string name="post_label_visit">About your visit</string>
+    <string name="post_label_visit">진료 정보</string>
     <string name="post_label_body">병원 진료가 어땟나요?</string>
     <string name="post_label_images">동물병원 영수증 사진을 첨부해주세요.</string>
     <string name="msg_error_review_view_failed">진료후기를 불러오는데 실패했습니다.</string>
     <string name="msg_progress_loading">잠시만 기다려주세요.&#8230;</string>
 
-    <string name="msg_notification_like">\"%1$s\" 진료후기에 고마움을 표현하셨습니다!</string>
-    <string name="msg_notification_comment">\"%1$s\" 진료후기에 댓글이 등록되었습니다!</string>
+    <string name="msg_notification_like">\"%1$s\" 진료후기에 고마움을 표현하셨습니다.</string>
+    <string name="msg_notification_comment">\"%1$s\" 진료후기에 댓글이 등록되었습니다.</string>
     <string name="already_liked">이미 고마움을 표현하셨습니다.</string>
     <string name="comment_inserted">댓글이 등록되었습니다.</string>
     <string name="comment_insert_failed">댓글을 등록하는데 실패했습니다.</string>
     <string name="comment_required">입력값이 유효하지 않습니다.</string>
-    <string name="review_liked">고마움이 전달되었습니다.</string>
+    <string name="review_liked">고맙습니다.</string>
     <string name="review_like_failed">고마움을 전달하는데 문제가 발생했습니다.</string>
     <string name="report_failed">신고기능에 오류가 발생했습니다.</string>
     <string name="msg_error_delete_review">진료후기를 삭제하는데 오류가 발생했습니다.</string>
 
     <string name="feedback_email_subject">[Dotor] 피드백</string>
+    <string name="feedback_email_body">
+	    닷터를 사용하며 개선했으면 하는 점, 혹은 칭찬하고 싶은 점을 이메일로 보내주세요.\n
 
-    <string name="feedback_email_body">[닷터를 사용하며 개선했으면 하는 점, 혹은 칭찬하고 싶은 점을 이메일로 보내주세요.]\n\n\n나의 유저아이디: %1$s</string>
 
-    <string name="label.about_us">Created by Team88</string>
+	    \n\n나의 유저아이디: %1$s
+	</string>
+
+	<string name="label.about_us">Created by Team88</string>
     <string name="program_info">Program Info</string>
     <string name="terms">Terms of Service</string>
     <string name="open_source_licenses">Open Source Licenses</string>
     <string name="created_by">Created by Team88</string>
     <string name="team88">https://www.team88.net/</string>
-	
+
 	<!-- Hospital Info -->
-    <string name="main_view_hospital_info">Hospital Info</string>
-    <string name="main_view_hospital_info_subtitle">Provides Hospital Information</string>
-    <string name="hospital_info_not_yet_implemented">Hospital Information is Not Yet Ready</string>
+    <string name="main_view_hospital_info">진료후기 등록된 동물병원 둘러보기</string>
+  <!-- info subtitle부분에 리뷰등록할 때 입력(선택)한 병원명 보여지도록 해주세요-->
+    <string name="main_view_hospital_info_subtitle">최근 방문한 병원이 없습니다.</string>
+    <string name="hospital_info_not_yet_implemented">진료후기가 등록된 동물병원들을 정리하고 있습니다.\n등록해주신 정보들을 잘 반영해서 곧 업데이트하겠습니다!</string>
 
 
 
