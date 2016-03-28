@@ -306,6 +306,12 @@
     <string name="open_source_licenses">Open Source Licenses</string>
     <string name="created_by">Created by Team88</string>
     <string name="team88">https://www.team88.net/</string>
+	
+	<!-- Hospital Info -->
+    <string name="main_view_hospital_info">Hospital Info</string>
+    <string name="main_view_hospital_info_subtitle">Provides Hospital Information</string>
+    <string name="hospital_info_not_yet_implemented">Hospital Information is Not Yet Ready</string>
+
 
 
     <!-- BELOW IS NOT NEEDED!!!!!!!!!!!!!!!! -->
