@@ -66,8 +66,8 @@ android {
             versionName "1.0-admin"
         }
         user {
-            versionCode 9
-            versionName "0.9"
+            versionCode 10
+            versionName "1.0"
         }
     }
 
@@ -110,15 +110,15 @@ android {
             applicationIdSuffix ".beta"
             versionNameSuffix "." + getDate() + "-beta"
             signingConfig signingConfigs.release
-            ext.betaDistributionReleaseNotesFilePath = "beta_release_notes.txt"
+            //ext.betaDistributionReleaseNotesFilePath = "beta_release_notes.txt"
             //ext.betaDistributionEmails = "jeindus@gmail.com, kn.kim@outlook.com"
-            ext.betaDistributionNotifications = false
+            //ext.betaDistributionNotifications = false
         }
         release {
             signingConfig signingConfigs.release
-            minifyEnabled true
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            versionNameSuffix "." + getDate()
+            versionNameSuffix "." + getDate() + "-beta"
         }
     }
 

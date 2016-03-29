@@ -14,23 +14,27 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="80dp"
+        android:gravity="center_horizontal"
         android:orientation="vertical">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="0px"
-            android:layout_weight="2" />
+        <ImageView
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/logotext_240dp" />
 
-        <LinearLayout
-            android:id="@+id/pointlayout"
-            android:layout_width="match_parent"
-            android:layout_height="0px"
-            android:layout_weight="1"
-            android:gravity="top|center_horizontal"
-            android:orientation="horizontal"
-            android:padding="10dp" />
     </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/pointlayout"
+        android:layout_width="match_parent"
+        android:layout_height="16dp"
+        android:gravity="center"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="72dp"
+        android:orientation="horizontal" />
 
     <ProgressBar
         android:id="@+id/progress"
