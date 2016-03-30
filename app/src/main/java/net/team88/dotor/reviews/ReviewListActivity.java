@@ -151,9 +151,26 @@ public class ReviewListActivity extends AppCompatActivity {
         } else if (action.equalsIgnoreCase(KEY_MODE_CATEGORY)) {
             Log.d(TAG, "setMode: Mode Category");
             mode = Mode.CATEGORY;
-            categories = getResources().getStringArray(R.array.review_category_array)[0];
 
             selectedCategories = searchSettings.getSelectedCategories();
+
+            StringBuilder stringBuilder = new StringBuilder();
+
+            for (String category : selectedCategories) {
+                stringBuilder
+                        .append(",")
+                        .append(category);
+            }
+
+            if (stringBuilder.length() > 1) {
+                stringBuilder.delete(0, 1);
+            } else {
+                // If Nothing is Selected, Select first item.
+                String category = getResources().getStringArray(R.array.review_category_array)[0];
+                stringBuilder.append(category);
+            }
+
+            categories = stringBuilder.toString();
 
         } else {
             Log.d(TAG, "setMode: Mode ALL");
