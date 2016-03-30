@@ -28,6 +28,8 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.crashlytics.android.Crashlytics;
+import com.crashlytics.android.answers.Answers;
+import com.crashlytics.android.answers.ContentViewEvent;
 
 import net.team88.dotor.R;
 import net.team88.dotor.comments.Comment;
@@ -113,6 +115,11 @@ public class ReviewViewActivity extends AppCompatActivity {
         } else {
             this.reviewId = new ObjectId(reviewIdStr);
         }
+
+        Answers.getInstance().logContentView(new ContentViewEvent()
+                .putContentName("Review")
+                .putContentType("Review")
+                .putContentId(reviewIdStr));
 
         String notificationIdStr = intent.getStringExtra("notificationid"); // TODO replace hard-coded value
         if (notificationIdStr == null || notificationIdStr.isEmpty()) {
@@ -480,14 +487,14 @@ public class ReviewViewActivity extends AppCompatActivity {
 
     private void likeReview() {
         //fab.setImageResource(R.drawable.w);
-        fab.setEnabled(false);
+        //fab.setEnabled(false);
         DotorWebService webServiceApi = Server.getInstance(getBaseContext()).getService();
         Call<BasicResponse> call = webServiceApi.likeReview(reviewId.toHexString());
 
         call.enqueue(new Callback<BasicResponse>() {
             @Override
             public void onResponse(Call<BasicResponse> call, Response<BasicResponse> response) {
-                fab.setEnabled(true);
+                //fab.setEnabled(true);
                 if (response.isSuccess() == false) {
                     Snackbar.make(textPetName, R.string.review_like_failed, Snackbar.LENGTH_LONG)
                             .show();
@@ -530,7 +537,7 @@ public class ReviewViewActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<BasicResponse> call, Throwable t) {
-                fab.setEnabled(true);
+                //fab.setEnabled(true);
                 Crashlytics.log(Log.ERROR, "ReviewLike", t.getMessage());
                 Snackbar.make(textPetName, R.string.review_like_failed, Snackbar.LENGTH_LONG)
                         .show();
