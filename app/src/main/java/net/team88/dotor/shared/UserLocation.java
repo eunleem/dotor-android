@@ -45,12 +45,13 @@ public class UserLocation {
         locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
 
         SharedPreferences data = this.context.getSharedPreferences("UserLocation", Activity.MODE_PRIVATE);
-        // There is not putDouble. Use putLong instead and do manual conversion
-        // #REF: http://stackoverflow.com/a/18098090/4694036
         lastKnownLocation = new Location("Provider");
 
-        lastKnownLocation.setLongitude((double) data.getLong(KEY_LONGITUDE, 127));
-        lastKnownLocation.setLatitude((double) data.getLong(KEY_LATITUDE, 37));
+        // There is no putDouble. Use putLong instead and do manual conversion
+        // #REF: http://stackoverflow.com/a/18098090/4694036
+        lastKnownLocation.setLatitude((double) data.getLong(KEY_LATITUDE, Double.doubleToLongBits(37.605886)));
+        lastKnownLocation.setLongitude((double) data.getLong(KEY_LONGITUDE, Double.doubleToLongBits(126.922720)));
+
         lastKnownLocationName = data.getString(KEY_PLACE_NAME, "");
     }
 

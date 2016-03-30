@@ -53,8 +53,9 @@ public class SearchSettings {
         locationName = this.data.getString(KEY_LOCATION_NAME, "");
 
         this.nearbyRequest = new NearbyRequest();
-        this.nearbyRequest.latitude = Double.longBitsToDouble(this.data.getLong(KEY_LOCATION_LATITUDE, 37));
-        this.nearbyRequest.longitude = Double.longBitsToDouble(this.data.getLong(KEY_LOCATION_LONGITUDE, 127));
+
+        this.nearbyRequest.latitude = Double.longBitsToDouble(this.data.getLong(KEY_LOCATION_LATITUDE, Double.doubleToLongBits(37.605886)));
+        this.nearbyRequest.longitude = Double.longBitsToDouble(this.data.getLong(KEY_LOCATION_LONGITUDE, Double.doubleToLongBits(126.922720)));
         this.nearbyRequest.distance = Double.longBitsToDouble(this.data.getLong(KEY_LOCATION_DISTANCE, 1000));
 
         String categories = this.data.getString(KEY_CATEGORIES, "");
