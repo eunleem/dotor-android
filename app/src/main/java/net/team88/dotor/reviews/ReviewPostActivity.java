@@ -70,6 +70,7 @@ import net.team88.dotor.pets.Pet;
 import net.team88.dotor.shared.DotorWebService;
 import net.team88.dotor.shared.InsertResponse;
 import net.team88.dotor.shared.InvalidInputException;
+import net.team88.dotor.shared.NearbyRequest;
 import net.team88.dotor.shared.PhotoGetter;
 import net.team88.dotor.shared.Server;
 import net.team88.dotor.shared.UserScreen;
@@ -735,7 +736,7 @@ public class ReviewPostActivity extends AppCompatActivity {
                 final Hospitals hospitalsInstance = Hospitals.getInstance(this);
                 hospitalsInstance.getHospitalsFromServer(
                         selectedPlace.getLatLng().latitude, selectedPlace.getLatLng().longitude,
-                        10000.00,
+                        4000.00,
                         new Runnable() {
                             @Override
                             public void run() {
@@ -865,6 +866,18 @@ public class ReviewPostActivity extends AppCompatActivity {
             hospitals.setLastSelectedHospitalId(this.selectedHospitalId);
         }
 
+        if (this.selectedPlace != null) {
+            NearbyRequest nearbyRequest = new NearbyRequest();
+            nearbyRequest.distance = 4000.00;
+            nearbyRequest.latitude = selectedPlace.getLatLng().latitude;
+            nearbyRequest.longitude = selectedPlace.getLatLng().longitude;
+
+            SearchSettings.getInstance(this).setLocationSetting(selectedPlace.getName().toString(), nearbyRequest);
+        }
+
+        String selectedCategoriesStr = this.textCategories.getText().toString().replace(" ", "");
+        SearchSettings.getInstance(this).setSelectedCategories(selectedCategoriesStr);
+
 
         DotorWebService service = Server.getInstance(this).getService();
         service.insertReview(newReview).enqueue(PostReviewCallback(newReview));
@@ -941,7 +954,7 @@ public class ReviewPostActivity extends AppCompatActivity {
 
                     intent.setClass(getApplicationContext(), ReviewViewActivity.class);
                     intent.putExtra("reviewid", json.newid);
-                    String message = getString(R.string.post_review_finished_text); // TODO use getString instead
+                    String message = getString(R.string.post_review_finished_text);
 
                     PendingIntent pendingIntent =
                             PendingIntent.getActivity(
@@ -953,7 +966,7 @@ public class ReviewPostActivity extends AppCompatActivity {
                     Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 
                     NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(getApplicationContext())
-                            .setSmallIcon(R.drawable.ic_logo_white_36dp)
+                            .setSmallIcon(R.drawable.ic_logo_white_24dp)
                             .setContentTitle(getApplicationContext().getString(R.string.post_review_finished))
                             .setContentText(message)
                             .setAutoCancel(true)
