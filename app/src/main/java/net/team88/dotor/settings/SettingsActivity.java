@@ -43,8 +43,8 @@ public class SettingsActivity extends AppCompatActivity {
     private SwitchCompat switchNotification;
     private SwitchCompat switchNotificationLikes;
     private SwitchCompat switchNotificationComments;
-    private Button buttonResetDb;
-    private Button buttonResetAll;
+    //private Button buttonResetDb;
+    //private Button buttonResetAll;
 
     private PushSetting pushSetting;
     private TextView textTerms;
@@ -91,8 +91,8 @@ public class SettingsActivity extends AppCompatActivity {
     private void registerElements() {
         viewRoot = findViewById(R.id.viewRoot);
 
-        buttonResetAll = (Button) findViewById(R.id.buttonResetAll);
-        buttonResetDb = (Button) findViewById(R.id.buttonResetDb);
+        //buttonResetAll = (Button) findViewById(R.id.buttonResetAll);
+        //buttonResetDb = (Button) findViewById(R.id.buttonResetDb);
 
         switchNotification = (SwitchCompat) findViewById(R.id.switchNotification);
         switchNotificationLikes = (SwitchCompat) findViewById(R.id.switchNotificationLikes);
