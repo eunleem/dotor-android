@@ -38,13 +38,14 @@
                 android:id="@+id/layoutHospitalInfo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
                 android:padding="16dp">
 
                 <TextView
                     android:id="@+id/textHospitalName"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:maxWidth="200dp"
                     android:singleLine="true"
                     android:text="Happy Pet Hospital"
                     android:textColor="@color/secondaryText"
@@ -53,7 +54,7 @@
 
                 <TextView
                     android:id="@+id/textHospitalAddress"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/textHospitalName"
                     android:text="Seoul-si Mapo-gu Yanghwa-daegyo"
@@ -87,6 +88,7 @@
                         android:layout_width="64dp"
                         android:layout_height="64dp"
                         android:scaleType="fitCenter" />
+
                 </FrameLayout>
 
 
@@ -181,10 +183,10 @@
                     android:visibility="visible">
 
                     <ImageView
-                        android:contentDescription="Attached Image for Review"
                         android:id="@+id/imageViewReviewImage"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
+                        android:contentDescription="Attached Image for Review"
                         android:scaleType="centerCrop"
                         app:layout_aspectRatio="100%"
                         app:layout_widthPercent="100%" />
@@ -228,8 +230,8 @@
                     android:drawableStart="@drawable/ic_message_draw_grey600_24dp"
                     android:foregroundGravity="center"
                     android:gravity="center"
-                    android:paddingStart="48dp"
                     android:paddingEnd="0dp"
+                    android:paddingStart="48dp"
                     android:text="Comments" />
 
             </LinearLayout>
