@@ -54,6 +54,9 @@ public class ImageEditActivity extends AppCompatActivity {
 
     ImageEditInfo editInfo = new ImageEditInfo();
 
+    int orgWidth = 100;
+    int orgHeight = 100;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,6 +89,9 @@ public class ImageEditActivity extends AppCompatActivity {
         editInfo.crop[2] = bmOptions.outWidth;
         editInfo.crop[3] = bmOptions.outHeight;
 
+        this.orgWidth = bmOptions.outWidth;
+        this.orgHeight = bmOptions.outHeight;
+
         imageView.initView(this, editableImage);
 
         imageView.setOnBoxChangedListener(new OnBoxChangedListener() {
@@ -104,7 +110,6 @@ public class ImageEditActivity extends AppCompatActivity {
 
             }
         });
-
     }
 
     /**
@@ -163,6 +168,17 @@ public class ImageEditActivity extends AppCompatActivity {
                 if (editInfo.rotation == 360) {
                     editInfo.rotation = 0;
                 }
+
+                if (editInfo.rotation == 0 || editInfo.rotation == 180) {
+                    editInfo.crop[2] = orgWidth;
+                    editInfo.crop[3] = orgHeight;
+                } else {
+                    editInfo.crop[2] = orgHeight;
+                    editInfo.crop[3] = orgWidth;
+                }
+
+                editInfo.crop[0] = 0;
+                editInfo.crop[1] = 0;
             }
         });
 
@@ -258,6 +274,7 @@ public class ImageEditActivity extends AppCompatActivity {
                 int y = editInfo.crop[1];
                 int width = editInfo.crop[2] - x;
                 int height = editInfo.crop[3] - y;
+
 
                 Bitmap cropped = Bitmap.createBitmap(rotated, x, y, width, height);
 
