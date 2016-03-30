@@ -277,13 +277,13 @@
 
                     <ImageButton
                         android:id="@+id/buttonPostComment"
-                        android:layout_width="42dp"
-                        android:layout_height="48dp"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
                         android:layout_gravity="center_horizontal|bottom"
                         android:layout_marginStart="8dp"
                         android:background="@color/colorSecondary"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/ic_plus_white_36dp" />
+                        android:src="@drawable/ic_plus_white_24dp" />
 
                 </LinearLayout>
 
