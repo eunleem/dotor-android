@@ -4,6 +4,8 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
@@ -51,6 +53,7 @@ public class SettingsActivity extends AppCompatActivity {
     private TextView textLicense;
     private View viewAppVersion;
     private View viewCreatedBy;
+    private TextView textVersion;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +67,17 @@ public class SettingsActivity extends AppCompatActivity {
         loadPushSetting();
 
         registerEvents();
+
+
+        try {
+            PackageInfo packageInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
+            String versionName = packageInfo.versionName;
+            String versionCode = String.valueOf(packageInfo.versionCode);
+            textVersion.setText(versionName + " (" + versionCode + ")");
+
+        } catch(PackageManager.NameNotFoundException e) {
+            textVersion.setText("Could not retrieve version info.");
+        }
 
     }
 
@@ -102,6 +116,8 @@ public class SettingsActivity extends AppCompatActivity {
         textLicense = (TextView) findViewById(R.id.textLicense);
         viewAppVersion = (View) findViewById(R.id.layoutAppVersion);
         viewCreatedBy = (View) findViewById(R.id.layoutCreatedBy);
+
+        textVersion = (TextView) findViewById(R.id.textVersion);
     }
 
     private void registerEvents() {
