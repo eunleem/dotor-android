@@ -15,6 +15,11 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
+-renamesourcefileattribute SourceFile
+-keepattributes SourceFile,LineNumberTable
+
+-optimizations !code/allocation/variable
+
 -keep class android.support.v7.** { *; }
 -keep interface android.support.v7.** { *; }
 -keep enum android.support.v7.** { *; }
@@ -27,4 +32,39 @@
 -keep interface com.google.** { *; }
 -keep enum com.google.** { *; }
 
+-dontwarn com.google.appengine.api.urlfetch.**
+-keep class com.google.appengine.api.datastore.Text { *; }
+
+
+# For using GSON @Expose annotation
 -keepattributes Signature
+-keepattributes *Annotation*
+-keepattributes EnclosingMethod
+
+-keep interface com.squareup.okhttp.** { *; }
+-keep class com.squareup.okhttp.** { *; }
+-keep class retrofit.** { *; }
+
+-dontwarn com.squareup.okhttp.**
+-dontwarn retrofit.**
+-dontwarn okio.**
+-dontwarn retrofit2.Platform$Java8
+-dontwarn rx.**
+-keepclasseswithmembers class * {
+    @retrofit.http.* <methods>;
+}
+
+
+# Gson specific classes
+-keep class sun.misc.Unsafe { *; }
+-keep class com.google.gson.stream.** { *; }
+
+
+
+-dontwarn javax.**
+-dontwarn java.lang.management.**
+-dontwarn javax.xml.stream.events.**
+
+-keep class javax.** { *; }
+-keep class java.lang.management.** { *; }
+
