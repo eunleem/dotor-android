@@ -130,7 +130,7 @@ public class Hospitals {
         service.getHospitalsNearby(nearbyRequest).enqueue(new Callback<HospitalsResponse>() {
             @Override
             public void onResponse(Call<HospitalsResponse> call, final Response<HospitalsResponse> response) {
-                if (!response.isSuccess()) {
+                if (!response.isSuccessful()) {
                     Log.d(TAG, "nearbyRequest: Failed.");
                     return;
                 }
@@ -165,7 +165,7 @@ public class Hospitals {
         service.getHospitalsNearby(nearbyRequest).enqueue(new Callback<HospitalsResponse>() {
             @Override
             public void onResponse(Call<HospitalsResponse> call, final Response<HospitalsResponse> response) {
-                if (!response.isSuccess()) {
+                if (!response.isSuccessful()) {
                     Log.d(TAG, "nearbyRequest: Failed.");
                     return;
                 }

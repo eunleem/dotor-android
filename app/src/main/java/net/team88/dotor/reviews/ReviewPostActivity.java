@@ -377,7 +377,6 @@ public class ReviewPostActivity extends AppCompatActivity {
             }
         });
 
-        final Activity act = this;
         imageViewAddImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -890,7 +889,7 @@ public class ReviewPostActivity extends AppCompatActivity {
         return new Callback<InsertResponse>() {
             @Override
             public void onResponse(Call<InsertResponse> call, Response<InsertResponse> response) {
-                if (response.isSuccess() == false) {
+                if (response.isSuccessful() == false) {
                     // Server Level Error
                     String errorMessage = "";
                     try {

@@ -126,7 +126,7 @@ public class IntroActivity extends AppCompatActivity implements IntroPagerAdapte
             viewPager.setSwipeEnabled(true);
             progressBar.setVisibility(View.GONE);
 
-            if (response.isSuccess() == false) {
+            if (response.isSuccessful() == false) {
                 // Server Level Error
                 Log.e(TAG, "Request failed. Msg: " + response.message());
                 final String message = getString(R.string.msg_error_register);

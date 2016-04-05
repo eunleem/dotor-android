@@ -120,7 +120,7 @@ public class NotificationsRecyclerViewAdapter extends RecyclerView.Adapter<Notif
         call.enqueue(new Callback<BasicResponse>() {
             @Override
             public void onResponse(Call<BasicResponse> call, Response<BasicResponse> response) {
-                if (response.isSuccess() == false) {
+                if (response.isSuccessful() == false) {
                     Log.d(TAG, "MarkRead: Failed");
                     return;
                 }

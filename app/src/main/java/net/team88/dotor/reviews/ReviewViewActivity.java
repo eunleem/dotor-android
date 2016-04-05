@@ -131,7 +131,7 @@ public class ReviewViewActivity extends AppCompatActivity {
             call.enqueue(new Callback<BasicResponse>() {
                 @Override
                 public void onResponse(Call<BasicResponse> call, Response<BasicResponse> response) {
-                    if (response.isSuccess() && response.body().status < 0) {
+                    if (response.isSuccessful() && response.body().status < 0) {
                         Log.d(TAG, "ReadNotification good");
                     } else {
                         Log.d(TAG, "ReadNotification failed");
@@ -275,7 +275,7 @@ public class ReviewViewActivity extends AppCompatActivity {
             call.enqueue(new Callback<BasicResponse>() {
                 @Override
                 public void onResponse(Call<BasicResponse> call, Response<BasicResponse> response) {
-                    if (response.isSuccess() == false) {
+                    if (response.isSuccessful() == false) {
                         Log.e(TAG, "DeleteReview failed!");
                         Snackbar.make(textReviewBody, R.string.msg_error_delete_review, Snackbar.LENGTH_LONG)
                                 .show();
@@ -318,7 +318,7 @@ public class ReviewViewActivity extends AppCompatActivity {
             call.enqueue(new Callback<BasicResponse>() {
                 @Override
                 public void onResponse(Call<BasicResponse> call, Response<BasicResponse> response) {
-                    if (response.isSuccess() == false) {
+                    if (response.isSuccessful() == false) {
                         Log.e(TAG, "insertReport failed!");
                         Snackbar.make(textReviewBody, R.string.report_failed, Snackbar.LENGTH_LONG)
                                 .show();
@@ -361,7 +361,7 @@ public class ReviewViewActivity extends AppCompatActivity {
         call.enqueue(new Callback<ReviewResponse>() {
             @Override
             public void onResponse(Call<ReviewResponse> call, Response<ReviewResponse> response) {
-                if (response.isSuccess() == false) {
+                if (response.isSuccessful() == false) {
                     Log.e(TAG, "getReviews failed!");
                     Toast.makeText(ReviewViewActivity.this, R.string.msg_error_review_view_failed,
                             Toast.LENGTH_LONG).show();
@@ -495,7 +495,7 @@ public class ReviewViewActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<BasicResponse> call, Response<BasicResponse> response) {
                 //fab.setEnabled(true);
-                if (response.isSuccess() == false) {
+                if (response.isSuccessful() == false) {
                     Snackbar.make(textPetName, R.string.review_like_failed, Snackbar.LENGTH_LONG)
                             .show();
                     return;
@@ -584,7 +584,7 @@ public class ReviewViewActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<BasicResponse> call, Response<BasicResponse> response) {
                 textCommentBody.setEnabled(true);
-                if (response.isSuccess() == false) {
+                if (response.isSuccessful() == false) {
                     Log.e(TAG, "CommentInsert failed!");
                     Snackbar.make(textCommentBody, R.string.comment_insert_failed, Snackbar.LENGTH_LONG)
                             .show();
@@ -621,7 +621,7 @@ public class ReviewViewActivity extends AppCompatActivity {
         call.enqueue(new Callback<CommentsResponse>() {
             @Override
             public void onResponse(Call<CommentsResponse> call, Response<CommentsResponse> response) {
-                if (response.isSuccess() == false) {
+                if (response.isSuccessful() == false) {
                     Log.e(TAG, "getReviews failed!");
                     return;
                 }

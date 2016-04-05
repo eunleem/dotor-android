@@ -92,7 +92,7 @@ public class GcmRegistrationService extends IntentService {
         call.enqueue(new Callback<BasicResponse>() {
             @Override
             public void onResponse(Call<BasicResponse> call, Response<BasicResponse> response) {
-                if (response.isSuccess() == false) {
+                if (response.isSuccessful() == false) {
                     Log.d(TAG, "InsertPushSetting failed.");
                     return;
                 }

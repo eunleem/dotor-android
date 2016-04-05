@@ -74,7 +74,7 @@ public class NotificationListActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<NotificationsResponse> call, Response<NotificationsResponse> response) {
                 layoutSwipeRefresh.setRefreshing(false);
-                if (response.isSuccess() == false) {
+                if (response.isSuccessful() == false) {
                     Log.e(TAG, "Failed to get Notifications.");
                     return;
                 }

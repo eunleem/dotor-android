@@ -645,7 +645,7 @@ public class ReviewListActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<ReviewsResponse> call, Response<ReviewsResponse> response) {
 
-                if (response.isSuccess() == false) {
+                if (response.isSuccessful() == false) {
                     layoutSwipeRefresh.setRefreshing(false);
                     Log.e(TAG, "getReviews failed!");
                     return;

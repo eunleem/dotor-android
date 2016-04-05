@@ -71,7 +71,7 @@ public class MyGcmListenerService extends GcmListenerService {
         call.enqueue(new Callback<BasicResponse>() {
             @Override
             public void onResponse(Call<BasicResponse> call, Response<BasicResponse> response) {
-                if (response.isSuccess() == false) {
+                if (response.isSuccessful() == false) {
                     Log.d(TAG, "receivedNotification: failed.");
                     return;
                 }

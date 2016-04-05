@@ -145,7 +145,7 @@ public class MyAccount {
                     @Override
                     public void onResponse(Call<BasicResponse> call, Response<BasicResponse> response) {
                         final String TAG = "Login";
-                        if (response.isSuccess() == false) {
+                        if (response.isSuccessful() == false) {
                             // Server Level Error
                             Log.e(TAG, "Request failed. Msg: " + response.message());
                             final String message = context.getString(R.string.msg_error_login);

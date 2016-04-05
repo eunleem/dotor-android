@@ -81,7 +81,7 @@ public class ImageUploadService extends IntentService {
         call.enqueue(new Callback<ImageInsertResponse>() {
             @Override
             public void onResponse(Call<ImageInsertResponse> call, Response<ImageInsertResponse> response) {
-                if (response.isSuccess() == false) {
+                if (response.isSuccessful() == false) {
                     // Server Level Error
                     Log.e(TAG, "Upload failed.");
                     return;

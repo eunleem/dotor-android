@@ -212,7 +212,7 @@ public class SettingsActivity extends AppCompatActivity {
         call.enqueue(new Callback<BasicResponse>() {
             @Override
             public void onResponse(Call<BasicResponse> call, Response<BasicResponse> response) {
-                if (response.isSuccess() == false) {
+                if (response.isSuccessful() == false) {
                     Log.d(TAG, "UpdateNotification failed.");
                     return;
                 }
@@ -265,7 +265,7 @@ public class SettingsActivity extends AppCompatActivity {
         webServiceApi.resetDb().enqueue(new Callback<BasicResponse>() {
             @Override
             public void onResponse(Call<BasicResponse> call, Response<BasicResponse> response) {
-                if (response.isSuccess() == false) {
+                if (response.isSuccessful() == false) {
                     Toast.makeText(ctx, "RESET FAILED", Toast.LENGTH_LONG)
                             .show();
                     return;

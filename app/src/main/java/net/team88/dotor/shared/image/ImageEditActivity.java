@@ -114,7 +114,7 @@ public class ImageEditActivity extends AppCompatActivity {
 
     /**
      * Creates a resized image that fits screen from an image file.
-     * This helps a lot with memory usage.
+     * This helps with memory usage.
      *
      * @param orgImagePath Original Image file
      * @return Resized Image file path under App's cache directory.

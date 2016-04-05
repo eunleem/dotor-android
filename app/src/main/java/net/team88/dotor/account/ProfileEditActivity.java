@@ -234,7 +234,7 @@ public class ProfileEditActivity extends AppCompatActivity {
                 .enqueue(new Callback<BasicResponse>() {
                     @Override
                     public void onResponse(Call<BasicResponse> call, Response<BasicResponse> response) {
-                        if (response.isSuccess() == false) {
+                        if (response.isSuccessful() == false) {
                             Log.d(TAG, "Update Nickname failed.");
                             Snackbar.make(viewRoot, R.string.msg_error_nickname, Snackbar.LENGTH_LONG)
                                     .show();
