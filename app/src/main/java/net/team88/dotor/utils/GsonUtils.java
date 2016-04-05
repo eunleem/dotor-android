@@ -29,6 +29,9 @@ public class GsonUtils {
             }).registerTypeAdapter(ObjectId.class, new JsonDeserializer<ObjectId>() {
                 @Override
                 public ObjectId deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+                    if (json.getAsString().isEmpty()) {
+                        return null;
+                    }
                     return new ObjectId(json.getAsString());
                 }
             })
