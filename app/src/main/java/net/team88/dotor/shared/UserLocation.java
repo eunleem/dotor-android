@@ -49,8 +49,8 @@ public class UserLocation {
 
         // There is no putDouble. Use putLong instead and do manual conversion
         // #REF: http://stackoverflow.com/a/18098090/4694036
-        lastKnownLocation.setLatitude((double) data.getLong(KEY_LATITUDE, Double.doubleToLongBits(37.605886)));
-        lastKnownLocation.setLongitude((double) data.getLong(KEY_LONGITUDE, Double.doubleToLongBits(126.922720)));
+        lastKnownLocation.setLatitude(Double.longBitsToDouble(data.getLong(KEY_LATITUDE, Double.doubleToLongBits(37.605886))));
+        lastKnownLocation.setLongitude(Double.longBitsToDouble(data.getLong(KEY_LONGITUDE, Double.doubleToLongBits(126.922720))));
 
         lastKnownLocationName = data.getString(KEY_PLACE_NAME, "");
     }
@@ -68,8 +68,8 @@ public class UserLocation {
         // There is not putDouble. Use putLong instead and do manual conversion
         // #REF: http://stackoverflow.com/a/18098090/4694036
         data.edit()
-                .putLong(KEY_LONGITUDE, (long) location.getLongitude())
-                .putLong(KEY_LATITUDE, (long) location.getLatitude())
+                .putLong(KEY_LONGITUDE, Double.doubleToLongBits(location.getLongitude()))
+                .putLong(KEY_LATITUDE, Double.doubleToLongBits(location.getLatitude()))
                 .apply();
 
         // Get Addresses use network call.
@@ -196,15 +196,16 @@ public class UserLocation {
             return "";
         }
         List<Address> addresses = getAddresses(location.getLatitude(), location.getLongitude(), 5, locale);
+        if (addresses == null || addresses.size() == 0) {
+            return null;
+        }
+
         if (BuildConfig.DEBUG) {
             for (Address addr : addresses) {
                 Log.d(TAG, "Current Location candidate: " + addr.toString());
             }
         }
 
-        if (addresses == null || addresses.size() == 0) {
-            return null;
-        }
 
         if (locale == Locale.KOREAN || locale == Locale.KOREA) {
             return getCityNameKorean(addresses.get(0));
@@ -222,11 +223,16 @@ public class UserLocation {
             return "";
         }
         List<Address> addresses = getAddresses(location.getLatitude(), location.getLongitude(), 5, Locale.ENGLISH);
+        if (addresses == null || addresses.size() == 0) {
+            return "";
+        }
+
         if (BuildConfig.DEBUG) {
             for (Address addr : addresses) {
                 Log.i(TAG, "Address from Addresses: " + addr.toString());
             }
         }
+
         return getCityNameUsa(addresses.get(0));
     }
 
@@ -237,6 +243,10 @@ public class UserLocation {
         }
 
         List<Address> addresses = getAddresses(location.getLatitude(), location.getLongitude(), 5, Locale.KOREAN);
+        if (addresses == null || addresses.size() == 0) {
+            return "";
+        }
+
         if (BuildConfig.DEBUG) {
             for (Address addr : addresses) {
                 Log.i(TAG, "Address from Addresses: " + addr.toString());
@@ -253,11 +263,16 @@ public class UserLocation {
         }
 
         List<Address> addresses = getAddresses(location.getLatitude(), location.getLongitude(), 5, Locale.KOREAN);
+        if (addresses == null || addresses.size() == 0) {
+            return "";
+        }
+
         if (BuildConfig.DEBUG) {
             for (Address addr : addresses) {
                 Log.i(TAG, "Address from Addresses: " + addr.toString());
             }
         }
+
         return getCityNameKorean(addresses.get(0));
     }
 
@@ -311,7 +326,10 @@ public class UserLocation {
             return gcd.getFromLocation(latitude, longitude, count);
         } catch (IOException e) {
             Log.w(TAG, "getAddresses: Failed to get Addresses from from Coordinates.", e);
+        } catch (IllegalArgumentException e) {
+            return null;
         }
+
         return null;
     }
 }
