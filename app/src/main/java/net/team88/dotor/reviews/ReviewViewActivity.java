@@ -3,8 +3,10 @@ package net.team88.dotor.reviews;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
@@ -40,11 +42,13 @@ import net.team88.dotor.shared.BasicResponse;
 import net.team88.dotor.shared.DotorWebService;
 import net.team88.dotor.shared.Server;
 import net.team88.dotor.shared.image.ImageViewActivity;
+import net.team88.dotor.utils.ImageUtils;
 
 import org.bson.types.ObjectId;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
 
 import io.fabric.sdk.android.Fabric;
 import retrofit2.Call;
@@ -415,6 +419,45 @@ public class ReviewViewActivity extends AppCompatActivity {
                 String ageStr = String.valueOf(reviewCached.petAge) + getApplicationContext().getString(R.string.age_unit);
                 textPetAgeSize.setText(ageStr + " " + petCached.getSizeString(getApplicationContext()));
 
+                if (petCached.imageid != null) {
+                    Log.i(TAG, "PetImageId Not Null");
+                    AsyncTask.execute(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                final String imageBaseUrl = Server.getInstance(getBaseContext()).getServerUrl() + "/img/";
+                                final String imageUrl = imageBaseUrl + petCached.imageid.toHexString() + ".jpg";
+
+                                final int size = (int) ImageUtils.convertDpToPixel(64.00f, getApplicationContext());
+                                Bitmap bitmap = Glide.with(getApplicationContext())
+                                        .load(imageUrl)
+                                        .asBitmap()
+                                        .centerCrop()
+                                        .skipMemoryCache(true)
+                                        .into(size, size)
+                                        .get();
+
+                                final Bitmap cropCircle = ImageUtils.cropCircle(getApplicationContext(),
+                                        bitmap, size / 2, size, size, false, false, false, false);
+
+                                imageViewPetThumbnail.post(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        imageViewPetThumbnail.setImageBitmap(cropCircle);
+                                    }
+                                });
+
+                            } catch (InterruptedException e) {
+                                Log.e(TAG, e.toString());
+
+                            } catch (ExecutionException e) {
+                                Log.e(TAG, e.toString());
+                            }
+
+                        }
+                    });
+                }
+
                 updateReviewInfo();
                 updateLikes();
                 updateComments();
@@ -427,6 +470,7 @@ public class ReviewViewActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<ReviewResponse> call, Throwable t) {
+                Log.e(TAG, "onFailure: Failed to load review. " + t.getMessage());
                 Toast.makeText(ReviewViewActivity.this, R.string.msg_error_review_view_failed,
                         Toast.LENGTH_LONG).show();
                 finish();

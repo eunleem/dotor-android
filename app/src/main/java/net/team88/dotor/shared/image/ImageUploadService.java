@@ -15,10 +15,14 @@ import android.util.Log;
 
 import net.team88.dotor.MainActivity;
 import net.team88.dotor.R;
+import net.team88.dotor.pets.MyPets;
+import net.team88.dotor.pets.Pet;
+import net.team88.dotor.pets.PetListActivity;
 import net.team88.dotor.reviews.ReviewViewActivity;
 import net.team88.dotor.shared.DotorWebService;
 import net.team88.dotor.shared.Server;
 
+import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
 
 import java.io.File;
@@ -98,13 +102,25 @@ public class ImageUploadService extends IntentService {
                 // TODO Update Local Review data in Reviews. (Mark it isDraft = false)
 
 
+                String title = "";
                 String message = context.getString(R.string.app_name);
                 Intent intent = new Intent();
 
                 if (categoryStr.equalsIgnoreCase("review")) {
                     intent.setClass(context, ReviewViewActivity.class);
                     intent.putExtra("reviewid", relatedIdStr);
+                    title = context.getString(R.string.post_review_finished);
                     message = context.getString(R.string.post_review_finished_text);
+                } else if (categoryStr.equalsIgnoreCase("pet")) {
+                    intent.setClass(context, PetListActivity.class);
+                    title = message;
+                    message = context.getString(R.string.pet_picture_uploaded);
+                    ObjectId petId = new ObjectId(relatedIdStr);
+                    ObjectId imageId = new ObjectId(json.newid);
+                    Pet pet = MyPets.getInstance(getApplicationContext()).getPet(petId);
+                    pet.imageid = imageId;
+                    pet.imageFileName = json.filename;
+                    MyPets.getInstance(getApplicationContext()).update(pet.name, pet);
                 }
 
                 PendingIntent pendingIntent = PendingIntent.getActivity(context, 0 /* Request code */, intent,
@@ -116,7 +132,7 @@ public class ImageUploadService extends IntentService {
 
                 NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context)
                         .setSmallIcon(R.drawable.ic_logo_white_24dp)
-                        .setContentTitle(context.getString(R.string.post_review_finished))
+                        .setContentTitle(title)
                         .setContentText(message)
                         .setAutoCancel(true)
                         .setSound(defaultSoundUri)
@@ -130,16 +146,31 @@ public class ImageUploadService extends IntentService {
             @Override
             public void onFailure(Call<ImageInsertResponse> call, Throwable t) {
                 Intent intent = new Intent(context, MainActivity.class);
-                PendingIntent pendingIntent = PendingIntent.getActivity(context, 0 /* Request code */, intent,
+                PendingIntent pendingIntent = PendingIntent.getActivity(context,
+                        0 /* Request code */, intent,
                         PendingIntent.FLAG_ONE_SHOT);
 
                 Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 
+                String title = "";
+                String message = context.getString(R.string.app_name);
+
+                if (categoryStr.equalsIgnoreCase("review")) {
+                    intent.setClass(context, ReviewViewActivity.class);
+                    intent.putExtra("reviewid", relatedIdStr);
+                    title = context.getString(R.string.post_review_failed_title);
+                    message = context.getString(R.string.post_review_failed_text);
+
+                } else if (categoryStr.equalsIgnoreCase("pet")) {
+                    intent.setClass(context, PetListActivity.class);
+                    title = message;
+                    message = context.getString(R.string.pet_picture_uploaded);
+                }
 
                 NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context)
                         .setSmallIcon(R.drawable.ic_logo_white_24dp)
-                        .setContentTitle(context.getString(R.string.post_review_failed_title))
-                        .setContentText(context.getString(R.string.post_review_failed_text))
+                        .setContentTitle(title)
+                        .setContentText(message)
                         .setAutoCancel(true)
                         .setSound(defaultSoundUri)
                         .setContentIntent(pendingIntent);

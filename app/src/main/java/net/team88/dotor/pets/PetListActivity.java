@@ -27,6 +27,7 @@ public class PetListActivity extends AppCompatActivity {
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
+
             public void onClick(View view) {
                 Intent intent = new Intent(PetListActivity.this, PetEditActivity.class);
                 startActivityForResult(intent, REQUEST_ADD_PET);

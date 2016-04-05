@@ -4,27 +4,46 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
+import android.app.FragmentManager;
+import android.content.ContentUris;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.net.Uri;
+import android.os.AsyncTask;
+import android.os.Build;
+import android.os.Environment;
+import android.provider.DocumentsContract;
+import android.provider.MediaStore;
+import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.crashlytics.android.Crashlytics;
 
 import net.team88.dotor.R;
@@ -33,15 +52,23 @@ import net.team88.dotor.shared.BasicResponse;
 import net.team88.dotor.shared.DotorWebService;
 import net.team88.dotor.shared.InsertResponse;
 import net.team88.dotor.shared.InvalidInputException;
+import net.team88.dotor.shared.PhotoGetter;
 import net.team88.dotor.shared.Server;
+import net.team88.dotor.shared.UserScreen;
+import net.team88.dotor.shared.image.ImageEditActivity;
+import net.team88.dotor.shared.image.ImageUploadService;
+import net.team88.dotor.utils.ImageUtils;
 import net.team88.dotor.utils.Utils;
 
 import org.bson.types.ObjectId;
 
+import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.ConcurrentModificationException;
 import java.util.Locale;
+import java.util.concurrent.ExecutionException;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -49,6 +76,9 @@ import retrofit2.Response;
 
 public class PetEditActivity extends AppCompatActivity {
 
+    private static final int REQUEST_TAKE_PHOTO = 10;
+    private static final int REQUEST_GET_FROM_GALLERY = 20;
+    private static final int REQUEST_IMAGE_EDIT = 30;
     private final String TAG = "EDIT_PET";
 
     public static final String KEY_PET_NAME = "PET_NAME";
@@ -59,6 +89,9 @@ public class PetEditActivity extends AppCompatActivity {
     private static final boolean ENABLE_CANCEL_CONFIRMATION = true;
 
     private SimpleDateFormat birthdayDateFormat;
+    private ImageView imagePet;
+    private ImageView imagePetAdd;
+    private ImageMenuDialogFragment imageMenuDialogFragment;
 
     private enum Mode {
         ADD,
@@ -80,6 +113,8 @@ public class PetEditActivity extends AppCompatActivity {
     private Calendar petBirthday;
 
     private String petName; // For edit mode
+
+    private File imageFile;
 
 
     @SuppressWarnings("unchecked")
@@ -109,15 +144,6 @@ public class PetEditActivity extends AppCompatActivity {
         }
     }
 
-    private void registerEvents() {
-        textPetBirthday.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                datePickerDialogPetBirthday.show();
-            }
-        });
-    }
-
     private void setupBasicElements() {
         birthdayDateFormat = new SimpleDateFormat(getString(R.string.birthday_format), Locale.KOREA);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -130,6 +156,10 @@ public class PetEditActivity extends AppCompatActivity {
 
     private void registerElements() {
         layoutRoot = find(R.id.viewRoot);
+
+        imagePet = find(R.id.imagePet);
+        imagePetAdd = find(R.id.imagePetAdd);
+
         editTextPetName = find(R.id.editTextPetName);
 
         radioGroupPetType = find(R.id.radioGroupPetType);
@@ -141,6 +171,93 @@ public class PetEditActivity extends AppCompatActivity {
 
         progressBar.setIndeterminate(true);
         progressBar.setVisibility(View.GONE);
+    }
+
+    private void registerEvents() {
+        textPetBirthday.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                datePickerDialogPetBirthday.show();
+            }
+        });
+
+        imagePet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        imagePet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (imageMenuDialogFragment == null) {
+                    imageMenuDialogFragment = new ImageMenuDialogFragment();
+                }
+                FragmentManager fm = getFragmentManager();
+                imageMenuDialogFragment.show(fm, "ImageMenuFragment");
+            }
+        });
+
+    }
+
+    public class ImageMenuDialogFragment extends DialogFragment {
+
+        private Button buttonCamera;
+        private Button buttonGallery;
+
+        @Nullable
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+            return inflater.inflate(R.layout.fragment_image_menu_dialog, container, false);
+        }
+
+        @Override
+        public void onViewCreated(View view, Bundle savedInstanceState) {
+            super.onViewCreated(view, savedInstanceState);
+
+            getDialog().setTitle(R.string.add_image);
+
+            buttonCamera = (Button) view.findViewById(R.id.buttonCamera);
+            buttonGallery = (Button) view.findViewById(R.id.buttonGallery);
+
+
+            buttonCamera.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    PackageManager packageManager = getPackageManager();
+                    if (packageManager.hasSystemFeature(PackageManager.FEATURE_CAMERA) == false) {
+                        Snackbar.make(v, "This device does not have a camera.", Snackbar.LENGTH_SHORT)
+                                .show();
+                        return;
+                    }
+                    // #FIXME existing picture gets overwritten and become null file if new instance gets cancelled.
+                    File tempImageFile = PhotoGetter.dispatchTakePictureIntent(PetEditActivity.this, REQUEST_TAKE_PHOTO);
+                    if (tempImageFile == null) {
+                        Log.e(TAG, "No Image file..");
+                        return;
+                    } else {
+                        imageFile = tempImageFile;
+                    }
+                }
+            });
+
+            buttonGallery.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    Intent intent = new Intent();
+                    intent.setType("image/*");
+                    intent.setAction(Intent.ACTION_GET_CONTENT);
+                    getActivity().startActivityForResult(Intent.createChooser(intent,
+                            "Select Picture"), REQUEST_GET_FROM_GALLERY);
+                    //startActivityForResult(intent, REQUEST_GET_FROM_GALLERY);
+                }
+            });
+
+
+        }
     }
 
     @Override
@@ -170,7 +287,7 @@ public class PetEditActivity extends AppCompatActivity {
         }
         return true;
     }
-    
+
 
     private void setupBirthdayPickerDialog() {
         final Calendar currentTime = Calendar.getInstance();
@@ -262,6 +379,116 @@ public class PetEditActivity extends AppCompatActivity {
                 cal.get(Calendar.DAY_OF_MONTH));
 
         this.spinnerPetSize.setSelection(pet.size);
+
+        if (pet.imageid != null && pet.imageFileName != null && pet.imageFileName.isEmpty() == false) {
+            final String imageBaseUrl = Server.getInstance(getBaseContext()).getServerUrl() + "/img/";
+            final String imageUrl = imageBaseUrl + pet.imageFileName;
+
+            final int size = (int) ImageUtils.convertDpToPixel(160.00f, getApplicationContext());
+
+            AsyncTask.execute(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        Bitmap bitmap = Glide.with(getApplicationContext())
+                                .load(imageUrl)
+                                .asBitmap()
+                                .centerCrop()
+                                .skipMemoryCache(true)
+                                .into(size, size)
+                                .get();
+
+                        final Bitmap cropCircle = ImageUtils.cropCircle(getApplicationContext(),
+                                bitmap, size / 2, size, size, false, false, false, false);
+
+                        imagePet.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                imagePet.setImageBitmap(cropCircle);
+                            }
+                        });
+
+                    } catch (InterruptedException e) {
+                        Log.e(TAG, e.toString());
+
+                    } catch (ExecutionException e) {
+                        Log.e(TAG, e.toString());
+                    }
+
+                }
+            });
+
+        }
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_IMAGE_EDIT) {
+            if (resultCode == RESULT_OK) {
+                if (imageMenuDialogFragment != null) {
+                    imageMenuDialogFragment.dismiss();
+                }
+
+                final String processedImagePath = data.getStringExtra(ImageEditActivity.KEY_PROCESSED_IMAGE_PATH);
+                this.imageFile = new File(processedImagePath);
+
+                AsyncTask.execute(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        int size = (int) ImageUtils.convertDpToPixel(160.00f, getApplicationContext());
+                        Bitmap bitmap = ImageUtils.scale(processedImagePath, size, size);
+                        ImageUtils.saveJpg(bitmap, processedImagePath, 70);
+                        final Bitmap cropCircle = ImageUtils.cropCircle(getApplicationContext(),
+                                bitmap, size / 2, size, size, false, false, false, false);
+
+                        imagePet.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                imagePet.setImageBitmap(cropCircle);
+                            }
+                        });
+
+                    }
+                });
+
+            } else {
+                Log.i(TAG, "onActivityResult: returned non ok");
+            }
+
+        } else if (requestCode == REQUEST_TAKE_PHOTO) {
+            if (resultCode == RESULT_OK) {
+
+                Intent intent = new Intent(this, ImageEditActivity.class);
+                intent.putExtra(ImageEditActivity.KEY_IMAGE_PATH, this.imageFile.getAbsolutePath());
+
+                startActivityForResult(intent, REQUEST_IMAGE_EDIT);
+                return;
+
+            } else if (resultCode == RESULT_CANCELED) {
+                if (this.imageFile != null) {
+                    this.imageFile.delete();
+                    this.imageFile = null;
+                    this.imagePet.setImageResource(R.drawable.logo_circle);
+                }
+            }
+
+        } else if (requestCode == REQUEST_GET_FROM_GALLERY) {
+            if (resultCode == RESULT_OK) {
+                Uri uri = data.getData();
+                String path = getPath(this, uri);
+                Log.d(TAG, "onActivityResult: ImagePath from Gallery:" + path);
+
+                Intent intent = new Intent(this, ImageEditActivity.class);
+                intent.putExtra(ImageEditActivity.KEY_IMAGE_PATH, path);
+                startActivityForResult(intent, REQUEST_IMAGE_EDIT);
+
+            } else {
+                Log.d(TAG, "onActivityResult: REUQEST_GET_FROM_GALLERY code:" + String.valueOf(resultCode));
+
+            }
+        }
     }
 
     private void addPet() {
@@ -290,7 +517,7 @@ public class PetEditActivity extends AppCompatActivity {
         webServiceApi.insertPet(pet).enqueue(new Callback<InsertResponse>() {
             @Override
             public void onResponse(Call<InsertResponse> call, Response<InsertResponse> response) {
-                if (response.isSuccess() == false) {
+                if (response.isSuccessful() == false) {
                     // Server Level Error
                     String errorMessage = "";
                     try {
@@ -336,6 +563,15 @@ public class PetEditActivity extends AppCompatActivity {
                     }
                 } else {
                     pet.id = new ObjectId(json.newid);
+                }
+
+
+                if (imageFile != null && imageFile.getAbsolutePath().isEmpty() == false) {
+                    Intent serviceIntent = new Intent(PetEditActivity.this, ImageUploadService.class);
+                    serviceIntent.putExtra("image_filepath", imageFile.getAbsolutePath());
+                    serviceIntent.putExtra("category", "pet");
+                    serviceIntent.putExtra("relatedid", pet.id.toHexString());
+                    startService(serviceIntent);
                 }
 
                 myPets.insert(pet);
@@ -388,7 +624,7 @@ public class PetEditActivity extends AppCompatActivity {
         webServiceApi.updatePet(pet).enqueue(new Callback<BasicResponse>() {
             @Override
             public void onResponse(Call<BasicResponse> call, Response<BasicResponse> response) {
-                if (response.isSuccess() == false) {
+                if (response.isSuccessful() == false) {
                     // Server Level Error
                     String errorMessage = "";
                     try {
@@ -533,5 +769,149 @@ public class PetEditActivity extends AppCompatActivity {
             AlertDialog dialog = (AlertDialog) getDialog();
             dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(Color.GRAY);
         }
+    }
+
+    // REF: http://stackoverflow.com/questions/33208911/get-realpath-return-null-on-android-marshmallow
+
+    /**
+     * Get a file path from a Uri. This will get the the path for Storage Access
+     * Framework Documents, as well as the _data field for the MediaStore and
+     * other file-based ContentProviders.
+     *
+     * @param context The context.
+     * @param uri     The Uri to query.
+     * @author paulburke
+     */
+    public static String getPath(final Context context, final Uri uri) {
+
+        final boolean isKitKat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
+
+        // DocumentProvider
+        if (isKitKat && DocumentsContract.isDocumentUri(context, uri)) {
+            // ExternalStorageProvider
+            if (isExternalStorageDocument(uri)) {
+                final String docId = DocumentsContract.getDocumentId(uri);
+                final String[] split = docId.split(":");
+                final String type = split[0];
+
+                if ("primary".equalsIgnoreCase(type)) {
+                    return Environment.getExternalStorageDirectory() + "/" + split[1];
+                }
+
+                // TODO handle non-primary volumes
+            }
+            // DownloadsProvider
+            else if (isDownloadsDocument(uri)) {
+
+                final String id = DocumentsContract.getDocumentId(uri);
+                final Uri contentUri = ContentUris.withAppendedId(
+                        Uri.parse("content://downloads/public_downloads"), Long.valueOf(id));
+
+                return getDataColumn(context, contentUri, null, null);
+            }
+            // MediaProvider
+            else if (isMediaDocument(uri)) {
+                final String docId = DocumentsContract.getDocumentId(uri);
+                final String[] split = docId.split(":");
+                final String type = split[0];
+
+                Uri contentUri = null;
+                if ("image".equals(type)) {
+                    contentUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
+                } else if ("video".equals(type)) {
+                    contentUri = MediaStore.Video.Media.EXTERNAL_CONTENT_URI;
+                } else if ("audio".equals(type)) {
+                    contentUri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
+                }
+
+                final String selection = "_id=?";
+                final String[] selectionArgs = new String[]{
+                        split[1]
+                };
+
+                return getDataColumn(context, contentUri, selection, selectionArgs);
+            }
+        }
+        // MediaStore (and general)
+        else if ("content".equalsIgnoreCase(uri.getScheme())) {
+
+            // Return the remote address
+            if (isGooglePhotosUri(uri))
+                return uri.getLastPathSegment();
+
+            return getDataColumn(context, uri, null, null);
+        }
+        // File
+        else if ("file".equalsIgnoreCase(uri.getScheme())) {
+            return uri.getPath();
+        }
+
+        return null;
+    }
+
+    /**
+     * Get the value of the data column for this Uri. This is useful for
+     * MediaStore Uris, and other file-based ContentProviders.
+     *
+     * @param context       The context.
+     * @param uri           The Uri to query.
+     * @param selection     (Optional) Filter used in the query.
+     * @param selectionArgs (Optional) Selection arguments used in the query.
+     * @return The value of the _data column, which is typically a file path.
+     */
+    public static String getDataColumn(Context context, Uri uri, String selection,
+                                       String[] selectionArgs) {
+
+        Cursor cursor = null;
+        final String column = "_data";
+        final String[] projection = {
+                column
+        };
+
+        try {
+            cursor = context.getContentResolver().query(uri, projection, selection, selectionArgs,
+                    null);
+            if (cursor != null && cursor.moveToFirst()) {
+                final int index = cursor.getColumnIndexOrThrow(column);
+                return cursor.getString(index);
+            }
+        } finally {
+            if (cursor != null)
+                cursor.close();
+        }
+        return null;
+    }
+
+
+    /**
+     * @param uri The Uri to check.
+     * @return Whether the Uri authority is ExternalStorageProvider.
+     */
+    public static boolean isExternalStorageDocument(Uri uri) {
+        return "com.android.externalstorage.documents".equals(uri.getAuthority());
+    }
+
+    /**
+     * @param uri The Uri to check.
+     * @return Whether the Uri authority is DownloadsProvider.
+     */
+    public static boolean isDownloadsDocument(Uri uri) {
+        return "com.android.providers.downloads.documents".equals(uri.getAuthority());
+    }
+
+    /**
+     * @param uri The Uri to check.
+     * @return Whether the Uri authority is MediaProvider.
+     */
+    public static boolean isMediaDocument(Uri uri) {
+        return "com.android.providers.media.documents".equals(uri.getAuthority());
+    }
+
+    /**
+     * @param uri The Uri to check.
+     * @return Whether the Uri authority is Google Photos.
+     */
+    public static boolean isGooglePhotosUri(Uri uri) {
+        return "com.google.android.apps.photos.content".equals(uri.getAuthority());
     }
 }

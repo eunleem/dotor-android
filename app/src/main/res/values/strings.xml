@@ -337,6 +337,7 @@
     <string name="email_unverified">Email Unverified</string>
     <string name="email_verified">This email is verified!</string>
     <string name="email_will_be_verified">Verification email will be sent.</string>
+    <string name="pet_picture_uploaded">Pet Picture Uploaded!</string>
 
 
 </resources>

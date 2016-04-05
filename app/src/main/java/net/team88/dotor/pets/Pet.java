@@ -62,8 +62,10 @@ public class Pet implements Comparable<Pet> {
     @SerializedName("size")
     public int size;
 
-    //public String imageLocalPath;
-    //public String imageUrl;
+    @SerializedName("profile_imageid")
+    public ObjectId imageid;
+
+    public String imageFileName;
 
     public boolean setId(ObjectId id) {
         if (ObjectId.isValid(id.toHexString()) == false) {
