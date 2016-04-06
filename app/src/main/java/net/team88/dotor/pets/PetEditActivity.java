@@ -656,6 +656,14 @@ public class PetEditActivity extends AppCompatActivity {
                     return;
                 }
 
+                if (imageFile != null && imageFile.getAbsolutePath().isEmpty() == false) {
+                    Intent serviceIntent = new Intent(PetEditActivity.this, ImageUploadService.class);
+                    serviceIntent.putExtra("image_filepath", imageFile.getAbsolutePath());
+                    serviceIntent.putExtra("category", "pet");
+                    serviceIntent.putExtra("relatedid", pet.id.toHexString());
+                    startService(serviceIntent);
+                }
+
                 myPets.update(petName, pet);
 
                 progressBar.setVisibility(View.GONE);
