@@ -319,9 +319,13 @@
 
 	<!-- Hospital Info -->
     <string name="main_view_hospital_info">진료후기 등록된 동물병원 둘러보기</string>
-  <!-- info subtitle부분에 리뷰등록할 때 입력(선택)한 병원명 보여지도록 해주세요-->
+
+    <!-- info subtitle부분에 리뷰등록할 때 입력(선택)한 병원명 보여지도록 해주세요-->
     <string name="main_view_hospital_info_subtitle">최근 방문한 병원이 없습니다.</string>
     <string name="hospital_info_not_yet_implemented">진료후기가 등록된 동물병원들을 정리하고 있습니다.\n등록해주신 정보들을 잘 반영해서 곧 업데이트하겠습니다!</string>
+
+    <string name="pet_picture_uploaded">Pet Picture Uploaded!</string>
+    <string name="msg_no_reviews_by_location">No Reviews found in the location. Displaying reviews from all locations.</string>
 
 
 
@@ -337,7 +341,6 @@
     <string name="email_unverified">Email Unverified</string>
     <string name="email_verified">This email is verified!</string>
     <string name="email_will_be_verified">Verification email will be sent.</string>
-    <string name="pet_picture_uploaded">Pet Picture Uploaded!</string>
 
 
 </resources>

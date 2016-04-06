@@ -70,6 +70,7 @@ public class ReviewListActivity extends AppCompatActivity {
 
     private SearchSettings searchSettings;
     private TextView textNothingMessage;
+    private Snackbar allReviewSnackbar;
 
     enum Mode {
         ALL,
@@ -614,6 +615,9 @@ public class ReviewListActivity extends AppCompatActivity {
     }
 
     private void getReviews() {
+        if (allReviewSnackbar != null) {
+            allReviewSnackbar.dismiss();
+        }
         layoutSwipeRefresh.setRefreshing(true);
         DotorWebService webServiceApi = Server.getInstance(this).getService();
         Call<ReviewsResponse> call;
@@ -670,6 +674,13 @@ public class ReviewListActivity extends AppCompatActivity {
                     layoutSwipeRefresh.setRefreshing(false);
                     textNothingMessage.setVisibility(View.VISIBLE);
                     return;
+
+                } else if (body.status == 2) {
+                    // No REVIEW
+                    layoutSwipeRefresh.setRefreshing(false);
+
+                    allReviewSnackbar = Snackbar.make(textNothingMessage, R.string.msg_no_reviews_by_location, Snackbar.LENGTH_INDEFINITE);
+                    allReviewSnackbar.show();
                 }
 
                 Log.i(TAG, "GetReviews: count: " + String.valueOf(body.reviews.size()));
