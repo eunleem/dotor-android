@@ -2,20 +2,29 @@ package net.team88.dotor.pets;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.os.AsyncTask;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
 import net.team88.dotor.R;
+import net.team88.dotor.shared.Server;
+import net.team88.dotor.utils.ImageUtils;
 import net.team88.dotor.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashMap;
+import java.util.concurrent.ExecutionException;
 
 public class PetsRecyclerViewAdapter extends RecyclerView.Adapter<PetsRecyclerViewAdapter.ViewHolder> {
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -23,6 +32,7 @@ public class PetsRecyclerViewAdapter extends RecyclerView.Adapter<PetsRecyclerVi
         CardView cardview;
 
 
+        ImageView imagePet;
         TextView textPetName;
         TextView textPetType;
         TextView textPetGender;
@@ -34,6 +44,8 @@ public class PetsRecyclerViewAdapter extends RecyclerView.Adapter<PetsRecyclerVi
             super(view);
 
             this.cardview = (CardView) view.findViewById(R.id.cardview);
+
+            this.imagePet = (ImageView) view.findViewById(R.id.imagePet);
 
             this.textPetName = (TextView) view.findViewById(R.id.textPetName);
             this.textPetType = (TextView) view.findViewById(R.id.textPetType);
@@ -58,7 +70,7 @@ public class PetsRecyclerViewAdapter extends RecyclerView.Adapter<PetsRecyclerVi
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, int position) {
         final LinkedHashMap<String, Pet> pets = MyPets.getInstance(context).getPets();
         ArrayList<Pet> petList = new ArrayList<>(pets.values());
         Collections.sort(petList);
@@ -88,6 +100,44 @@ public class PetsRecyclerViewAdapter extends RecyclerView.Adapter<PetsRecyclerVi
         } else {
             // ERROR
             petSize = "Unknown";
+        }
+
+        if (pet.imageid != null) {
+            final String imageBaseUrl = Server.getInstance(context).getServerUrl() + "/img/";
+            final String imageUrl = imageBaseUrl + pet.imageFileName;
+            AsyncTask.execute(new Runnable() {
+                @Override
+                public void run() {
+
+                    try {
+                        final int size = (int) ImageUtils.convertDpToPixel(96.00f, context);
+                        Bitmap bitmap = Glide.with(context)
+                                .load(imageUrl)
+                                .asBitmap()
+                                .centerCrop()
+                                .skipMemoryCache(true)
+                                .into(size, size)
+                                .get();
+
+                        final Bitmap cropCircle = ImageUtils.cropCircle(context,
+                                bitmap, size / 2, size, size, false, false, false, false);
+
+                        holder.imagePet.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                holder.imagePet.setImageBitmap(cropCircle);
+                            }
+                        });
+
+                    } catch (InterruptedException e) {
+                        Log.e("Glide", e.toString());
+
+                    } catch (ExecutionException e) {
+                        Log.e("Glide", e.toString());
+                    }
+
+                }
+            });
         }
 
         holder.textPetName.setText(pet.name);

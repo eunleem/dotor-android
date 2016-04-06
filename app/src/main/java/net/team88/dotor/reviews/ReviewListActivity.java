@@ -629,17 +629,22 @@ public class ReviewListActivity extends AppCompatActivity {
             case LOCATION:
                 if (nearbyRequest == null) {
                     Log.e(TAG, "getReviews: nearByRequest is null.");
-                    return;
+                    Crashlytics.log(Log.WARN, TAG, "nearByRequest is null. Getting all reviews...");
+                    call = webServiceApi.getReviews();
+                } else {
+                    searchSettings.setLocationSetting(currentLocationName, nearbyRequest);
+                    call = webServiceApi.getReviewsByLocation(nearbyRequest);
                 }
-                searchSettings.setLocationSetting(currentLocationName, nearbyRequest);
-                call = webServiceApi.getReviewsByLocation(nearbyRequest);
+
                 break;
             case CATEGORY:
                 if (categories == null) {
                     Log.e(TAG, "getReviews: category is null.");
-                    return;
+                    Crashlytics.log(Log.WARN, TAG, "category is null. Getting all reviews...");
+                    call = webServiceApi.getReviews();
+                } else {
+                    call = webServiceApi.getReviewsByCategories(categories);
                 }
-                call = webServiceApi.getReviewsByCategories(categories);
                 break;
             default:
                 return;
@@ -652,18 +657,29 @@ public class ReviewListActivity extends AppCompatActivity {
                 if (response.isSuccessful() == false) {
                     layoutSwipeRefresh.setRefreshing(false);
                     Log.e(TAG, "getReviews failed!");
+                    Crashlytics.log(Log.WARN, TAG, "GetReviews failed. Code A. Response.isSuccessful returned false.");
+                    Snackbar.make(textNothingMessage, R.string.msg_error_bad_server, Snackbar.LENGTH_INDEFINITE)
+                            .show();
                     return;
                 }
 
                 ReviewsResponse body = response.body();
                 if (body == null) {
+                    Crashlytics.log(Log.WARN, TAG, "GetReviews failed. Code B. Body Null");
+
                     layoutSwipeRefresh.setRefreshing(false);
+                    Snackbar.make(textNothingMessage, R.string.msg_error_bad_server, Snackbar.LENGTH_INDEFINITE)
+                            .show();
                     return;
                 }
 
                 if (body.status < 0) {
+                    Crashlytics.log(Log.WARN, TAG, "GetReviews failed. Code C. " + body.message);
                     Log.e(TAG, "getReviews returned status non-zero! message: " + body.message);
+
                     layoutSwipeRefresh.setRefreshing(false);
+                    Snackbar.make(textNothingMessage, R.string.msg_error_bad_server, Snackbar.LENGTH_INDEFINITE)
+                            .show();
                     return;
                 }
 
@@ -685,7 +701,6 @@ public class ReviewListActivity extends AppCompatActivity {
 
                 Log.i(TAG, "GetReviews: count: " + String.valueOf(body.reviews.size()));
 
-
                 ArrayList<Review> reviews = body.reviews;
 
                 viewAdapter.clear();
@@ -697,8 +712,11 @@ public class ReviewListActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<ReviewsResponse> call, Throwable t) {
+                Crashlytics.log(Log.WARN, TAG, "GetReviews failed. Code D. " + t.getMessage());
                 layoutSwipeRefresh.setRefreshing(false);
                 Log.e(TAG, "GetReviews onFailure: " + t.getMessage());
+                Snackbar.make(textNothingMessage, R.string.msg_error_bad_connection, Snackbar.LENGTH_INDEFINITE)
+                        .show();
             }
         });
     }
