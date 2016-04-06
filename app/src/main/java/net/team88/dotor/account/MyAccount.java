@@ -149,7 +149,7 @@ public class MyAccount {
                             // Server Level Error
                             Log.e(TAG, "Request failed. Msg: " + response.message());
                             final String message = context.getString(R.string.msg_error_login);
-                            Snackbar.make(snackBarParent, message, Snackbar.LENGTH_LONG).show();
+                            Snackbar.make(snackBarParent, message, Snackbar.LENGTH_INDEFINITE).show();
                             return;
                         }
 
@@ -161,7 +161,7 @@ public class MyAccount {
                         if (json.status < 0) {
                             // Application Level Error
                             final String message = context.getString(R.string.msg_error_login);
-                            Snackbar.make(snackBarParent, message, Snackbar.LENGTH_LONG).show();
+                            Snackbar.make(snackBarParent, message, Snackbar.LENGTH_INDEFINITE).show();
                             return;
                         }
 
@@ -181,7 +181,7 @@ public class MyAccount {
                     @Override
                     public void onFailure(Call<BasicResponse> call, Throwable t) {
                         final String message = context.getString(R.string.msg_error_bad_connection);
-                        Snackbar.make(snackBarParent, message, Snackbar.LENGTH_LONG).show();
+                        Snackbar.make(snackBarParent, message, Snackbar.LENGTH_INDEFINITE).show();
                     }
                 }
         );
