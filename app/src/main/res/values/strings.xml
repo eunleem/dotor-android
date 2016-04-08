@@ -328,6 +328,7 @@
     <string name="pet_picture_uploaded">프로필 사진이 등록되었습니다.</string>
     <string name="msg_no_reviews_by_location">현재 위치에서 가까운 순으로 진료후기들이 리스트에 보여집니다.</string>
 
+    <string name="msg.unregistered.hospital">Unregistered hospital. This will be verified by admin and then registered.</string>
 
 
     <!-- BELOW IS NOT NEEDED!!!!!!!!!!!!!!!! -->
