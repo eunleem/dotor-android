@@ -23,7 +23,7 @@
     <string name="age_unit" translatable="false">살</string>
     <string name="weight" translatable="true">크기</string>
 
-    <string name="review" translatable="true">내용을 입력해주세요.</string>
+    <string name="review" translatable="true">소중한 정보 감사합니다.\n내용을 입력해주세요.</string>
     <string name="region" translatable="true">지역</string>
     <string name="location" translatable="true">위치</string>
     <string name="hospital" translatable="true">병원명</string>
@@ -286,7 +286,7 @@
     <string name="wait">잠시만 기다려주세요.&#8230;</string>
     <string name="post_label_hospital_info">병원정보</string>
     <string name="post_label_visit">진료 정보</string>
-    <string name="post_label_body">병원 진료가 어땟나요?</string>
+    <string name="post_label_body">진료 후기</string>
     <string name="post_label_images">동물병원 영수증 사진을 첨부해주세요.</string>
     <string name="msg_error_review_view_failed">진료후기를 불러오는데 실패했습니다.</string>
     <string name="msg_progress_loading">잠시만 기다려주세요.&#8230;</string>
@@ -324,8 +324,9 @@
     <string name="main_view_hospital_info_subtitle">최근 방문한 병원이 없습니다.</string>
     <string name="hospital_info_not_yet_implemented">진료후기가 등록된 동물병원들을 정리하고 있습니다.\n등록해주신 정보들을 잘 반영해서 곧 업데이트하겠습니다!</string>
 
-    <string name="pet_picture_uploaded">Pet Picture Uploaded!</string>
-    <string name="msg_no_reviews_by_location">No Reviews found in the location. Displaying reviews from all locations.</string>
+
+    <string name="pet_picture_uploaded">프로필 사진이 등록되었습니다.</string>
+    <string name="msg_no_reviews_by_location">현재 위치에서 가까운 순으로 진료후기들이 리스트에 보여집니다.</string>
 
 
 
