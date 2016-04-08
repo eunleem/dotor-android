@@ -3,6 +3,8 @@ package net.team88.dotor.reviews;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -181,6 +183,15 @@ public class ReviewsRecyclerViewAdapter extends RecyclerView.Adapter<ReviewsRecy
             });
         } else {
             holder.imageViewReviewThumbnail.setVisibility(View.GONE);
+        }
+
+        int primaryColor = context.getResources().getColor(R.color.colorPrimary);
+
+        Drawable[] drawables = holder.textReviewLikes.getCompoundDrawablesRelative();
+        for (Drawable drawable : drawables) {
+            if (drawable != null) {
+                drawable.mutate().setColorFilter(primaryColor, PorterDuff.Mode.MULTIPLY);
+            }
         }
 
         int likes = 0;

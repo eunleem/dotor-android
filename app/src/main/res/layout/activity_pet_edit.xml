@@ -55,7 +55,7 @@
                         android:layout_height="160dp"
                         android:layout_gravity="center"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/logo_circle" />
+                        android:src="@drawable/ic_dotor_circle_96dp" />
 
                     <ImageView
                         android:id="@+id/imagePetAdd"

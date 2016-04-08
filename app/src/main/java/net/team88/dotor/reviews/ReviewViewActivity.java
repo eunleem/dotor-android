@@ -3,6 +3,7 @@ package net.team88.dotor.reviews;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
@@ -34,6 +35,7 @@ import com.crashlytics.android.answers.Answers;
 import com.crashlytics.android.answers.ContentViewEvent;
 
 import net.team88.dotor.R;
+import net.team88.dotor.account.MyAccount;
 import net.team88.dotor.comments.Comment;
 import net.team88.dotor.comments.CommentsListViewAdapter;
 import net.team88.dotor.comments.CommentsResponse;
@@ -166,7 +168,7 @@ public class ReviewViewActivity extends AppCompatActivity {
 
         ActionBar ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
-        ab.setHomeAsUpIndicator(R.drawable.ic_clear_white_24dp);
+        //ab.setHomeAsUpIndicator(R.drawable.ic_clear_white_24dp);
     }
 
     private void registerElements() {
@@ -389,7 +391,7 @@ public class ReviewViewActivity extends AppCompatActivity {
 
                 final String imageBaseUrl = Server.getInstance(getBaseContext()).getServerUrl() + "/img/";
 
-                imageViewPetThumbnail.setImageResource(R.drawable.logo_circle);// TODO Load Pet Image
+
 
                 if (reviewCached.images != null && reviewCached.images.size() > 0) {
                     // #LATER currently only support one picture.
@@ -414,10 +416,10 @@ public class ReviewViewActivity extends AppCompatActivity {
                 }
 
                 textPetName.setText(petCached.getName());
-                textPetTypeGender.setText(petCached.getTypeString(getBaseContext()) + " " + petCached.getGenderString(getBaseContext())); // TODO Add more info
+                textPetTypeGender.setText(petCached.getTypeString(getBaseContext()) + "   " + petCached.getGenderString(getBaseContext())); // TODO Add more info
 
                 String ageStr = String.valueOf(reviewCached.petAge) + getApplicationContext().getString(R.string.age_unit);
-                textPetAgeSize.setText(ageStr + " " + petCached.getSizeString(getApplicationContext()));
+                textPetAgeSize.setText(ageStr + "   " + petCached.getSizeString(getApplicationContext()));
 
                 if (petCached.imageid != null) {
                     Log.i(TAG, "PetImageId Not Null");
@@ -425,7 +427,6 @@ public class ReviewViewActivity extends AppCompatActivity {
                         @Override
                         public void run() {
                             try {
-                                final String imageBaseUrl = Server.getInstance(getBaseContext()).getServerUrl() + "/img/";
                                 final String imageUrl = imageBaseUrl + petCached.imageid.toHexString() + ".jpg";
 
                                 final int size = (int) ImageUtils.convertDpToPixel(64.00f, getApplicationContext());
@@ -456,6 +457,8 @@ public class ReviewViewActivity extends AppCompatActivity {
 
                         }
                     });
+                } else {
+                    imageViewPetThumbnail.setImageResource(R.drawable.ic_dotor_circle_48dp);
                 }
 
                 updateReviewInfo();
@@ -510,10 +513,12 @@ public class ReviewViewActivity extends AppCompatActivity {
             likes = reviewCached.likes.size();
         }
 
+        int primaryColor = getResources().getColor(R.color.colorPrimary);
+
         Drawable[] drawables = textLikes.getCompoundDrawablesRelative();
         for (Drawable drawable : drawables) {
             if (drawable != null) {
-                drawable.mutate().setColorFilter(0xFFFF0000, PorterDuff.Mode.MULTIPLY);
+                drawable.mutate().setColorFilter(primaryColor, PorterDuff.Mode.MULTIPLY);
             }
         }
 

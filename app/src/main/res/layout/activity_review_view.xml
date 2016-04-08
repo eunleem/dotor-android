@@ -34,36 +34,6 @@
             android:focusableInTouchMode="true"
             android:orientation="vertical">
 
-            <RelativeLayout
-                android:id="@+id/layoutHospitalInfo"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:focusable="true"
-                android:focusableInTouchMode="true"
-                android:padding="16dp">
-
-                <TextView
-                    android:id="@+id/textHospitalName"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:singleLine="true"
-                    android:text="Happy Pet Hospital"
-                    android:textColor="@color/secondaryText"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/textHospitalAddress"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/textHospitalName"
-                    android:text="Seoul-si Mapo-gu Yanghwa-daegyo"
-                    android:textColor="@color/secondaryText" />
-
-            </RelativeLayout>
-
-            <View style="@style/Divider" />
-
             <LinearLayout
                 android:id="@+id/layoutPetInfo"
                 android:layout_width="match_parent"
@@ -74,23 +44,12 @@
                 android:paddingRight="@dimen/activity_horizontal_margin"
                 android:paddingTop="@dimen/activity_vertical_margin">
 
-                <FrameLayout
+                <ImageView
+                    android:id="@+id/imageViewPetThumbnail"
                     android:layout_width="64dp"
-                    android:layout_height="64dp">
-
-                    <ImageView
-                        android:layout_width="64dp"
-                        android:layout_height="64dp"
-                        android:src="@drawable/logo_circle" />
-
-                    <ImageView
-                        android:id="@+id/imageViewPetThumbnail"
-                        android:layout_width="64dp"
-                        android:layout_height="64dp"
-                        android:scaleType="fitCenter" />
-
-                </FrameLayout>
-
+                    android:layout_height="64dp"
+                    android:contentDescription="@string/pet"
+                    android:scaleType="fitCenter" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -105,7 +64,7 @@
                         android:singleLine="true"
                         android:text="Misu"
                         android:textColor="@color/primaryText"
-                        android:textSize="24sp"
+                        android:textSize="20sp"
                         android:textStyle="bold" />
 
                     <TextView
@@ -115,7 +74,7 @@
                         android:singleLine="true"
                         android:text="Kitten, Male"
                         android:textColor="@color/secondaryText"
-                        android:textSize="16sp" />
+                        android:textSize="14sp" />
 
                     <TextView
                         android:id="@+id/textPetAgeSize"
@@ -124,7 +83,7 @@
                         android:singleLine="true"
                         android:text="Age, Size"
                         android:textColor="@color/secondaryText"
-                        android:textSize="16sp" />
+                        android:textSize="14sp" />
                 </LinearLayout>
 
             </LinearLayout>
@@ -142,9 +101,30 @@
                 android:paddingRight="@dimen/activity_horizontal_margin"
                 android:paddingTop="@dimen/activity_vertical_margin">
 
+                <android.support.percent.PercentRelativeLayout
+                    android:id="@+id/layoutReviewImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="16dp"
+                    android:layout_weight="2"
+                    android:visibility="visible">
+
+                    <ImageView
+                        android:id="@+id/imageViewReviewImage"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:contentDescription="Attached Image for Review"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/ic_image_grey600_48dp"
+                        app:layout_aspectRatio="100%"
+                        app:layout_widthPercent="100%" />
+
+                </android.support.percent.PercentRelativeLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
                     android:layout_weight="1"
                     android:orientation="vertical">
 
@@ -154,17 +134,18 @@
                         android:layout_height="wrap_content"
                         android:text="Category"
                         android:textColor="@color/primaryText"
-                        android:textSize="24sp"
-                        android:textStyle="bold" />
+                        android:textSize="20sp"
+                        android:textStyle="normal" />
 
                     <TextView
                         android:id="@+id/textReviewCost"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
                         android:singleLine="true"
-                        android:text="$212"
-                        android:textColor="@color/colorSecondary"
-                        android:textSize="20sp" />
+                        android:text="$888"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="18sp" />
 
                     <TextView
                         android:id="@+id/textReviewBody"
@@ -175,29 +156,40 @@
 
                 </LinearLayout>
 
-                <android.support.percent.PercentRelativeLayout
-                    android:id="@+id/layoutReviewImage"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                    android:visibility="visible">
-
-                    <ImageView
-                        android:id="@+id/imageViewReviewImage"
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:contentDescription="Attached Image for Review"
-                        android:scaleType="centerCrop"
-                        app:layout_aspectRatio="100%"
-                        app:layout_widthPercent="100%" />
-
-                </android.support.percent.PercentRelativeLayout>
-
             </LinearLayout>
-
 
             <View style="@style/Divider" />
 
+            <RelativeLayout
+                android:id="@+id/layoutHospitalInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:padding="16dp">
+
+                <TextView
+                    android:id="@+id/textHospitalName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:text="Happy Pet Hospital"
+                    android:textColor="@color/primaryText"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/textHospitalAddress"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/textHospitalName"
+                    android:lineSpacingExtra="4dp"
+                    android:text="Seoul-si Mapo-gu Yanghwa-daegyo"
+                    android:textColor="@color/secondaryText" />
+
+            </RelativeLayout>
+
+            <View style="@style/Divider" />
 
             <LinearLayout
                 android:id="@+id/layoutSocialOverview"
@@ -214,12 +206,13 @@
                     android:layout_height="wrap_content"
                     android:clickable="true"
                     android:drawablePadding="8dp"
-                    android:drawableStart="@drawable/ic_heart_white_24dp"
+                    android:drawableStart="@drawable/ic_heart_outline_white_36dp"
                     android:foregroundGravity="center"
                     android:gravity="center"
                     android:paddingEnd="48dp"
                     android:paddingStart="0dp"
-                    android:text="Likes" />
+                    android:text="Likes"
+                    android:textSize="16dp" />
 
                 <TextView
                     android:id="@+id/textComments"
@@ -227,17 +220,17 @@
                     android:layout_height="wrap_content"
                     android:clickable="true"
                     android:drawablePadding="8dp"
-                    android:drawableStart="@drawable/ic_message_draw_grey600_24dp"
+                    android:drawableStart="@drawable/ic_message_draw_grey600_36dp"
                     android:foregroundGravity="center"
                     android:gravity="center"
                     android:paddingEnd="0dp"
                     android:paddingStart="48dp"
-                    android:text="Comments" />
+                    android:text="Comments"
+                    android:textSize="16dp" />
 
             </LinearLayout>
 
             <View style="@style/Divider" />
-
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -281,9 +274,9 @@
                         android:layout_height="40dp"
                         android:layout_gravity="center_horizontal|bottom"
                         android:layout_marginStart="8dp"
-                        android:background="@color/colorSecondary"
+                        android:background="#55000000"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/ic_plus_white_24dp" />
+                        android:src="@drawable/ic_check_white_24dp" />
 
                 </LinearLayout>
 

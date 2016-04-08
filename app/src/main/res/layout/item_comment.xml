@@ -19,8 +19,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:src="@drawable/logo_circle"
-            android:scaleType="centerCrop" />
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_dotor_circle_48dp" />
 
     </FrameLayout>
 
@@ -46,21 +46,22 @@
                 android:maxWidth="160dp"
                 android:singleLine="true"
                 android:text="Nickname"
+                android:textColor="@color/colorPrimary"
                 android:textSize="16sp"
-                android:textStyle="bold" />
+                android:textStyle="normal" />
 
             <TextView
                 android:id="@+id/textTimestamp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:layout_toEndOf="@+id/textNickname"
                 android:layout_weight="5"
                 android:gravity="end"
                 android:maxWidth="100dp"
                 android:singleLine="true"
                 android:text="Timestamp"
-                android:textColor="@color/secondaryText" />
+                android:textColor="@color/secondaryText"
+                android:textSize="14sp" />
 
         </LinearLayout>
 
@@ -68,6 +69,7 @@
             android:id="@+id/textCommentBody"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textSize="14sp"
             android:paddingEnd="32dp"
             android:text="CommentBody" />
 
