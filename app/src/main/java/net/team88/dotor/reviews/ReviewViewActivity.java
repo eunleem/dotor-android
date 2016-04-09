@@ -448,6 +448,15 @@ public class ReviewViewActivity extends AppCompatActivity {
                                     }
                                 });
 
+                                imageViewPetThumbnail.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        Intent intent = new Intent(ReviewViewActivity.this, ImageViewActivity.class);
+                                        intent.putExtra("image_url", imageUrl);
+                                        startActivity(intent);
+                                    }
+                                });
+
                             } catch (InterruptedException e) {
                                 Log.e(TAG, e.toString());
 
