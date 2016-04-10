@@ -111,6 +111,21 @@ public class MyAccount {
         return true;
     }
 
+    public boolean switchAccount(String username, String password) {
+        this.account = new Account();
+        this.account.setUsername(username);
+        this.account.setPassword(password);
+
+        if (Utils.isPlayServicesAvailable(this.context)) {
+            Intent intent = new Intent(this.context, GcmRegistrationService.class);
+            this.context.startService(intent);
+        }
+
+        this.save();
+
+        return true;
+    }
+
     public Account getAccount() {
         return account;
     }

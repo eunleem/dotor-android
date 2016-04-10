@@ -198,6 +198,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="net.team88.dotor.MainActivity" />
         </activity>
+        <activity
+            android:name=".settings.MyAccountActivity"
+            android:label="@string/title_activity_my_account"
+            android:parentActivityName=".settings.SettingsActivity"
+            android:theme="@style/AppTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="net.team88.dotor.settings.SettingsActivity" />
+        </activity>
     </application>
 
 </manifest>

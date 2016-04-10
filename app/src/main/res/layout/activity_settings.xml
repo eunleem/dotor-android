@@ -215,6 +215,29 @@
 
             </LinearLayout>
 
+            <LinearLayout
+                android:id="@+id/layoutAdmin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:layout_marginTop="8dp"
+                android:background="@color/white"
+                android:elevation="2dp"
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:paddingRight="@dimen/activity_horizontal_margin"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/textLogin"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp"
+                    android:text="@string/settings.login_info"
+                    android:textStyle="bold" />
+
+
+            </LinearLayout>
 
             <Button
                 android:id="@+id/buttonResetAll"
@@ -237,6 +260,7 @@
                 android:visibility="gone" />
 
         </LinearLayout>
+
     </ScrollView>
 
 </android.support.design.widget.CoordinatorLayout>

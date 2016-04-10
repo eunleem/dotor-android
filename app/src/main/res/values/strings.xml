@@ -310,14 +310,14 @@
 	    \n\n나의 유저아이디: %1$s
 	</string>
 
-	<string name="label.about_us">Created by Team88</string>
+    <string name="label.about_us">Created by Team88</string>
     <string name="program_info">Program Info</string>
     <string name="terms">Terms of Service</string>
     <string name="open_source_licenses">Open Source Licenses</string>
     <string name="created_by">Created by Team88</string>
     <string name="team88">https://www.team88.net/</string>
 
-	<!-- Hospital Info -->
+    <!-- Hospital Info -->
     <string name="main_view_hospital_info">진료후기 등록된 동물병원 둘러보기</string>
 
     <!-- info subtitle부분에 리뷰등록할 때 입력(선택)한 병원명 보여지도록 해주세요-->
@@ -343,6 +343,9 @@
     <string name="email_unverified">Email Unverified</string>
     <string name="email_verified">This email is verified!</string>
     <string name="email_will_be_verified">Verification email will be sent.</string>
+    <string name="settings.login">Login</string>
+    <string name="settings.login_info">Login Info</string>
+    <string name="title_activity_my_account">My Account</string>
 
 
 </resources>

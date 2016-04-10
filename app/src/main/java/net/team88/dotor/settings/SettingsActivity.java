@@ -23,6 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import net.team88.dotor.BuildConfig;
 import net.team88.dotor.R;
 import net.team88.dotor.account.MyAccount;
 import net.team88.dotor.hospitals.Hospitals;
@@ -54,6 +55,8 @@ public class SettingsActivity extends AppCompatActivity {
     private View viewAppVersion;
     private View viewCreatedBy;
     private TextView textVersion;
+    private TextView textLogin;
+    private View layoutAdmin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +82,13 @@ public class SettingsActivity extends AppCompatActivity {
             textVersion.setText("Could not retrieve version info.");
         }
 
+        if (BuildConfig.DEBUG) {
+            layoutAdmin.setVisibility(View.VISIBLE);
+        }
+
+        if (BuildConfig.BUILD_TYPE.contains("beta")) {
+            layoutAdmin.setVisibility(View.VISIBLE);
+        }
     }
 
     private void loadPushSetting() {
@@ -118,6 +128,9 @@ public class SettingsActivity extends AppCompatActivity {
         viewCreatedBy = (View) findViewById(R.id.layoutCreatedBy);
 
         textVersion = (TextView) findViewById(R.id.textVersion);
+
+        layoutAdmin = (View) findViewById(R.id.layoutAdmin);
+        textLogin = (TextView) findViewById(R.id.textLogin);
     }
 
     private void registerEvents() {
@@ -186,6 +199,14 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });
 
+        textLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(SettingsActivity.this, MyAccountActivity.class);
+                startActivity(intent);
+            }
+        });
+
 
 //        buttonResetAll.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -238,7 +259,6 @@ public class SettingsActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        save();
         finish();
     }
 
@@ -246,7 +266,6 @@ public class SettingsActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                save();
                 finish();
                 break;
             default:
@@ -255,9 +274,6 @@ public class SettingsActivity extends AppCompatActivity {
         return true;
     }
 
-    private void save() {
-
-    }
 
     public void resetDb() {
         final Context ctx = this.getApplicationContext();
