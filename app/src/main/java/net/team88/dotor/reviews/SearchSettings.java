@@ -45,6 +45,8 @@ public class SearchSettings {
 
     private PetFilter petFilter;
 
+    public static double DEFAULT_LATITUDE = 37.605886;
+    public static double DEFAULT_LONGITUDE = 126.922720;
 
     private SearchSettings(Context context) {
         this.context = context;
@@ -54,8 +56,8 @@ public class SearchSettings {
 
         this.nearbyRequest = new NearbyRequest();
 
-        this.nearbyRequest.latitude = Double.longBitsToDouble(this.data.getLong(KEY_LOCATION_LATITUDE, Double.doubleToLongBits(37.605886)));
-        this.nearbyRequest.longitude = Double.longBitsToDouble(this.data.getLong(KEY_LOCATION_LONGITUDE, Double.doubleToLongBits(126.922720)));
+        this.nearbyRequest.latitude = Double.longBitsToDouble(this.data.getLong(KEY_LOCATION_LATITUDE, Double.doubleToLongBits(DEFAULT_LATITUDE)));
+        this.nearbyRequest.longitude = Double.longBitsToDouble(this.data.getLong(KEY_LOCATION_LONGITUDE, Double.doubleToLongBits(DEFAULT_LONGITUDE)));
         this.nearbyRequest.distance = Double.longBitsToDouble(this.data.getLong(KEY_LOCATION_DISTANCE, 1000));
 
         String categories = this.data.getString(KEY_CATEGORIES, "");
@@ -98,9 +100,9 @@ public class SearchSettings {
 
         this.data.edit()
                 .putString(KEY_LOCATION_NAME, this.locationName)
-                .putLong(KEY_LOCATION_LATITUDE, Double.doubleToLongBits(nearbyRequest.latitude.doubleValue()))
-                .putLong(KEY_LOCATION_LONGITUDE, Double.doubleToLongBits(nearbyRequest.longitude.doubleValue()))
-                .putLong(KEY_LOCATION_DISTANCE, Double.doubleToLongBits(nearbyRequest.distance.doubleValue()))
+                .putLong(KEY_LOCATION_LATITUDE, Double.doubleToLongBits(nearbyRequest.latitude))
+                .putLong(KEY_LOCATION_LONGITUDE, Double.doubleToLongBits(nearbyRequest.longitude))
+                .putLong(KEY_LOCATION_DISTANCE, Double.doubleToLongBits(nearbyRequest.distance))
                 .apply();
     }
 
