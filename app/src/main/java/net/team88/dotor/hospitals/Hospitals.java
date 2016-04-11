@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.location.Location;
 import android.util.Log;
 
+import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.answers.Answers;
 import com.crashlytics.android.answers.CustomEvent;
 
@@ -87,6 +88,9 @@ public class Hospitals {
 
     public void setHospitals(List<Hospital> hospitalList) {
         hospitalHashMap.clear();
+        if (hospitalList == null) {
+            return;
+        }
         for (Hospital hospital : hospitalList) {
             hospitalHashMap.put(hospital.id, hospital);
         }
@@ -141,14 +145,14 @@ public class Hospitals {
                 }
 
                 int count = 0;
-                if (response.body().hospitals != null) {
-                    count = response.body().hospitals.size();
+                ArrayList<Hospital> hospitals = response.body().hospitals;
+                if (hospitals != null) {
+                    count = hospitals.size();
                 }
 
                 Log.d(TAG, "nearbyRequest: Successful. " + String.valueOf(count));
 
-                final ArrayList<Hospital> hospitals = response.body().hospitals;
-                setHospitals(response.body().hospitals);
+                setHospitals(hospitals);
                 onSuccess.run();
             }
 
@@ -176,13 +180,13 @@ public class Hospitals {
                 }
 
                 int count = 0;
-                if (response.body().hospitals != null) {
-                    count = response.body().hospitals.size();
+                ArrayList<Hospital> hospitals = response.body().hospitals;
+                if (hospitals != null) {
+                    count = hospitals.size();
                 }
 
                 Log.d(TAG, "nearbyRequest: Successful. " + String.valueOf(count));
 
-                final ArrayList<Hospital> hospitals = response.body().hospitals;
                 setHospitals(hospitals);
                 onSuccess.run();
             }
@@ -195,29 +199,15 @@ public class Hospitals {
     }
 
     private NearbyRequest createNearbyRequest(double distance) {
-        Location location = UserLocation.getInstance(context).getLastBestLocation();
         NearbyRequest nearbyRequest = new NearbyRequest();
         nearbyRequest.distance = distance;
-        if (location == null) {
-            Answers.getInstance().logCustom(
-                    new CustomEvent("Location")
-                            .putCustomAttribute("GetLocation", "Failed")
-            );
-            Log.d(TAG, "GetLocation: returned null. Fixed default values are used for coordinates.");
-            //nearbyRequest.longitude = 127.126344; // TODO Default longitude
-            //nearbyRequest.latitude = 37.412049;
-            nearbyRequest.longitude = 137.126344;
-            nearbyRequest.latitude = 47.412049;
 
-        } else {
-            Answers.getInstance().logCustom(
-                    new CustomEvent("Location")
-                            .putCustomAttribute("GetLocation", "Successful")
-            );
+        Location location = UserLocation.getInstance(context).getLastBestLocation();
+        if (location != null) {
             nearbyRequest.longitude = location.getLongitude();
             nearbyRequest.latitude = location.getLatitude();
-
         }
+
         return nearbyRequest;
     }
 }

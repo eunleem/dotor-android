@@ -40,6 +40,7 @@ public class MyAccountActivity extends AppCompatActivity {
         textUsername.setText(username);
         textPassword.setText(password);
 
+        buttonSetAccount.setVisibility(View.GONE);
     }
 
     private void setupBasicElements() {
