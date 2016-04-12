@@ -1,5 +1,6 @@
 package net.team88.dotor.pets;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -21,6 +22,7 @@ import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -79,6 +81,7 @@ public class PetEditActivity extends AppCompatActivity {
     private static final int REQUEST_TAKE_PHOTO = 10;
     private static final int REQUEST_GET_FROM_GALLERY = 20;
     private static final int REQUEST_IMAGE_EDIT = 30;
+    private static final int REQUEST_PERMISSION = 50;
     private final String TAG = "EDIT_PET";
 
     public static final String KEY_PET_NAME = "PET_NAME";
@@ -133,6 +136,7 @@ public class PetEditActivity extends AppCompatActivity {
 
         setSpinnerListItems(spinnerPetSize, R.array.pet_size_array);
         setupBirthdayPickerDialog();
+
 
         final String modeStr = getIntent().getStringExtra(KEY_MODE);
         if (modeStr != null && modeStr.equals(VALUE_MODE_EDIT)) {
@@ -220,6 +224,8 @@ public class PetEditActivity extends AppCompatActivity {
 
             buttonCamera = (Button) view.findViewById(R.id.buttonCamera);
             buttonGallery = (Button) view.findViewById(R.id.buttonGallery);
+
+            checkPermissions();
 
 
             buttonCamera.setOnClickListener(new View.OnClickListener() {
@@ -777,6 +783,40 @@ public class PetEditActivity extends AppCompatActivity {
             AlertDialog dialog = (AlertDialog) getDialog();
             dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(Color.GRAY);
         }
+    }
+
+    private static String[] PERMISSIONS = {
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.ACCESS_COARSE_LOCATION,
+            Manifest.permission.ACCESS_FINE_LOCATION
+    };
+
+    private void checkPermissions() {
+        int storagePermission = ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        int locationPermission = ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION);
+        if (storagePermission != PackageManager.PERMISSION_GRANTED ||
+                locationPermission != PackageManager.PERMISSION_GRANTED) {
+            // Permission not granted so prompt the user
+            ActivityCompat.requestPermissions(
+                    this,
+                    PERMISSIONS,
+                    REQUEST_PERMISSION
+            );
+        } else {
+            Log.i(TAG, "Permission Granted!");
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        if (requestCode == REQUEST_PERMISSION) {
+            //Log.d(TAG, "permissions: " + permissions.toString());
+            for (int result : grantResults) {
+                Log.d(TAG, "grantResults: " + String.valueOf(result));
+            }
+        }
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
     // REF: http://stackoverflow.com/questions/33208911/get-realpath-return-null-on-android-marshmallow
