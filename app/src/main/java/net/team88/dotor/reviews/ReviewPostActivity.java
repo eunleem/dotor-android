@@ -1170,15 +1170,6 @@ public class ReviewPostActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        if (requestCode == REQUEST_PERMISSION) {
-            //Log.d(TAG, "permissions: " + permissions.toString());
-            //Log.d(TAG, "grantResults: " + grantResults.toString());
-        }
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-    }
-
     @SuppressWarnings("unchecked")
     public <T extends View> T find(int id) {
         return (T) findViewById(id);
