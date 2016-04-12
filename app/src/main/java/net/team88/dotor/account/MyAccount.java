@@ -145,8 +145,8 @@ public class MyAccount {
             return true;
         }
 
-        // Needs login after 30 minutes
-        if (this.account.lastLogin.getTime() + (1000 * 60 * 30) < (new Date()).getTime())  {
+        // Needs login after 1 minutes
+        if (this.account.lastLogin.getTime() + (1000 * 60 * 1) < (new Date()).getTime())  {
             return true;
         }
 
