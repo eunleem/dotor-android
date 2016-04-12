@@ -68,7 +68,7 @@ android {
             versionName "1.0-admin"
         }
         user {
-            versionCode 14
+            versionCode 15
             versionName "1.0"
         }
     }
@@ -135,11 +135,11 @@ dependencies {
     }
 
     compile 'com.android.support:multidex:1.0.1'
-    compile 'com.android.support:appcompat-v7:23.2.1'
-    compile 'com.android.support:design:23.2.1'
-    compile 'com.android.support:cardview-v7:23.2.1'
-    compile 'com.android.support:recyclerview-v7:23.2.1'
-    compile 'com.android.support:percent:23.2.1'
+    compile 'com.android.support:appcompat-v7:23.3.0'
+    compile 'com.android.support:design:23.3.0'
+    compile 'com.android.support:cardview-v7:23.3.0'
+    compile 'com.android.support:recyclerview-v7:23.3.0'
+    compile 'com.android.support:percent:23.3.0'
 
     compile 'com.google.android.gms:play-services:8.4.0'
     compile 'com.google.android.gms:play-services-gcm:8.4.0'
