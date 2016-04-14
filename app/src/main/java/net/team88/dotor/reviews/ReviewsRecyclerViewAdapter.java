@@ -22,6 +22,7 @@ import net.team88.dotor.R;
 import net.team88.dotor.pets.Pet;
 import net.team88.dotor.shared.Server;
 import net.team88.dotor.shared.image.ImageViewActivity;
+import net.team88.dotor.utils.Utils;
 
 import org.bson.types.ObjectId;
 
@@ -185,14 +186,14 @@ public class ReviewsRecyclerViewAdapter extends RecyclerView.Adapter<ReviewsRecy
             holder.imageViewReviewThumbnail.setVisibility(View.GONE);
         }
 
+        {
+
+        }
+
         int primaryColor = context.getResources().getColor(R.color.colorPrimary);
 
-        Drawable[] drawables = holder.textReviewLikes.getCompoundDrawablesRelative();
-        for (Drawable drawable : drawables) {
-            if (drawable != null) {
-                drawable.mutate().setColorFilter(primaryColor, PorterDuff.Mode.MULTIPLY);
-            }
-        }
+        Utils.changeIconColor(holder.textReviewLikes, primaryColor);
+        Utils.changeIconColor(holder.textReviewComments, primaryColor);
 
         int likes = 0;
         if (review.likes != null) {

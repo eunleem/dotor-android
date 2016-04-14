@@ -220,7 +220,7 @@
                     android:layout_height="wrap_content"
                     android:clickable="true"
                     android:drawablePadding="8dp"
-                    android:drawableStart="@drawable/ic_message_draw_grey600_36dp"
+                    android:drawableStart="@drawable/ic_comment_white_36dp"
                     android:foregroundGravity="center"
                     android:gravity="center"
                     android:paddingEnd="0dp"

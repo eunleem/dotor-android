@@ -2,12 +2,18 @@ package net.team88.dotor.utils;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.View;
+import android.widget.TextView;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
+
+import net.team88.dotor.R;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -59,5 +65,23 @@ public class Utils {
         int currentYear = c.get(Calendar.YEAR);
         c.setTimeInMillis(d.getTime());
         return currentYear - c.get(Calendar.YEAR);
+    }
+
+    public static void changeIconColor(TextView view, int color) {
+        Drawable[] drawables = view.getCompoundDrawablesRelative();
+        for (Drawable drawable : drawables) {
+            if (drawable != null) {
+                changeIconColor(drawable, color);
+            }
+        }
+    }
+
+    public static void changeIconColor(Drawable drawable, int color) {
+        if (drawable == null) {
+            Log.e(TAG, "changeIconColor: Drawable is null. skipping...");
+            return;
+        }
+
+        drawable.mutate().setColorFilter(color, PorterDuff.Mode.MULTIPLY);
     }
 }

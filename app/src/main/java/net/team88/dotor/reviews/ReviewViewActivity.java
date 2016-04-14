@@ -45,6 +45,7 @@ import net.team88.dotor.shared.DotorWebService;
 import net.team88.dotor.shared.Server;
 import net.team88.dotor.shared.image.ImageViewActivity;
 import net.team88.dotor.utils.ImageUtils;
+import net.team88.dotor.utils.Utils;
 
 import org.bson.types.ObjectId;
 
@@ -521,17 +522,10 @@ public class ReviewViewActivity extends AppCompatActivity {
         if (reviewCached.likes != null) {
             likes = reviewCached.likes.size();
         }
+        textLikes.setText(String.valueOf(likes));
 
         int primaryColor = getResources().getColor(R.color.colorPrimary);
-
-        Drawable[] drawables = textLikes.getCompoundDrawablesRelative();
-        for (Drawable drawable : drawables) {
-            if (drawable != null) {
-                drawable.mutate().setColorFilter(primaryColor, PorterDuff.Mode.MULTIPLY);
-            }
-        }
-
-        textLikes.setText(String.valueOf(likes));
+        Utils.changeIconColor(textLikes, primaryColor);
     }
 
     private void updateComments() {
@@ -540,6 +534,9 @@ public class ReviewViewActivity extends AppCompatActivity {
             comments = reviewCached.comments.size();
         }
         textComments.setText(String.valueOf(comments));
+
+        int primaryColor = getResources().getColor(R.color.colorPrimary);
+        Utils.changeIconColor(textLikes, primaryColor);
 
     }
 

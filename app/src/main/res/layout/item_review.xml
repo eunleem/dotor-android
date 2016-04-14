@@ -140,7 +140,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:drawablePadding="8dp"
-                    android:drawableStart="@drawable/ic_message_draw_grey600_24dp"
+                    android:drawableStart="@drawable/ic_comment_white_24dp"
                     android:gravity="start"
                     android:padding="16dp"
                     android:text="Comments" />
