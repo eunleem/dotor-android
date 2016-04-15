@@ -1,7 +1,9 @@
 package net.team88.dotor.reviews;
 
+import android.app.DialogFragment;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -11,6 +13,7 @@ import android.os.AsyncTask;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -267,10 +270,8 @@ public class ReviewViewActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
         int id = item.getItemId();
 
-        DotorWebService webServiceApi = Server.getInstance(this).getService();
 
         if (id == android.R.id.home) {
             finish();
@@ -278,88 +279,118 @@ public class ReviewViewActivity extends AppCompatActivity {
         }
 
         if (id == R.id.action_delete) {
-            Call<BasicResponse> call = webServiceApi.deleteReview(this.reviewId.toHexString());
-            call.enqueue(new Callback<BasicResponse>() {
-                @Override
-                public void onResponse(Call<BasicResponse> call, Response<BasicResponse> response) {
-                    if (response.isSuccessful() == false) {
-                        Log.e(TAG, "DeleteReview failed!");
-                        Snackbar.make(textReviewBody, R.string.msg_error_delete_review, Snackbar.LENGTH_LONG)
-                                .show();
-                        return;
-                    }
-
-                    BasicResponse body = response.body();
-                    if (body.status == -1) {
-                        Log.e(TAG, "DeleteReview returned status non-zero! message: " + body.message);
-                        Snackbar.make(textReviewBody, R.string.msg_error_delete_review, Snackbar.LENGTH_LONG)
-                                .show();
-                        return;
-
-                    } else if (body.status == -2) {
-                        // Not Yours
-                        Snackbar.make(textReviewBody, R.string.msg_error_delete_review_notyours, Snackbar.LENGTH_LONG)
-                                .show();
-
-                    } else if (body.status == 0) {
-                        Toast.makeText(getApplicationContext(), R.string.deleted, Toast.LENGTH_LONG)
-                                .show();
-                        finish();
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<BasicResponse> call, Throwable t) {
-                    Log.d(TAG, "Delete Review Failed. " + t.getMessage());
-                    Snackbar.make(textReviewBody, R.string.msg_error_delete_review, Snackbar.LENGTH_LONG)
-                            .show();
-                }
-            });
+            confirmDeleteReview();
 
         } else if (id == R.id.action_modify) {
-            Snackbar.make(textReviewBody, R.string.modify_not_yet_supported, Snackbar.LENGTH_LONG)
-                    .show();
+            editReview();
 
         } else if (id == R.id.action_flag) {
-            Call<BasicResponse> call = webServiceApi.insertReport("review", this.reviewId.toHexString());
-            call.enqueue(new Callback<BasicResponse>() {
-                @Override
-                public void onResponse(Call<BasicResponse> call, Response<BasicResponse> response) {
-                    if (response.isSuccessful() == false) {
-                        Log.e(TAG, "insertReport failed!");
-                        Snackbar.make(textReviewBody, R.string.report_failed, Snackbar.LENGTH_LONG)
-                                .show();
-                        return;
-                    }
-
-                    BasicResponse body = response.body();
-                    if (body.status < 0) {
-                        Log.e(TAG, "insertReport returned status non-zero! message: " + body.message);
-                        Snackbar.make(textReviewBody, R.string.report_failed, Snackbar.LENGTH_LONG)
-                                .show();
-                        return;
-
-                    } else if (body.status == 1) {
-                        // Already Reported
-                        Snackbar.make(textReviewBody, R.string.already_reported, Snackbar.LENGTH_LONG)
-                                .show();
-
-                    } else if (body.status == 0) {
-                        Snackbar.make(textReviewBody, R.string.reported, Snackbar.LENGTH_LONG)
-                                .show();
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<BasicResponse> call, Throwable t) {
-                    Log.d(TAG, "insertReport Failed. " + t.getMessage());
-                    Snackbar.make(textReviewBody, R.string.report_failed, Snackbar.LENGTH_LONG)
-                            .show();
-                }
-            });
+            reportReview();
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void confirmDeleteReview() {
+        new AlertDialog.Builder(this)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setTitle(R.string.title_delete_review)
+                .setMessage(R.string.msg_delete_review)
+                .setPositiveButton(R.string.delete, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        deleteReview();
+                    }
+
+                })
+                .setNegativeButton(R.string.cancel, null)
+                .show();
+    }
+
+    private void editReview() {
+        Snackbar.make(textReviewBody, R.string.modify_not_yet_supported, Snackbar.LENGTH_LONG)
+                .show();
+    }
+
+    private void reportReview() {
+        DotorWebService webServiceApi = Server.getInstance(this).getService();
+        Call<BasicResponse> call = webServiceApi.insertReport("review", this.reviewId.toHexString());
+        call.enqueue(new Callback<BasicResponse>() {
+            @Override
+            public void onResponse(Call<BasicResponse> call, Response<BasicResponse> response) {
+                if (response.isSuccessful() == false) {
+                    Log.e(TAG, "insertReport failed!");
+                    Snackbar.make(textReviewBody, R.string.report_failed, Snackbar.LENGTH_LONG)
+                            .show();
+                    return;
+                }
+
+                BasicResponse body = response.body();
+                if (body.status < 0) {
+                    Log.e(TAG, "insertReport returned status non-zero! message: " + body.message);
+                    Snackbar.make(textReviewBody, R.string.report_failed, Snackbar.LENGTH_LONG)
+                            .show();
+                    return;
+
+                } else if (body.status == 1) {
+                    // Already Reported
+                    Snackbar.make(textReviewBody, R.string.already_reported, Snackbar.LENGTH_LONG)
+                            .show();
+
+                } else if (body.status == 0) {
+                    Snackbar.make(textReviewBody, R.string.reported, Snackbar.LENGTH_LONG)
+                            .show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<BasicResponse> call, Throwable t) {
+                Log.d(TAG, "insertReport Failed. " + t.getMessage());
+                Snackbar.make(textReviewBody, R.string.report_failed, Snackbar.LENGTH_LONG)
+                        .show();
+            }
+        });
+    }
+
+    private void deleteReview() {
+        DotorWebService webServiceApi = Server.getInstance(this).getService();
+        Call<BasicResponse> call = webServiceApi.deleteReview(this.reviewId.toHexString());
+        call.enqueue(new Callback<BasicResponse>() {
+            @Override
+            public void onResponse(Call<BasicResponse> call, Response<BasicResponse> response) {
+                if (response.isSuccessful() == false) {
+                    Log.e(TAG, "DeleteReview failed!");
+                    Snackbar.make(textReviewBody, R.string.msg_error_delete_review, Snackbar.LENGTH_LONG)
+                            .show();
+                    return;
+                }
+
+                BasicResponse body = response.body();
+                if (body.status == -1) {
+                    Log.e(TAG, "DeleteReview returned status non-zero! message: " + body.message);
+                    Snackbar.make(textReviewBody, R.string.msg_error_delete_review, Snackbar.LENGTH_LONG)
+                            .show();
+                    return;
+
+                } else if (body.status == -2) {
+                    // Not Yours
+                    Snackbar.make(textReviewBody, R.string.msg_error_delete_review_notyours, Snackbar.LENGTH_LONG)
+                            .show();
+
+                } else if (body.status == 0) {
+                    Toast.makeText(getApplicationContext(), R.string.deleted, Toast.LENGTH_LONG)
+                            .show();
+                    finish();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<BasicResponse> call, Throwable t) {
+                Log.d(TAG, "Delete Review Failed. " + t.getMessage());
+                Snackbar.make(textReviewBody, R.string.msg_error_delete_review, Snackbar.LENGTH_LONG)
+                        .show();
+            }
+        });
     }
 
     private void fetchReviewDetail() {
@@ -391,7 +422,6 @@ public class ReviewViewActivity extends AppCompatActivity {
                 reviewCached = body.review;
 
                 final String imageBaseUrl = Server.getInstance(getBaseContext()).getServerUrl() + "/img/";
-
 
 
                 if (reviewCached.images != null && reviewCached.images.size() > 0) {
@@ -536,7 +566,7 @@ public class ReviewViewActivity extends AppCompatActivity {
         textComments.setText(String.valueOf(comments));
 
         int primaryColor = getResources().getColor(R.color.colorPrimary);
-        Utils.changeIconColor(textLikes, primaryColor);
+        Utils.changeIconColor(textComments, primaryColor);
 
     }
 
