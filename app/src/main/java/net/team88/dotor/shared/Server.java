@@ -131,37 +131,26 @@ public class Server {
                     }
                 });
 
-        if (BuildConfig.DEBUG || BuildConfig.BUILD_TYPE.equalsIgnoreCase("beta")) {
-            clientBuilder.addNetworkInterceptor(new Interceptor() {
-                @Override
-                public Response intercept(Chain chain) throws IOException {
-                    Request request = chain.request();
-                    final long requestStartTime = System.currentTimeMillis();
-                    Log.i(TAG, request.url().toString() + " is being made..");
+        clientBuilder.addNetworkInterceptor(new Interceptor() {
+            @Override
+            public Response intercept(Chain chain) throws IOException {
+                Request request = chain.request();
+                Response response = chain.proceed(request);
 
-                    Response response = chain.proceed(request);
-
-                    final long timeTook = System.currentTimeMillis() - requestStartTime;
-                    Log.i(TAG, request.url().toString() + " took " + String.valueOf(timeTook) + " ms");
-
-                    Answers.getInstance()
-                            .logCustom(new CustomEvent("Network Request")
-                                            .putCustomAttribute("Url", request.url().encodedPath().toString())
-                                            .putCustomAttribute("Time", timeTook)
-                            );
-
-                    if (response.isSuccessful() == false) {
-                        Crashlytics.log(Log.ERROR, "Network",
-                                "Failed to get response from Server. ReqUrl: " +
-                                        request.url().toString()
-                        );
-                    }
-
-                    return response;
+                if (response.isSuccessful() == false) {
+                    Crashlytics.log(Log.ERROR, "Network",
+                            "Failed to get response from Server. ReqUrl: " +
+                                    request.url().toString()
+                    );
                 }
-            });
 
-        }
+                Log.i(TAG, "response: " + response.toString());
+                Log.i(TAG, "response headers: " + response.headers().toString());
+
+                return response;
+            }
+        });
+
 
         retrofit = new Retrofit.Builder()
                 .baseUrl(getServerUrl())
