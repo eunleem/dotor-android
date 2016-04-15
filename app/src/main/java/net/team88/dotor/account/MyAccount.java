@@ -7,6 +7,8 @@ import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.view.View;
 
+import com.crashlytics.android.answers.Answers;
+import com.crashlytics.android.answers.CustomEvent;
 import com.google.gson.Gson;
 
 import net.team88.dotor.BuildConfig;
@@ -145,12 +147,12 @@ public class MyAccount {
             return true;
         }
 
-        // Needs login after 1 minutes
-        if (this.account.lastLogin.getTime() + (1000 * 60 * 1) < (new Date()).getTime())  {
-            return true;
-        }
+        // Needs login after 30 seconds minutes
+        //if (this.account.lastLogin.getTime() + (1000 * 30 * 1 * 1) < (new Date()).getTime()) {
+            //return true;
+        //}
 
-        return false;
+        return true;
     }
 
     public void login(final View snackBarParent) {
@@ -176,18 +178,31 @@ public class MyAccount {
                         if (json.status < 0) {
                             // Application Level Error
                             final String message = context.getString(R.string.msg_error_login);
-                            Snackbar.make(snackBarParent, message, Snackbar.LENGTH_INDEFINITE).show();
+                            Snackbar.make(snackBarParent, message, Snackbar.LENGTH_INDEFINITE)
+                                    .setAction(R.string.retry, new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            login(snackBarParent);
+                                        }
+                                    })
+                                    .show();
                             return;
                         }
 
-                        if (BuildConfig.DEBUG) {
-                            //Snackbar.make(viewRoot, "Logged in!", Snackbar.LENGTH_LONG).show();
-                        }
+                        Answers.getInstance().logCustom(
+                                new CustomEvent("LoginResult")
+                                        .putCustomAttribute("status", String.valueOf(json.status))
+                                        .putCustomAttribute("message", String.valueOf(json.message))
+                        );
 
-                        if (json.status == 2) {
-                            // Email Verified
-                            //setEmailVerified();
-                        }
+                        //if (BuildConfig.DEBUG) {
+                        //Snackbar.make(viewRoot, "Logged in!", Snackbar.LENGTH_LONG).show();
+                        //}
+
+                        //if (json.status == 2) {
+                        // Email Verified
+                        //setEmailVerified();
+                        //}
 
 
                         setLastLogin(new Date());
