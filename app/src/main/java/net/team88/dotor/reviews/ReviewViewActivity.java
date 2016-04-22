@@ -1,5 +1,6 @@
 package net.team88.dotor.reviews;
 
+import android.app.Dialog;
 import android.app.DialogFragment;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -23,6 +24,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -40,6 +42,8 @@ import com.crashlytics.android.answers.ContentViewEvent;
 import net.team88.dotor.R;
 import net.team88.dotor.account.MyAccount;
 import net.team88.dotor.comments.Comment;
+import net.team88.dotor.comments.CommentEvent;
+import net.team88.dotor.comments.CommentMenuDialogFragment;
 import net.team88.dotor.comments.CommentsListViewAdapter;
 import net.team88.dotor.comments.CommentsResponse;
 import net.team88.dotor.pets.Pet;
@@ -61,7 +65,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ReviewViewActivity extends AppCompatActivity {
+public class ReviewViewActivity extends AppCompatActivity
+    implements CommentEvent {
 
     private static final String TAG = "ReviewView";
 
@@ -95,6 +100,7 @@ public class ReviewViewActivity extends AppCompatActivity {
     private ImageButton buttonPostComment;
     private ListView listViewComments;
     private ProgressDialog progressDialog;
+    private CommentMenuDialogFragment commentMenuDialogFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -155,7 +161,15 @@ public class ReviewViewActivity extends AppCompatActivity {
             });
         }
 
-        CommentsListViewAdapter adapter = new CommentsListViewAdapter(getBaseContext(), new ArrayList<Comment>());
+        CommentMenuDialogFragment.event = this;
+
+        commentMenuDialogFragment = new CommentMenuDialogFragment();
+
+        CommentsListViewAdapter adapter = new CommentsListViewAdapter(
+                getBaseContext(),
+                commentMenuDialogFragment,
+                new ArrayList<Comment>());
+
         listViewComments.setAdapter(adapter);
     }
 
@@ -751,6 +765,80 @@ public class ReviewViewActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<CommentsResponse> call, Throwable t) {
                 Log.e(TAG, "Could not fetch Comments: " + t.getMessage());
+            }
+        });
+    }
+
+    @Override
+    public void onDeleteComment(String commentIdStr) {
+        Server server = Server.getInstance(this);
+        DotorWebService service = server.getService();
+        Call<BasicResponse> call = service.deleteComment(commentIdStr);
+        call.enqueue(new Callback<BasicResponse>() {
+            @Override
+            public void onResponse(Call<BasicResponse> call, Response<BasicResponse> response) {
+                if (response.isSuccessful() == false) {
+                    Snackbar.make(textComments, R.string.comment_delete_failed, Snackbar.LENGTH_LONG)
+                            .show();
+                    return;
+                }
+
+                if (response.body().status == -1) {
+                    Snackbar.make(textComments, R.string.comment_delete_failed, Snackbar.LENGTH_LONG)
+                            .show();
+                    return;
+                }
+
+                if (response.body().status == -2) {
+                    Snackbar.make(textComments, R.string.comment_delete_failed_not_yours, Snackbar.LENGTH_LONG)
+                            .show();
+                    return;
+                }
+
+                Snackbar.make(textComments, R.string.comment_deleted, Snackbar.LENGTH_LONG)
+                        .show();
+
+                fetchComments(false);
+            }
+
+            @Override
+            public void onFailure(Call<BasicResponse> call, Throwable t) {
+                Snackbar.make(textComments, R.string.comment_delete_failed, Snackbar.LENGTH_LONG)
+                        .show();
+            }
+        });
+
+    }
+
+    @Override
+    public void onReportComment(String commentIdStr) {
+        Server server = Server.getInstance(this);
+        DotorWebService service = server.getService();
+        Call<BasicResponse> call = service.insertReport("comment", commentIdStr);
+        call.enqueue(new Callback<BasicResponse>() {
+            @Override
+            public void onResponse(Call<BasicResponse> call, Response<BasicResponse> response) {
+                if (response.isSuccessful() == false) {
+                    Snackbar.make(textComments, R.string.comment_report_failed, Snackbar.LENGTH_LONG)
+                            .show();
+                    return;
+                }
+
+                if (response.body().status < 0) {
+                    Snackbar.make(textComments, R.string.comment_report_failed, Snackbar.LENGTH_LONG)
+                            .show();
+                    return;
+                }
+
+                Snackbar.make(textComments, R.string.comment_reported, Snackbar.LENGTH_LONG)
+                        .show();
+            }
+
+            @Override
+            public void onFailure(Call<BasicResponse> call, Throwable t) {
+                Snackbar.make(textComments, R.string.comment_report_failed, Snackbar.LENGTH_LONG)
+                        .show();
+
             }
         });
     }

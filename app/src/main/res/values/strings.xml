@@ -350,6 +350,11 @@
     <string name="title_delete_review">Delete Review</string>
     <string name="retry">Retry</string>
     <string name="image_import_failed">Image import failed. Pictures from thrid party app, including Google Drive, is not supported yet.</string>
+    <string name="comment_delete_failed">Comment Delete Failed</string>
+    <string name="comment_delete_failed_not_yours">Cannot delete other people\'s comment</string>
+    <string name="comment_deleted">Comment deleted</string>
+    <string name="comment_report_failed">Comment report failed</string>
+    <string name="comment_reported">Comment reported!</string>
 
 
 </resources>

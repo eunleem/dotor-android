@@ -1,6 +1,10 @@
 package net.team88.dotor.comments;
 
+import android.app.DialogFragment;
+import android.app.FragmentManager;
 import android.content.Context;
+import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,9 +16,9 @@ import net.team88.dotor.R;
 
 import java.util.ArrayList;
 
+
 public class CommentsListViewAdapter extends ArrayAdapter<Comment> {
 
-    // View lookup cache
     private static class ViewHolder {
         View layoutRoot;
         TextView textNickname;
@@ -22,12 +26,20 @@ public class CommentsListViewAdapter extends ArrayAdapter<Comment> {
         TextView textTimestamp;
     }
 
-    public CommentsListViewAdapter(Context context, ArrayList<Comment> comments) {
+    Context context;
+    DialogFragment commentMenuDialogFragment;
+
+    public CommentsListViewAdapter(Context context,
+                                   CommentMenuDialogFragment commentMenuDialogFragment,
+                                   ArrayList<Comment> comments) {
         super(context, 0, comments);
+        this.context = context;
+        this.commentMenuDialogFragment = commentMenuDialogFragment;
     }
 
+
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(int position, View convertView, final ViewGroup parent) {
 
         ViewHolder viewHolder;
         if (convertView == null) {
@@ -43,16 +55,30 @@ public class CommentsListViewAdapter extends ArrayAdapter<Comment> {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        Comment comment = getItem(position);
+        final Comment comment = getItem(position);
 
         viewHolder.textNickname.setText(comment.nickname);
         CharSequence time = DateUtils.getRelativeTimeSpanString(this.getContext(), comment.created.getTime());
         viewHolder.textTimestamp.setText(time.toString());
         viewHolder.textCommentBody.setText(comment.commentBody);
 
+        viewHolder.layoutRoot.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                Bundle args = new Bundle();
+                args.putString("commentid", comment.id.toHexString());
+                commentMenuDialogFragment.setArguments(args);
+                FragmentManager fm = ((FragmentActivity) parent.getContext()).getFragmentManager();
+                commentMenuDialogFragment.show(fm, "CommentMenu");
+                return false;
+            }
+        });
+
 
         return convertView;
     }
+
+
 
 }
 

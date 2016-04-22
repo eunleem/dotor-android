@@ -154,6 +154,9 @@ public interface DotorWebService {
                                           @Path("relatedid") String relatedId,
                                           @Body Comment comment);
 
+    @POST("comment/delete/{id}")
+    Call<BasicResponse> deleteComment(@Path("id") String id);
+
     @GET("comments/{category}/{relatedid}")
     Call<CommentsResponse> getComments(@Path("category") String category,
                                        @Path("relatedid") String relatedid);
