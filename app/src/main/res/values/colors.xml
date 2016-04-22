@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- SYSTEM STATUS BAR COLOR FOR Kitkat -->
-    <color name="colorPrimaryDark">#1A237E</color>
+    <color name="colorPrimaryDark">#558b2f</color>
 
     <!-- PRIMARY COLOR -->
-    <color name="colorPrimary">#303F9F</color>
+    <color name="colorPrimary">#689f38</color>
 
     <!-- PRIMARY COLOR LIGHTER -->
-    <color name="colorPrimaryLighter">#4554A3</color>
+    <color name="colorPrimaryLighter">#7cb342</color>
 
     <color name="colorSecondary">#039BE5</color>
 
     <!-- START BUTTON COLOR -->
     <color name="colorSecondaryDark">#0277BD</color>
 
-    <color name="colorAccent">#FF5252</color>
+    <color name="colorAccent">#FFC107</color>
 
     <color name="bgLightGrey">#DEDEDE</color>
 
