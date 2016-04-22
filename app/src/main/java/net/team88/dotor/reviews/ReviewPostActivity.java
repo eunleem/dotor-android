@@ -1,25 +1,18 @@
 package net.team88.dotor.reviews;
 
 import android.Manifest;
-import android.app.Activity;
 import android.app.DialogFragment;
 import android.app.FragmentManager;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.Build;
-import android.os.Environment;
-import android.provider.DocumentsContract;
-import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -47,7 +40,6 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
-import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
@@ -464,7 +456,9 @@ public class ReviewPostActivity extends AppCompatActivity {
 
     public class CategoriesDialogFragment extends DialogFragment {
 
-        private ViewGroup table;
+        private LinearLayout layoutRoot;
+
+        private Button buttonReset;
         private Button buttonCancel;
         private Button buttonOk;
 
@@ -477,24 +471,52 @@ public class ReviewPostActivity extends AppCompatActivity {
         @Override
         public void onViewCreated(View view, Bundle savedInstanceState) {
             super.onViewCreated(view, savedInstanceState);
-            table = (ViewGroup) view.findViewById(R.id.tableLayout);
 
+            layoutRoot = (LinearLayout) view.findViewById(R.id.layoutRoot);
+
+            buttonReset = (Button) view.findViewById(R.id.buttonReset);
             buttonOk = (Button) view.findViewById(R.id.buttonSetFilter);
             buttonCancel = (Button) view.findViewById(R.id.buttonCancel);
 
             getDialog().setTitle(R.string.visit_categories);
-            addCategories();
+
+            int count = layoutRoot.getChildCount();
+            for (int i = 0; i <= count; i++) {
+                View child = layoutRoot.getChildAt(i);
+                if (child instanceof ToggleButton) {
+                    ToggleButton button = (ToggleButton) child;
+                    button.setChecked(selectedCategories.contains(button.getText()));
+                }
+            }
+
+            buttonReset.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    selectedCategories.clear();
+
+                    int count = layoutRoot.getChildCount();
+                    for (int i = 0; i <= count; i++) {
+                        View child = layoutRoot.getChildAt(i);
+                        if (child instanceof ToggleButton) {
+                            ToggleButton button = (ToggleButton) child;
+                            button.setChecked(false);
+                        }
+                    }
+                    textCategories.setText("");
+                }
+            });
 
 
             buttonOk.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     selectedCategories.clear();
-                    for (int i = 0; i < table.getChildCount(); ++i) {
-                        ViewGroup row = (ViewGroup) table.getChildAt(i);
 
-                        for (int j = 0; j < row.getChildCount(); ++j) {
-                            ToggleButton button = (ToggleButton) row.getChildAt(j);
+                    int count = layoutRoot.getChildCount();
+                    for (int i = 0; i <= count; i++) {
+                        View child = layoutRoot.getChildAt(i);
+                        if (child instanceof ToggleButton) {
+                            ToggleButton button = (ToggleButton) child;
                             if (button.isChecked()) {
                                 selectedCategories.add(button.getText().toString());
                             }
@@ -518,6 +540,7 @@ public class ReviewPostActivity extends AppCompatActivity {
                     }
                     textCategories.setText(s);
 
+
                     getDialog().dismiss();
                 }
             });
@@ -529,39 +552,6 @@ public class ReviewPostActivity extends AppCompatActivity {
                 }
             });
 
-        }
-
-        private void addCategories() {
-            String[] categories = getResources().getStringArray(R.array.review_category_array);
-
-            final int numButtonsPerRow = 3;
-            final int numCategories = categories.length;
-            Log.d(TAG, "onCreateView: numCategories" + String.valueOf(numCategories));
-
-            final int numRows = (int) Math.ceil((double) numCategories / numButtonsPerRow);
-
-            Log.d(TAG, "onCreateView: numRows: " + String.valueOf(numRows));
-
-            int count = 0;
-
-            for (int i = 0; i < numRows; i++) {
-                TableRow row = new TableRow(getActivity());
-                row.setGravity(Gravity.CENTER);
-
-                for (int j = 0; j < numButtonsPerRow && count < numCategories; j++, count++) {
-                    ToggleButton button = new ToggleButton(getActivity());
-                    // Very First element is Checked by Default.
-                    if (i == 0 && j == 0) {
-                        button.setChecked(true);
-                    }
-                    button.setChecked(selectedCategories.contains(categories[count]));
-                    button.setText(categories[count]);
-                    button.setTextOn(categories[count]);
-                    button.setTextOff(categories[count]);
-                    row.addView(button);
-                }
-                table.addView(row);
-            }
         }
     }
 

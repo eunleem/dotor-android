@@ -1,53 +1,272 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
-
-    <TableLayout
-        android:id="@+id/tableLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:minHeight="40dp"
-        android:padding="16dp">
-
-    </TableLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/divider" />
+    android:layout_height="wrap_content"
+    android:minWidth="280dp">
 
     <LinearLayout
+        android:id="@+id/layoutRoot"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:minWidth="280dp"
+        android:orientation="vertical"
+        android:paddingBottom="0dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:paddingTop="0dp">
 
-        <Space
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="기본진료" />
+
+
+        <ToggleButton
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1" />
+            android:text="초진"
+            android:textOff="초진"
+            android:textOn="초진" />
+
+        <ToggleButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="재진"
+            android:textOff="재진"
+            android:textOn="재진" />
+
+        <ToggleButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="약처방"
+            android:textOff="약처방"
+            android:textOn="약처방" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="검사" />
+
+
+        <ToggleButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="혈액검사"
+            android:textOff="혈액검사"
+            android:textOn="혈액검사" />
+
+        <ToggleButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="X-ray검사"
+            android:textOff="X-ray검사"
+            android:textOn="X-ray검사" />
+
+        <ToggleButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="초음파검사"
+            android:textOff="초음파검사"
+            android:textOn="초음파검사" />
+
+        <ToggleButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="기타검사"
+            android:textOff="방사선검사"
+            android:textOn="방사선검사" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="예방 접종" />
+
+
+        <ToggleButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="종합백신"
+            android:textOff="종합백신"
+            android:textOn="종합백신" />
+
+        <ToggleButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="광견병"
+            android:textOff="광견병"
+            android:textOn="광견병" />
+
+        <ToggleButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="코로나"
+            android:textOff="코로나"
+            android:textOn="코로나" />
+
+        <ToggleButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="켄넬로프"
+            android:textOff="켄넬로프"
+            android:textOn="켄넬로프" />
+
+        <ToggleButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="인플루엔자"
+            android:textOff="인플루엔자"
+            android:textOn="인플루엔자" />
+
+        <ToggleButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="사상충"
+            android:textOff="사상충"
+            android:textOn="사상충" />
+
+        <ToggleButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="구충"
+            android:textOff="구충"
+            android:textOn="구충" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="수술" />
+
+        <ToggleButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="중성화"
+            android:textOff="중성화"
+            android:textOn="중성화" />
+
+        <ToggleButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="슬개구 탈골"
+            android:textOff="슬개구 탈골"
+            android:textOn="슬개구 탈골" />
+
+        <ToggleButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="기타 수술"
+            android:textOff="기타 수술"
+            android:textOn="기타 수술" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="마취" />
+
+
+        <ToggleButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="주사마취"
+            android:textOff="주사마취"
+            android:textOn="주사마취" />
+
+        <ToggleButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="호흡마취"
+            android:textOff="호흡마취"
+            android:textOn="호흡마취" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="기타" />
+
+
+        <ToggleButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="미용"
+            android:textOff="미용"
+            android:textOn="미용" />
+
+        <ToggleButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="스켈링"
+            android:textOff="스켈링"
+            android:textOn="스켈링" />
+
+        <ToggleButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="폴리싱"
+            android:textOff="폴리싱"
+            android:textOn="폴리싱" />
+
+        <ToggleButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="입원"
+            android:textOff="입원"
+            android:textOn="입원" />
+
+        <ToggleButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="카테고리에 없음"
+            android:textOff="카테고리에 없음"
+            android:textOn="카테고리에 없음" />
 
         <Button
-            android:id="@+id/buttonCancel"
+            android:id="@+id/buttonReset"
             style="?android:attr/borderlessButtonStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/cancel"
+            android:layout_marginBottom="16dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/label.reset"
             android:textColor="@color/secondaryText" />
 
-        <Button
-            android:id="@+id/buttonSetFilter"
-            style="?android:attr/borderlessButtonStyle"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/set_filter"
-            android:textColor="@color/colorSecondary"
-            android:textStyle="bold" />
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/buttonCancel"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/cancel"
+                android:textColor="@color/secondaryText" />
+
+            <Button
+                android:id="@+id/buttonSetFilter"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/set_filter"
+                android:textColor="@color/colorSecondary"
+                android:textStyle="bold" />
+
+        </LinearLayout>
 
     </LinearLayout>
 
-</LinearLayout>
+
+</ScrollView>
+
