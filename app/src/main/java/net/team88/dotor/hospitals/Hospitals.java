@@ -124,83 +124,9 @@ public class Hospitals {
         return this.hospitalHashMap.values();
     }
 
-    public void getHospitalsFromServer(double latitude, double longitude, double distance, final Runnable onSuccess) {
-        NearbyRequest nearbyRequest = new NearbyRequest();
-        nearbyRequest.longitude = longitude;
-        nearbyRequest.latitude = latitude;
-        nearbyRequest.distance = distance;
-
-        DotorWebService service = Server.getInstance(context).getService();
-        service.getHospitalsNearby(nearbyRequest).enqueue(new Callback<HospitalsResponse>() {
-            @Override
-            public void onResponse(Call<HospitalsResponse> call, final Response<HospitalsResponse> response) {
-                if (!response.isSuccessful()) {
-                    Log.d(TAG, "nearbyRequest: Failed.");
-                    return;
-                }
-
-                if (response.body().status < 0) {
-                    Log.d(TAG, "nearbyRequest: Failed. msg: " + response.body().message);
-                    return;
-                }
-
-                int count = 0;
-                ArrayList<Hospital> hospitals = response.body().hospitals;
-                if (hospitals != null) {
-                    count = hospitals.size();
-                }
-
-                Log.d(TAG, "nearbyRequest: Successful. " + String.valueOf(count));
-
-                setHospitals(hospitals);
-                onSuccess.run();
-            }
-
-            @Override
-            public void onFailure(Call<HospitalsResponse> call, Throwable t) {
-                Log.d(TAG, "nearbyRequest: Failed. " + t.getMessage());
-            }
-        });
-    }
 
     public void getNearbyHospitalsFromServer(double distance, final Runnable onSuccess) {
-        NearbyRequest nearbyRequest = createNearbyRequest(distance);
-        DotorWebService service = Server.getInstance(context).getService();
-        service.getHospitalsNearby(nearbyRequest).enqueue(new Callback<HospitalsResponse>() {
-            @Override
-            public void onResponse(Call<HospitalsResponse> call, final Response<HospitalsResponse> response) {
-                if (!response.isSuccessful()) {
-                    Log.d(TAG, "nearbyRequest: Failed.");
-                    return;
-                }
-
-                if (response.body().status < 0) {
-                    Log.d(TAG, "nearbyRequest: Failed. msg: " + response.body().message);
-                    return;
-                }
-
-                int count = 0;
-                ArrayList<Hospital> hospitals = response.body().hospitals;
-                if (hospitals != null) {
-                    count = hospitals.size();
-                }
-
-                Log.d(TAG, "nearbyRequest: Successful. " + String.valueOf(count));
-
-                setHospitals(hospitals);
-                onSuccess.run();
-            }
-
-            @Override
-            public void onFailure(Call<HospitalsResponse> call, Throwable t) {
-                Log.d(TAG, "nearbyRequest: Failed. " + t.getMessage());
-            }
-        });
-    }
-
-    private NearbyRequest createNearbyRequest(double distance) {
         NearbyRequest nearbyRequest = new NearbyRequest();
-        nearbyRequest.distance = distance;
 
         Location location = UserLocation.getInstance(context).getLastBestLocation();
         if (location != null) {
@@ -208,6 +134,61 @@ public class Hospitals {
             nearbyRequest.latitude = location.getLatitude();
         }
 
-        return nearbyRequest;
+        nearbyRequest.distance = distance;
+
+        getHospitalsFromServer(nearbyRequest, onSuccess);
     }
+
+    public void getHospitalsFromServer(double latitude, double longitude, double distance, final Runnable onSuccess) {
+        NearbyRequest nearbyRequest = new NearbyRequest();
+        nearbyRequest.longitude = longitude;
+        nearbyRequest.latitude = latitude;
+        nearbyRequest.distance = distance;
+
+        getHospitalsFromServer(nearbyRequest, onSuccess);
+    }
+
+    public void getHospitalsFromServer(NearbyRequest nearby, final Runnable onSuccess) {
+        NearbyRequest nearbyRequest = nearby;
+
+        DotorWebService service = Server.getInstance(context).getService();
+        service.getHospitalsNearby(nearbyRequest).enqueue(new Callback<HospitalsResponse>() {
+            @Override
+            public void onResponse(Call<HospitalsResponse> call, final Response<HospitalsResponse> response) {
+                if (!response.isSuccessful()) {
+                    Log.d(TAG, "nearbyRequest: Failed.");
+                    Crashlytics.log(Log.ERROR, "Hospitals", "Failed to fetch hospitals. Got response other than OK.");
+                    return;
+                }
+
+                if (response.body().status < 0) {
+                    Log.d(TAG, "nearbyRequest: Failed. msg: " + response.body().message);
+                    String message = String.valueOf(response.body().status) + " " + response.body().message;
+                    Crashlytics.log(Log.ERROR, "Hospitals", "Failed to fetch hospitals. " + message);
+                    return;
+                }
+
+                int count = 0;
+                ArrayList<Hospital> hospitals = response.body().hospitals;
+                if (hospitals != null) {
+                    count = hospitals.size();
+                }
+
+                Log.d(TAG, "nearbyRequest: Successful. " + String.valueOf(count));
+
+                Answers.getInstance().logCustom(new CustomEvent("GetHospitals")
+                        .putCustomAttribute("Count", String.valueOf(count)));
+
+                setHospitals(hospitals);
+                onSuccess.run();
+            }
+
+            @Override
+            public void onFailure(Call<HospitalsResponse> call, Throwable t) {
+                Log.d(TAG, "nearbyRequest: Failed. " + t.getMessage());
+                Crashlytics.log(Log.ERROR, "Hospitals", "Failed to fetch hospitals. " + t.getMessage());
+            }
+        });
+    }
+
 }

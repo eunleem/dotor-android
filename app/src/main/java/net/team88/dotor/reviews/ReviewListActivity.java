@@ -16,7 +16,6 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.util.TypedValue;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -25,11 +24,11 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
-import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
@@ -240,7 +239,9 @@ public class ReviewListActivity extends AppCompatActivity {
 
     public class SetCategoriesDialogFragment extends DialogFragment {
 
-        private ViewGroup table;
+        private LinearLayout layoutRoot;
+
+        private Button buttonReset;
         private Button buttonCancel;
         private Button buttonSetFilter;
 
@@ -253,23 +254,50 @@ public class ReviewListActivity extends AppCompatActivity {
         @Override
         public void onViewCreated(View view, Bundle savedInstanceState) {
             super.onViewCreated(view, savedInstanceState);
-            table = (ViewGroup) view.findViewById(R.id.tableLayout);
 
+            layoutRoot = (LinearLayout) view.findViewById(R.id.layoutRoot);
+
+            buttonReset = (Button) view.findViewById(R.id.buttonReset);
             buttonSetFilter = (Button) view.findViewById(R.id.buttonSetFilter);
             buttonCancel = (Button) view.findViewById(R.id.buttonCancel);
 
             getDialog().setTitle(R.string.visit_categories);
-            addCategories();
+
+            int count = layoutRoot.getChildCount();
+            for (int i = 0; i <= count; i++) {
+                View child = layoutRoot.getChildAt(i);
+                if (child instanceof ToggleButton) {
+                    ToggleButton button = (ToggleButton) child;
+                    button.setChecked(selectedCategories.contains(button.getText()));
+                }
+            }
+
+            buttonReset.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    selectedCategories.clear();
+
+                    int count = layoutRoot.getChildCount();
+                    for (int i = 0; i <= count; i++) {
+                        View child = layoutRoot.getChildAt(i);
+                        if (child instanceof ToggleButton) {
+                            ToggleButton button = (ToggleButton) child;
+                            button.setChecked(false);
+                        }
+                    }
+                }
+            });
 
             buttonSetFilter.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     selectedCategories.clear();
-                    for (int i = 0; i < table.getChildCount(); ++i) {
-                        ViewGroup row = (ViewGroup) table.getChildAt(i);
 
-                        for (int j = 0; j < row.getChildCount(); ++j) {
-                            ToggleButton button = (ToggleButton) row.getChildAt(j);
+                    int count = layoutRoot.getChildCount();
+                    for (int i = 0; i <= count; i++) {
+                        View child = layoutRoot.getChildAt(i);
+                        if (child instanceof ToggleButton) {
+                            ToggleButton button = (ToggleButton) child;
                             if (button.isChecked()) {
                                 selectedCategories.add(button.getText().toString());
                             }
@@ -285,11 +313,6 @@ public class ReviewListActivity extends AppCompatActivity {
                     }
                     if (stringBuilder.length() > 1) {
                         stringBuilder.delete(0, 1);
-                    } else {
-                        // If Nothing is Selected, Select first item.
-                        ViewGroup firstRow = (ViewGroup) table.getChildAt(0);
-                        ToggleButton firstItem = (ToggleButton) firstRow.getChildAt(0);
-                        stringBuilder.append(firstItem.getText().toString());
                     }
 
                     searchSettings = SearchSettings.getInstance(getApplicationContext());
@@ -312,39 +335,6 @@ public class ReviewListActivity extends AppCompatActivity {
                 }
             });
 
-        }
-
-        private void addCategories() {
-            String[] categories = getResources().getStringArray(R.array.review_category_array);
-
-            final int numButtonsPerRow = 3;
-            final int numCategories = categories.length;
-            Log.d(TAG, "onCreateView: numCategories" + String.valueOf(numCategories));
-
-            final int numRows = (int) Math.ceil((double) numCategories / numButtonsPerRow);
-
-            Log.d(TAG, "onCreateView: numRows: " + String.valueOf(numRows));
-
-            int count = 0;
-
-            for (int i = 0; i < numRows; i++) {
-                TableRow row = new TableRow(getActivity());
-                row.setGravity(Gravity.CENTER);
-
-                for (int j = 0; j < numButtonsPerRow && count < numCategories; j++, count++) {
-                    ToggleButton button = new ToggleButton(getActivity());
-                    // Very First element is Checked by Default.
-                    if (i == 0 && j == 0) {
-                        button.setChecked(true);
-                    }
-                    button.setChecked(selectedCategories.contains(categories[count]));
-                    button.setText(categories[count]);
-                    button.setTextOn(categories[count]);
-                    button.setTextOff(categories[count]);
-                    row.addView(button);
-                }
-                table.addView(row);
-            }
         }
     }
 

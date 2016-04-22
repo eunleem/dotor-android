@@ -68,7 +68,7 @@ android {
             versionName "1.0-admin"
         }
         user {
-            versionCode 16
+            versionCode 18
             versionName "1.0"
         }
     }
