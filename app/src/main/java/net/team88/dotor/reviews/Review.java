@@ -2,6 +2,7 @@ package net.team88.dotor.reviews;
 
 import com.google.gson.annotations.SerializedName;
 
+import net.team88.dotor.shared.GeoJson;
 import net.team88.dotor.utils.GsonUtils;
 
 import org.bson.types.ObjectId;
@@ -39,8 +40,8 @@ public class Review implements Comparable<Review> {
     @SerializedName("hospital_name")
     public String hospitalName;
 
-    //@SerializedName("location")
-    public ArrayList<Double> locationCoordinates;
+    @SerializedName("location")
+    public GeoJson location;
 
     @SerializedName("location_name")
     public String locationName;

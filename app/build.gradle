@@ -6,7 +6,7 @@ buildscript {
 
     dependencies {
         classpath 'io.fabric.tools:gradle:1.21.4'
-        classpath 'com.android.tools.build:gradle:2.0.0'
+        classpath 'com.android.tools.build:gradle:2.1.0'
         classpath 'com.google.gms:google-services:1.3.0-beta1'
     }
 }
@@ -22,11 +22,12 @@ repositories {
 
 android {
     dexOptions {
+        maxProcessCount 3
         javaMaxHeapSize "4g"
     }
 
     compileSdkVersion 23
-    buildToolsVersion '23.0.2'
+    buildToolsVersion '23.0.3'
 
     lintOptions {
         checkReleaseBuilds false
@@ -68,7 +69,7 @@ android {
             versionName "1.0-admin"
         }
         user {
-            versionCode 18
+            versionCode 20
             versionName "1.0"
         }
     }
@@ -129,33 +130,25 @@ android {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
-
     compile('com.crashlytics.sdk.android:crashlytics:2.5.5@aar') {
         transitive = true;
     }
-
     compile 'com.android.support:multidex:1.0.1'
     compile 'com.android.support:appcompat-v7:23.3.0'
     compile 'com.android.support:design:23.3.0'
     compile 'com.android.support:cardview-v7:23.3.0'
     compile 'com.android.support:recyclerview-v7:23.3.0'
     compile 'com.android.support:percent:23.3.0'
-
     compile 'com.google.android.gms:play-services:8.4.0'
     compile 'com.google.android.gms:play-services-gcm:8.4.0'
-
     compile 'com.google.code.gson:gson:2.6.1'
-
     compile 'org.mongodb:bson:3.2.2'
-
     compile 'com.squareup.retrofit2:retrofit:2.0.1'
     compile 'com.squareup.retrofit2:converter-gson:2.0.1'
     compile 'com.squareup.okhttp3:okhttp:3.2.0'
-
     compile 'com.github.bumptech.glide:glide:3.7.0'
     compile 'com.commit451:PhotoView:1.2.4'
     compile 'me.littlecheesecake:croplayout:1.0.5'
-
     compile 'io.reactivex:rxjava:1.1.2'
     compile 'io.reactivex:rxandroid:1.1.0'
     compile 'com.squareup.retrofit2:adapter-rxjava:2.0.1'

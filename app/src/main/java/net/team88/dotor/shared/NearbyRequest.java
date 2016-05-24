@@ -14,18 +14,18 @@ public class NearbyRequest {
     public NearbyRequest() {
         latitude = SearchSettings.DEFAULT_LATITUDE;
         longitude = SearchSettings.DEFAULT_LONGITUDE;
-        distance = 1000.00;
+        distance = 500000.00;
     }
 
     public NearbyRequest(Location location) {
         if (location != null) {
             latitude = location.getLatitude();
             longitude = location.getLongitude();
-            distance = 1000.00;
+            distance = 500000.00;
         } else {
             latitude = SearchSettings.DEFAULT_LATITUDE;
             longitude = SearchSettings.DEFAULT_LONGITUDE;
-            distance = 1000.00;
+            distance = 500000.00;
         }
     }
 

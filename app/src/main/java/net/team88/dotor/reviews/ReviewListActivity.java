@@ -106,11 +106,7 @@ public class ReviewListActivity extends AppCompatActivity {
         recyclerViewReviews.setAdapter(viewAdapter);
 
         setupSwipeRefreshLayout();
-    }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
         getReviews();
     }
 
@@ -640,6 +636,51 @@ public class ReviewListActivity extends AppCompatActivity {
                 return;
         }
 
+        getReviews(call);
+    }
+
+    private void getReviewsByMode(Mode mode) {
+        if (allReviewSnackbar != null) {
+            allReviewSnackbar.dismiss();
+        }
+        layoutSwipeRefresh.setRefreshing(true);
+        DotorWebService webServiceApi = Server.getInstance(this).getService();
+        Call<ReviewsResponse> call;
+
+        switch (mode) {
+            case ALL:
+                call = webServiceApi.getReviews();
+                allReviewSnackbar = Snackbar.make(textNothingMessage, R.string.msg_all_reviews_showing, Snackbar.LENGTH_INDEFINITE);
+                allReviewSnackbar.show();
+                break;
+            case LOCATION:
+                if (nearbyRequest == null) {
+                    Log.e(TAG, "getReviews: nearByRequest is null.");
+                    Crashlytics.log(Log.WARN, TAG, "nearByRequest is null. Getting all reviews...");
+                    call = webServiceApi.getReviews();
+                } else {
+                    searchSettings.setLocationSetting(currentLocationName, nearbyRequest);
+                    call = webServiceApi.getReviewsByLocation(nearbyRequest);
+                }
+
+                break;
+            case CATEGORY:
+                if (categories == null) {
+                    Log.e(TAG, "getReviews: category is null.");
+                    Crashlytics.log(Log.WARN, TAG, "category is null. Getting all reviews...");
+                    call = webServiceApi.getReviews();
+                } else {
+                    call = webServiceApi.getReviewsByCategories(categories);
+                }
+                break;
+            default:
+                return;
+        }
+
+        getReviews(call);
+    }
+
+    private void getReviews(Call<ReviewsResponse> call) {
         call.enqueue(new Callback<ReviewsResponse>() {
             @Override
             public void onResponse(Call<ReviewsResponse> call, Response<ReviewsResponse> response) {

@@ -60,6 +60,7 @@ import net.team88.dotor.hospitals.Hospitals;
 import net.team88.dotor.pets.MyPets;
 import net.team88.dotor.pets.Pet;
 import net.team88.dotor.shared.DotorWebService;
+import net.team88.dotor.shared.GeoJson;
 import net.team88.dotor.shared.InsertResponse;
 import net.team88.dotor.shared.InvalidInputException;
 import net.team88.dotor.shared.NearbyRequest;
@@ -88,6 +89,8 @@ import retrofit2.Response;
 
 public class ReviewPostActivity extends AppCompatActivity {
     static final String TAG = "PostReview";
+
+    private static final String TAG = "ReviewPostActivity";
 
     static final int REQUEST_PERMISSION = 1;
     static final int REQUEST_TAKE_PHOTO = 10;
@@ -214,6 +217,7 @@ public class ReviewPostActivity extends AppCompatActivity {
     }
 
     private void registerElements() {
+
         viewRoot = find(R.id.view_root);
 
         progressBar = find(R.id.progressBar);
@@ -722,7 +726,6 @@ public class ReviewPostActivity extends AppCompatActivity {
                 Log.i(TAG, "Place: " + selectedPlace.getName());
                 Log.i(TAG, "Place: " + selectedPlace.toString());
                 String address = selectedPlace.getAddress().toString().replaceFirst("대한민국 ", "");
-                textLocation.setEnabled(true);
 
                 textLocation.setText(address);
                 textLocation.setError(null);
@@ -752,16 +755,12 @@ public class ReviewPostActivity extends AppCompatActivity {
                 Crashlytics.log(Log.ERROR, "GooglePlace", status.getStatusMessage());
                 Snackbar.make(textLocation, R.string.msg_error_autocomplete_location, Snackbar.LENGTH_LONG)
                         .show();
-                textLocation.setEnabled(true);
 
             } else if (resultCode == RESULT_CANCELED) {
                 Log.i(TAG, "Cancelled");
-                textLocation.setEnabled(true);
-
-            } else {
-                textLocation.setEnabled(true);
-
             }
+
+            textLocation.setEnabled(true);
         } else {
             Log.i(TAG, "onActivityResult: ");
         }
@@ -868,6 +867,11 @@ public class ReviewPostActivity extends AppCompatActivity {
             nearbyRequest.longitude = selectedPlace.getLatLng().longitude;
 
             SearchSettings.getInstance(this).setLocationSetting(selectedPlace.getName().toString(), nearbyRequest);
+
+            newReview.location = new GeoJson();
+            newReview.location.coordinates = new Double[2];
+            newReview.location.coordinates[0] = selectedPlace.getLatLng().longitude;
+            newReview.location.coordinates[1] = selectedPlace.getLatLng().latitude;
         }
 
         String selectedCategoriesStr = this.textCategories.getText().toString().replace(" ", "");

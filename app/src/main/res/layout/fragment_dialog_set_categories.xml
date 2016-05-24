@@ -76,9 +76,16 @@
         <ToggleButton
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="기타검사"
+            android:text="방사선검사"
             android:textOff="방사선검사"
             android:textOn="방사선검사" />
+
+        <ToggleButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="기타검사"
+            android:textOff="기타검사"
+            android:textOn="기타검사" />
 
 
         <TextView
@@ -112,9 +119,9 @@
         <ToggleButton
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="켄넬로프"
-            android:textOff="켄넬로프"
-            android:textOn="켄넬로프" />
+            android:text="켄넬코프"
+            android:textOff="켄넬코프"
+            android:textOn="켄넬코프" />
 
         <ToggleButton
             android:layout_width="match_parent"
@@ -191,7 +198,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="기타" />
+            android:text="검사" />
 
 
         <ToggleButton
